@@ -78,13 +78,13 @@ public class Board : MonoBehaviour
             Debug.Log("Here is the tile position "+ (Vector2Int)tilePosition);
             // An out of bounds tile is invalid
             if (!bounds.Contains((Vector2Int)tilePosition)) {
-                Debug.LogError("bounds does not contain that position");
+                //Debug.LogError("bounds does not contain that position");
                 return false;
             }
 
             // A tile already occupies the position, thus invalid
             if (this.tilemap.HasTile(tilePosition)) {
-                Debug.LogError("tile map has that tile");
+                //Debug.LogError("tile map has that tile");
                 return false;
             }
         }

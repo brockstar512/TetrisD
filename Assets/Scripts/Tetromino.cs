@@ -18,10 +18,12 @@ public struct TetrominoData
     public Tetromino tetromino;
     public Tile tile;//which color tile we are using
     public Vector2Int[] cells{get;private set;}//what shape the tetromino should be
+    public Vector2Int[,] wallKicks{get;private set;}
 
     public void Initialize()
     {
         this.cells = Data.Cells[this.tetromino];
+        this.wallKicks = Data.WallKicks[this.tetromino];
     }
 
 }
