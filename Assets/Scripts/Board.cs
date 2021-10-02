@@ -44,8 +44,17 @@ public class Board : MonoBehaviour
         //passing our piece the game board, spawn position, and random data
         this.activePiece.Initialize(this, spawnPosition, data);
 
-        //now we set piece on gamebooard
-        Set(this.activePiece);
+        if(IsValidPosition(this.activePiece, this.spawnPosition)){
+            //now we set piece on gamebooard
+            Set(this.activePiece);
+        }else{
+            GameOver();
+        }
+    }
+
+    private void GameOver()
+    {
+        this.tilemap.ClearAllTiles();
     }
 
     public void Set(Piece piece)
@@ -90,5 +99,49 @@ public class Board : MonoBehaviour
         }
 
         return true;
+        
+    }
+
+    public void ClearLines()
+    {
+        RectInt bounds = this.Bounds;
+        int row = bounds.yMin;
+        while(row < bounds.yMax)
+        {
+            if(IsLineFull(row)){
+                //dont increase row because there are going to be new tiles on it
+                LineClear(row);
+            }else{
+                row++;
+            }
+        }
+    }
+
+    private bool IsLineFull(int row){
+        RectInt bounds = this.Bounds;
+        for(int col = bounds.xMin;col < bounds.xMax;col++){
+            Vector3Int position = new Vector3Int(col,row,0);
+            if(!this.tilemap.HasTile(position)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void LineClear(int row){
+        RectInt bounds = this.Bounds;
+        for(int col = bounds.xMin;col < bounds.xMax;col++){
+            Vector3Int position = new Vector3Int(col, row,0);
+            this.tilemap.SetTile(position, null);
+        }
+        while(row <bounds.yMax){
+            for(int col = bounds.xMin;col < bounds.xMax;col++){
+                Vector3Int position = new Vector3Int(col, row+1,0);
+                TileBase above = this.tilemap.GetTile(position);
+                position = new Vector3Int(col,row,0);
+                this.tilemap.SetTile(position,above);
+            }
+            row++;
+        }
     }
 }
