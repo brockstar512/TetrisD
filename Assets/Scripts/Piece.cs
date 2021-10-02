@@ -11,6 +11,11 @@ public class Piece : MonoBehaviour
     public Vector3Int[] cells {get; private set;}
     public int rotationIndex {get; private set;}
 
+    public float stepDelay = 1f;
+    public float lockDelay = 0.5f;
+
+    private float stepTime;
+    private float lockTime;
 
     //spawn position, which piece is active
     public void Initialize(Board board, Vector3Int position,TetrominoData data)
@@ -19,6 +24,9 @@ public class Piece : MonoBehaviour
         this.position = position;
         this.data = data;
         this.rotationIndex = 0;
+        this.stepTime = Time.time + this.stepDelay;
+        this.lockTime = 0f;
+
 
         if(this.cells == null){
             this.cells = new Vector3Int[data.cells.Length];//always 4 unless custom shape
@@ -34,13 +42,18 @@ public class Piece : MonoBehaviour
     private void Update()
     {
         this.board.Clear(this);
+        
+        
+        this.lockTime += Time.deltaTime;
+
+
         if(Input.GetKeyDown(KeyCode.RightShift)){
             Rotate(1);
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift)){
             Rotate(-1);
         }
-
+        
 
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -57,18 +70,42 @@ public class Piece : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space)){
             HardDrop();
         }
+
+        if(Time.time >= this.stepTime){
+            Step();
+        }
         this.board.Set(this);
 
     }
+
+    private void Step(){
+        this.stepTime = Time.time + this.stepDelay;
+        Move(Vector2Int.down);
+
+        if(this.lockTime >= this.lockDelay){
+            Lock();
+        }
+    }
+
+    private void Lock()
+    {
+        this.board.Set(this);
+        this.board.SpawnPiece();
+
+    }
+
     private void HardDrop()
     {
+        //Debug.LogError("HARD DROP");
         while(Move(Vector2Int.down)){
             continue;
         }
         Debug.Log("Hit the bottom");
+        Lock();
     }
     private bool Move(Vector2Int translation)
     {
+        //Debug.LogError("MOVE");
         Vector3Int newPosition = this.position;
         newPosition.x += translation.x;
         newPosition.y += translation.y;
@@ -79,6 +116,8 @@ public class Piece : MonoBehaviour
         if (valid)
         {
             this.position = newPosition;
+            this.position = newPosition;
+            this.lockTime = 0f;//reset locktime
         }
 
         return valid;
