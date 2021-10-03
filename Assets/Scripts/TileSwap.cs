@@ -24,14 +24,17 @@ public class TileSwap : MonoBehaviour
     [ContextMenu("Place Piece")]
     public void PlacePiece()
     {
+        
         //Vector3Int position,TetrominoData data
         int random = Random.Range(0,6);
         TetrominoData data = board.tetrominoes[random];
         Debug.Log("SWAP: "+data.tetromino);
         //we dont really need a cells array... its more for manipulation on piece
         if(this.cells == null){
+            Debug.Log("SWAP: cells is null");
             this.cells = new Vector3Int[data.cells.Length];
         }
+        else{Clear();}
         Debug.Log("SWAP cells length: "+data.cells.Length);
         for(int i = 0; i< data.cells.Length;i++){
             this.cells[i] = (Vector3Int)data.cells[i];
@@ -49,6 +52,16 @@ public class TileSwap : MonoBehaviour
         TetrominoData newPiece = sideLinePiece;
         this.sideLinePiece = incomingPiece;
         return newPiece;
+    }
+
+    public void Clear()
+    {
+        for(int i = 0;i< this.cells.Length;i++)
+        {
+            Vector3Int tilePosition = this.cells[i] + spawnPosition;
+            this.swapMap.SetTile(tilePosition,null);
+        }
+
     }
 
 
