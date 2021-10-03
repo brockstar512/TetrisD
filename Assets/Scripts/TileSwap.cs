@@ -6,10 +6,13 @@ using UnityEngine.Tilemaps;
 public class TileSwap : MonoBehaviour
 {
 
-    public TetrominoData sideLinePiece;
+    private TetrominoData sideLinePiece;
+    //dont need
     public int indexOfSidePiece;
     public Vector3Int spawnPosition;
+    //dont need
     public Vector2Int miniBoardSize= new Vector2Int(4,4);
+    //dont need
     public RectInt Bounds {
         get
         {
@@ -17,60 +20,48 @@ public class TileSwap : MonoBehaviour
             return new RectInt(position, this.miniBoardSize);
         }
     }
-    public Tilemap swapMap;
+    public Tilemap swapMap;//the tile map that will have filled tiles
     public Board board;
-    public Vector3Int[] cells {get; private set;}
+    public Vector3Int[] cells {get; private set;}//the tiles of swap map that will fill
 
-    [ContextMenu("Place Piece")]
-    public TetrominoData PlacePiece(TetrominoData incoming)
+    
+    public TetrominoData Swap(TetrominoData incoming)
     {
-        TetrominoData toReturn;
-        toReturn = sideLinePiece;
+        TetrominoData toReturn = sideLinePiece;
         sideLinePiece = incoming;
-        //Vector3Int position,TetrominoData data
-        // int random = Random.Range(0,6);
-        // TetrominoData data = board.tetrominoes[random];
-        
-        //we dont really need a cells array... its more for manipulation on piece
-        if(this.cells == null){
-            Debug.Log("SWAP: cells is null");
-            int random = Random.Range(0,6);
+
+        if(this.cells == null)
+        {
+            //if swap is empty return a random piece
+            int random = Random.Range(0,7);
             toReturn = board.tetrominoes[random];
+            //fill in the tiles of that tile map with these cells
             this.cells = new Vector3Int[incoming.cells.Length];
         }
         else{
-
+            //clear what was there before
             Clear();
             }
-        //Debug.Log("SWAP cells length: "+sideLinePiece.cells.Length);
+            //whatever is the new sidline piece fill in thos tiles
         for(int i = 0; i< sideLinePiece.cells.Length;i++){
             this.cells[i] = (Vector3Int)sideLinePiece.cells[i];
-            
+            //fill it in at the designiated spawn position  
             Vector3Int tilePosition = this.cells[i]+spawnPosition; 
-            Debug.Log("SWAP position: "+tilePosition+"      i-> "+i);
             this.swapMap.SetTile(tilePosition,sideLinePiece.tile);
         }
-        Debug.Log("SWAP: "+toReturn.tetromino);
+        //return the piece that was either there before or it is reandom
         return toReturn;
-
     }
 
 
-    public TetrominoData Swap(TetrominoData incomingPiece)
-    {
-        TetrominoData newPiece = sideLinePiece;
-        this.sideLinePiece = incomingPiece;
-        return newPiece;
-    }
-
-    public void Clear()
+    //clear tilemap of what was previosuly drawn
+    private void Clear()
     {
         for(int i = 0;i< this.cells.Length;i++)
         {
             Vector3Int tilePosition = this.cells[i] + spawnPosition;
             this.swapMap.SetTile(tilePosition,null);
         }
-
     }
 
 

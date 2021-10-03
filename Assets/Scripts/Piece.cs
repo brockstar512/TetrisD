@@ -99,13 +99,14 @@ public class Piece : MonoBehaviour
     private void Swap()
     {
         //swap data
-        data = tileSwap.PlacePiece(this.data);
+        data = tileSwap.Swap(this.data);
+        
         //redraw
         for(int i = 0; i< data.cells.Length;i++)
         {
         this.cells[i] = (Vector3Int)data.cells[i];
         }
-
+        //Rotate(rotationIndex);//makes it janky
     }
 
     private void Lock()
