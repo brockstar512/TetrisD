@@ -51,7 +51,8 @@ public class Piece : MonoBehaviour
         this.lockTime += Time.deltaTime;
 
         if(Input.GetKeyDown(KeyCode.S)){
-            data = tileSwap.PlacePiece(this.data);
+            Swap();
+            
         }
 
 
@@ -93,6 +94,18 @@ public class Piece : MonoBehaviour
         if(this.lockTime >= this.lockDelay){
             Lock();
         }
+    }
+
+    private void Swap()
+    {
+        //swap data
+        data = tileSwap.PlacePiece(this.data);
+        //redraw
+        for(int i = 0; i< data.cells.Length;i++)
+        {
+        this.cells[i] = (Vector3Int)data.cells[i];
+        }
+
     }
 
     private void Lock()
