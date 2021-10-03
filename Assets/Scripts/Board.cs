@@ -8,6 +8,7 @@ public class Board : MonoBehaviour
 {
     public TetrominoData[] tetrominoes;//possible terominoes option
     //a way to kep variable public without exposing it in the editor
+    
     public Tilemap tilemap{get; private set;}
     public Piece activePiece {get; private set;}
     public Vector3Int spawnPosition;
@@ -19,13 +20,14 @@ public class Board : MonoBehaviour
             return new RectInt(position, this.boardSize);
         }
     }
-    
+   //public TileSwap tileSwap;
+
 
 
     private void Awake(){
         this.tilemap = GetComponentInChildren<Tilemap>();
         this.activePiece = GetComponentInChildren<Piece>();
-
+        //registering all the possible tetris pieces in the array
         for(int i = 0;i<this.tetrominoes.Length;i++){
         this.tetrominoes[i].Initialize();
         }

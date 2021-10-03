@@ -17,6 +17,8 @@ public class Piece : MonoBehaviour
     private float stepTime;
     private float lockTime;
 
+
+    public TileSwap tileSwap;
     //spawn position, which piece is active
     public void Initialize(Board board, Vector3Int position,TetrominoData data)
     {
@@ -38,6 +40,8 @@ public class Piece : MonoBehaviour
 
     }
 
+
+
     //player input
     private void Update()
     {
@@ -45,6 +49,10 @@ public class Piece : MonoBehaviour
         
         
         this.lockTime += Time.deltaTime;
+
+        if(Input.GetKeyDown(KeyCode.S)){
+            data = tileSwap.Swap(this.data);
+        }
 
 
         if(Input.GetKeyDown(KeyCode.RightShift)){
