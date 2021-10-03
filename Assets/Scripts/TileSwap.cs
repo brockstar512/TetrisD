@@ -22,27 +22,36 @@ public class TileSwap : MonoBehaviour
     public Vector3Int[] cells {get; private set;}
 
     [ContextMenu("Place Piece")]
-    public void PlacePiece()
+    public TetrominoData PlacePiece(TetrominoData incoming)
     {
-        
+        TetrominoData toReturn;
+        toReturn = sideLinePiece;
+        sideLinePiece = incoming;
         //Vector3Int position,TetrominoData data
-        int random = Random.Range(0,6);
-        TetrominoData data = board.tetrominoes[random];
-        Debug.Log("SWAP: "+data.tetromino);
+        // int random = Random.Range(0,6);
+        // TetrominoData data = board.tetrominoes[random];
+        
         //we dont really need a cells array... its more for manipulation on piece
         if(this.cells == null){
             Debug.Log("SWAP: cells is null");
-            this.cells = new Vector3Int[data.cells.Length];
+            int random = Random.Range(0,6);
+            toReturn = board.tetrominoes[random];
+            this.cells = new Vector3Int[incoming.cells.Length];
         }
-        else{Clear();}
-        Debug.Log("SWAP cells length: "+data.cells.Length);
-        for(int i = 0; i< data.cells.Length;i++){
-            this.cells[i] = (Vector3Int)data.cells[i];
+        else{
+
+            Clear();
+            }
+        //Debug.Log("SWAP cells length: "+sideLinePiece.cells.Length);
+        for(int i = 0; i< sideLinePiece.cells.Length;i++){
+            this.cells[i] = (Vector3Int)sideLinePiece.cells[i];
             
             Vector3Int tilePosition = this.cells[i]+spawnPosition; 
             Debug.Log("SWAP position: "+tilePosition+"      i-> "+i);
-            this.swapMap.SetTile(tilePosition,data.tile);
+            this.swapMap.SetTile(tilePosition,sideLinePiece.tile);
         }
+        Debug.Log("SWAP: "+toReturn.tetromino);
+        return toReturn;
 
     }
 

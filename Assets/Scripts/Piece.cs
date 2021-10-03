@@ -51,7 +51,7 @@ public class Piece : MonoBehaviour
         this.lockTime += Time.deltaTime;
 
         if(Input.GetKeyDown(KeyCode.S)){
-            data = tileSwap.Swap(this.data);
+            data = tileSwap.PlacePiece(this.data);
         }
 
 
