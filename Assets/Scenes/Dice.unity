@@ -474,17 +474,30 @@ MonoBehaviour:
   DiceOptions:
   - number: 1
     tile: {fileID: 11400000, guid: 52a91917d82c34470b4e58b30d082652, type: 2}
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 2
     tile: {fileID: 11400000, guid: 710a17f3bc9414ab898c32b3616e3b01, type: 2}
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 3
     tile: {fileID: 11400000, guid: ab614f5efb879409e8cb0844551925b9, type: 2}
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 4
     tile: {fileID: 11400000, guid: 5693a0b75c28a4ea69b512e360c04a60, type: 2}
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 5
     tile: {fileID: 11400000, guid: 70ae23c293e0b4329af74f88ad6aa391, type: 2}
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 6
     tile: {fileID: 11400000, guid: 98e27f7c73e224e6abbd8e126734968f, type: 2}
-  spawnPosition: {x: 0, y: 0, z: 0}
+    cellLocation:
+    - {x: 0, y: 0}
+  spawnPosition: {x: -1, y: 3, z: 0}
+  boardSize: {x: 6, y: 10}
 --- !u!1 &1975790803
 GameObject:
   m_ObjectHideFlags: 0
