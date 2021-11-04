@@ -42,7 +42,9 @@ public class DiceBoard : MonoBehaviour
     {
         int random = Random.Range(0,this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
-        this.activeGroup.Initialize(this, spawnPosition, newGroup);
+        int random2 = Random.Range(0, this.DiceOptions.Length);
+        DiceData newGroup2 = this.DiceOptions[random2];
+        this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
     }   
@@ -52,10 +54,15 @@ public class DiceBoard : MonoBehaviour
         
     }
 
+    //TODO explain how this works
     //place the cell/tilegroup in the active dice set on the board
     public void SetOnBoard(DiceGroup diceGroup)
     {
-        
+        this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
+        this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
+
+        return;
+
         for(int i = 0;i< diceGroup.cells.Length;i++)
         {
             //Debug.Log("SETTING TILE ON BOARD"+diceGroup.cells);
@@ -63,8 +70,16 @@ public class DiceBoard : MonoBehaviour
             Vector3Int tilePosition = diceGroup.cells[i]+ diceGroup.position;
             //what is the position it needs to be placed(more important if there is more than 1)/which tile to use
             //we have a position where we are falling/place what are the coordinates from that location do the other tiles need to go to fill in that shape
-            this.tilemap.SetTile(tilePosition,diceGroup.data.tile);//
+
+
+            //TODO
+            //THIS SHOULD ITERATIVLY place second dice [] of datadice
+            //this.tilemap.SetTile(tilePosition, diceGroup.datacollection[i].tile);//
+            this.tilemap.SetTile(tilePosition,diceGroup.dynamicData.tile);//this is places 2nd dice on
+            this.tilemap.SetTile(tilePosition, diceGroup.data.tile);//this is placeing 1st dice on
+
         }
+
 
     }
     
