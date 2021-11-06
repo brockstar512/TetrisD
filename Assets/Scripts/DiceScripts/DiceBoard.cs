@@ -61,24 +61,23 @@ public class DiceBoard : MonoBehaviour
         this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
         this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
 
-        return;
-
+       
+        /*
         for(int i = 0;i< diceGroup.cells.Length;i++)
         {
-            //Debug.Log("SETTING TILE ON BOARD"+diceGroup.cells);
             //each tile in this dice group array is placed on the map
             Vector3Int tilePosition = diceGroup.cells[i]+ diceGroup.position;
             //what is the position it needs to be placed(more important if there is more than 1)/which tile to use
             //we have a position where we are falling/place what are the coordinates from that location do the other tiles need to go to fill in that shape
 
 
-            //TODO
+            //TODO explain why this is also taken out
             //THIS SHOULD ITERATIVLY place second dice [] of datadice
             //this.tilemap.SetTile(tilePosition, diceGroup.datacollection[i].tile);//
             this.tilemap.SetTile(tilePosition,diceGroup.dynamicData.tile);//this is places 2nd dice on
             this.tilemap.SetTile(tilePosition, diceGroup.data.tile);//this is placeing 1st dice on
 
-        }
+        }*/
 
 
     }
@@ -95,13 +94,14 @@ public class DiceBoard : MonoBehaviour
 
     public bool IsValidPosition(DiceGroup group, Vector3Int position)
     {
+        //Debug.Log($"Is valid?"); 
         RectInt bounds = this.Bounds;
         // Debug.Log("Here are the bounds "+bounds);
         // The position is only valid if every cell is valid
         for (int i = 0; i < group.cells.Length; i++)
         {
             Vector3Int tilePosition = group.cells[i] + position;
-            Debug.Log("Here is the tile position "+ (Vector2Int)tilePosition);
+            //Debug.Log("Here is the tile position "+ (Vector2Int)tilePosition);
             // An out of bounds tile is invalid
             if (!bounds.Contains((Vector2Int)tilePosition)) {
                 //Debug.LogError("bounds does not contain that position");
