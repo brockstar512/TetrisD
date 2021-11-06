@@ -38,7 +38,7 @@ public class DiceBoard : MonoBehaviour
         SpawnGroup();
     }
 
-    void SpawnGroup()
+    public void SpawnGroup()
     {
         int random = Random.Range(0,this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];

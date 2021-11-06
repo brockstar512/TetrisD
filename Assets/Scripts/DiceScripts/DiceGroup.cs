@@ -15,7 +15,13 @@ public class DiceGroup : MonoBehaviour
     
     public Vector3Int position {get; private set;}
     public Vector3Int[] cells {get; private set;}//we have an array of cells to help manipulate the shape when it moves/rotatets
- 
+
+    //dropping
+    public float stepDelay = 1f;
+    public float lockDelay = 0.5f;
+
+    private float stepTime;
+    private float lockTime;
 
 
 
@@ -44,6 +50,9 @@ public class DiceGroup : MonoBehaviour
         //Debug.Log("die 2:"+dynamicData.number);//
         //Debug.Log("die 1:" + data.number);
 
+        this.stepTime = Time.time+ stepDelay;
+        this.lockTime = 0f;
+
 
         //if we have not initialized this array do it now
         if (this.cells == null)
@@ -70,7 +79,10 @@ public class DiceGroup : MonoBehaviour
     {
         //MoveController();
         this.diceBoard.Clear(this);
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+
+        this.lockTime += Time.deltaTime;
+        
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Move(Vector2Int.left);
         }
@@ -86,6 +98,7 @@ public class DiceGroup : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //test function
+            HardDrop();
         }
 
 
@@ -99,6 +112,10 @@ public class DiceGroup : MonoBehaviour
             
         }
 
+        if(Time.time >= this.stepTime)
+        {
+            Step();
+        }
         
         this.diceBoard.SetOnBoard(this);
     }
@@ -197,7 +214,8 @@ public class DiceGroup : MonoBehaviour
                     break;
 
         }
-        this.cells[1] = new Vector3Int(newPosition.x, newPosition.y, 0); ;
+        this.cells[1] = new Vector3Int(newPosition.x, newPosition.y, 0);
+        this.lockTime = 0f;
     }
 
     /// <summary>
@@ -228,7 +246,11 @@ public class DiceGroup : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// Moves tile
+    /// </summary>
+    /// <param name="translation"></param>
+    /// <returns>if the move is valid</returns>
     private bool Move(Vector2Int translation)
     {
         Vector3Int newPosition = this.position;
@@ -241,10 +263,36 @@ public class DiceGroup : MonoBehaviour
         if (valid)
         {
             this.position = newPosition;
-            this.position = newPosition;
+            this.lockTime = 0f;
         }
 
         return valid;
+    }
+
+    void HardDrop()
+    {
+        while (Move(Vector2Int.down))
+        {
+            continue;
+        }
+        Lock();
+    }
+    void Step()
+    {
+        this.stepTime = Time.time + this.stepDelay;
+        Move(Vector2Int.down);
+
+        //this will only run when we get to the bottom because everytome move passes it resets locktime
+        if(lockTime >= this.lockDelay)
+        {
+            Lock();
+        }
+    }
+
+    void Lock()
+    {
+        this.diceBoard.SetOnBoard(this);
+        this.diceBoard.SpawnGroup();
     }
 }
 
