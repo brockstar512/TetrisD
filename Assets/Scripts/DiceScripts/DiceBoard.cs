@@ -5,8 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class DiceBoard : MonoBehaviour
 {
+    //-TODO disengage blocks that can still fall
+    //-TODO  ghost the blocks that still have room to fall
+    //-TODO document what I have
 
-        public DiceData[] DiceOptions;
+
+    //-todo when all of the above is done.... then work on a bejewelled tutprial to figure out how to handle taking out dice
+    public DiceData[] DiceOptions;
         public Vector3Int spawnPosition;
         public Tilemap tilemap{get; private set;}
         public DiceGroup activeGroup {get; private set;}

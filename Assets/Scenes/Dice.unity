@@ -297,6 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1363189444}
   - component: {fileID: 1363189443}
+  - component: {fileID: 1363189445}
   m_Layer: 0
   m_Name: Ghost tile map - tile map (cell size matches grid scale)
   m_TagString: Untagged
@@ -331,6 +332,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1363189445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363189442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c12dac4021c41bcb0d72ca08b14c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 11400000, guid: a10927dec698b7c49b1375f89e8db4d2, type: 2}
+  diceBoard: {fileID: 1749936041}
+  trackedDiceGroup: {fileID: 1999377123}
 --- !u!1 &1619723872
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,3 +763,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa83c1742c004fc8b72ea0ad59fe8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stepDelay: 1
+  lockDelay: 0.5

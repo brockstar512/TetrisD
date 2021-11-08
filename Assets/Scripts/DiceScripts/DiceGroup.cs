@@ -6,8 +6,6 @@ using UnityEngine.Tilemaps;
 public class DiceGroup : MonoBehaviour
 {
 
-    //one data is static the other dynamic
-    //when you intialize one initialize the other
 
     public DiceBoard diceBoard {get;private set;}//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceData data {get;private set;}
@@ -38,7 +36,7 @@ public class DiceGroup : MonoBehaviour
 
 
 
-
+    ////todo explain the most here
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
@@ -94,10 +92,8 @@ public class DiceGroup : MonoBehaviour
             Move(Vector2Int.down);
         }
 
-        //TODO Testing functions
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //test function
             HardDrop();
         }
 
@@ -244,10 +240,9 @@ public class DiceGroup : MonoBehaviour
         SwapTilesInGroup();
     }
 
-
-
     /// <summary>
-    /// Moves tile
+    /// Moves tile after checking is valid position which check the bounds of the board, then if that tile has a tile on it
+    /// if the tile does not and it is in the bounds then you can move there.... reverts the locktime to 0
     /// </summary>
     /// <param name="translation"></param>
     /// <returns>if the move is valid</returns>
@@ -269,6 +264,9 @@ public class DiceGroup : MonoBehaviour
         return valid;
     }
 
+    /// <summary>
+    /// immedietly moves the tile down until move does not return it being valid then it locks the piece into place
+    /// </summary>
     void HardDrop()
     {
         while (Move(Vector2Int.down))
@@ -277,6 +275,10 @@ public class DiceGroup : MonoBehaviour
         }
         Lock();
     }
+
+    /// <summary>
+    /// resets the step time and forces the tile group to move down
+    /// </summary>
     void Step()
     {
         this.stepTime = Time.time + this.stepDelay;
@@ -289,6 +291,9 @@ public class DiceGroup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// sets the tile group on the board. takes away our reference by/while spawining in a new dice group
+    /// </summary>
     void Lock()
     {
         this.diceBoard.SetOnBoard(this);
