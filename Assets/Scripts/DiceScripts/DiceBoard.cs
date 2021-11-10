@@ -9,7 +9,6 @@ public class DiceBoard : MonoBehaviour
     //-TODO  ghost the blocks that still have room to fall
     //-TODO document what I have
 
-
     //-todo when all of the above is done.... then work on a bejewelled tutprial to figure out how to handle taking out dice
     public DiceData[] DiceOptions;
         public Vector3Int spawnPosition;
@@ -86,7 +85,9 @@ public class DiceBoard : MonoBehaviour
 
 
     }
-    
+
+
+
     public void Clear(DiceGroup group)
     {
         for(int i = 0;i< group.cells.Length;i++)
@@ -123,4 +124,70 @@ public class DiceBoard : MonoBehaviour
         return true;
         
     }
+
+
+    //TESTING THIS //todo CHECK IF THIS IS CHECKING ONE TILE ACCURATLEY
+    //we want to check the indicvidual piece and once that piece is invalid we will store that pieces position in diceGhost
+    public bool IsValidPositionSingleDice(Vector3Int position)
+    {
+
+        //get the bounds
+        RectInt bounds = this.Bounds;
+
+        //what position are we checking?
+        Vector3Int tilePosition = position;
+
+        //is that position in the bounds?
+        if (!bounds.Contains((Vector2Int)tilePosition))
+        {
+            return false;
+        }
+
+        //does that position alreadt have a tile 
+        if (this.tilemap.HasTile(tilePosition))
+        {
+            return false;
+        }
+
+        //you are good to go to the next position
+        return true;
+
+    }
+    //public bool IsValidPositionSingleDice(int index, Vector3Int position)
+    //{
+    //    //Debug.Log($"Is valid?"); 
+    //    RectInt bounds = this.Bounds;
+    //    // Debug.Log("Here are the bounds "+bounds);
+    //    // The position is only valid if every cell is valid
+    //    //for (int i = 0; i < group.cells.Length; i++)
+    //    //{
+    //    //activeGroup
+    //    //whatever index of tile we are passing in 
+    //    Vector3Int tilePosition = activeGroup.cells[index] + position;
+
+    //    //Vector3Int tilePosition = group.cells[i] + position;
+    //    //Debug.Log("Here is the tile position "+ (Vector2Int)tilePosition);
+    //    // An out of bounds tile is invalid
+    //    Debug.Log($"1. here is where we would put the dice for {index} at {tilePosition}");
+
+    //    if (!bounds.Contains((Vector2Int)tilePosition))
+    //        {
+    //            //Debug.LogError("bounds does not contain that position");
+    //            return false;
+    //        }
+
+    //        // A tile already occupies the position, thus invalid
+    //        if (this.tilemap.HasTile(tilePosition))
+    //        {
+    //            //Debug.LogError("tile map has that tile");
+    //            return false;
+    //        }
+    //    //}
+    //    Debug.Log($"2. here is where we would put the dice for {index} at {tilePosition}");
+    //    //this.tilemap.SetTile(tilePosition, this.redTile);
+    //    return true;
+
+    //}
+
+
 }
