@@ -31,18 +31,13 @@ public class DiceGhost : MonoBehaviour
         Clearing();
         Copy();
         //Drop();
-        pos[0]= Drop(this.trackedDiceGroup.cells[0] + this.trackedDiceGroup.position);
-        pos[1]= Drop(this.trackedDiceGroup.cells[1] + this.trackedDiceGroup.position);
+        pos[0]= Dropping(this.trackedDiceGroup.cells[0] + this.trackedDiceGroup.position);
+        pos[1]= Dropping(this.trackedDiceGroup.cells[1] + this.trackedDiceGroup.position);
         Setting();
 
     }
 
-    private void Clearing()
-    {
-        this.tilemap.SetTile(this.pos[0], null);
-        this.tilemap.SetTile(this.pos[1], null);
-
-    }
+    // -- the following was working but the ghost pieces stick together on the horizontal line like how tetris normally works, I want each piece of dice to fall to the next avaiable tile //
     /// <summary>
     /// removes the current ghost piece from the board to make room for the piece that we are dropping
     /// </summary>
@@ -51,6 +46,7 @@ public class DiceGhost : MonoBehaviour
         this.tilemap.SetTile(this.cells[1] + this.position, null);
         this.tilemap.SetTile(this.cells[0] + this.position, null);
     }
+
     /// <summary>
     /// this copies the group that is in play and we are storing it into the ghost cells array.
     /// </summary>
@@ -58,6 +54,15 @@ public class DiceGhost : MonoBehaviour
     {
         this.cells[0] = this.trackedDiceGroup.cells[0];
         this.cells[1] = this.trackedDiceGroup.cells[1];
+    }
+
+    /// <summary>
+    /// puts the ghost piece group on the dice board
+    /// </summary>
+    void Set()
+    {
+        this.tilemap.SetTile(this.cells[1] + this.position, this.tile);
+        this.tilemap.SetTile(this.cells[0] + this.position, this.tile);
     }
 
     /// <summary>
@@ -102,12 +107,25 @@ public class DiceGhost : MonoBehaviour
         this.diceBoard.SetOnBoard(this.trackedDiceGroup);
     }
 
+
+    // -- the following sperates the ghost pieces so they aren't tied to the same row -- //
+
+    /// <summary>
+    /// This function clears where the previous position of both ghost pieces were.
+    /// </summary>
+    private void Clearing()
+    {
+        this.tilemap.SetTile(this.pos[0], null);
+        this.tilemap.SetTile(this.pos[1], null);
+
+    }
+
     /// <summary>
     /// This function takes in a single dice location then iterates down the coloumn to see what is the last available tile.
     /// in order to find the last avaiable tile it quickly removes the tracked piece then puts the piece back on
     /// </summary>
     /// <param name="singleDice cell location + the position of the parent class"></param>
-    private Vector3Int Drop(Vector3Int singleDice)
+    private Vector3Int Dropping(Vector3Int singleDice)
     {
         //Debug.Log("POS" + singleDice);
         Vector3Int position = singleDice;
@@ -144,16 +162,10 @@ public class DiceGhost : MonoBehaviour
     }
 
     /// <summary>
-    /// puts the ghost piece group on the dice board
+    /// This function could change to be more elegant but I was over shooting a row by 1, so for every tile I raise it by one.
+    /// when the tiles were ontop of eachother they inhabited the same tile. They see if the spot is avaiable on the other board but they dont check to see if its avaible for this board
+    /// Which is why they double up, so if they were vertical they would only take up one tile, so if the x is the same add one more in the y to raise it one more.
     /// </summary>
-    void Set()
-    {
-        this.tilemap.SetTile(this.cells[1] + this.position, this.tile);
-        this.tilemap.SetTile(this.cells[0] + this.position, this.tile);
-    }
-
-
-
     void Setting()
     {
         //TODO maybe at the end I can figure out a way where things should work exactly how they're written so I don't have to keep this hard coded check
