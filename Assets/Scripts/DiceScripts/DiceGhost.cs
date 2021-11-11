@@ -12,11 +12,14 @@ public class DiceGhost : MonoBehaviour
     public Tilemap tilemap { get; private set; }
     public Vector3Int[] cells { get; private set; }
     public Vector3Int position { get; private set; }
+    public Vector3Int[] pos { get; private set; }
+
 
     private void Awake()
     {
         this.tilemap = GetComponentInChildren<Tilemap>();
         this.cells = new Vector3Int[2];
+        this.pos = new Vector3Int[2];
     }
 
     /// <summary>
@@ -25,12 +28,19 @@ public class DiceGhost : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        //Clear();
-        //Copy();
+        Clearing();
+        Copy();
         //Drop();
-        Drop(this.trackedDiceGroup.cells[0]+ this.trackedDiceGroup.position);
-        Drop(this.trackedDiceGroup.cells[1]+ this.trackedDiceGroup.position);
-        //Set();
+        pos[0]= Drop(this.trackedDiceGroup.cells[0] + this.trackedDiceGroup.position);
+        pos[1]= Drop(this.trackedDiceGroup.cells[1] + this.trackedDiceGroup.position);
+        Setting();
+
+    }
+
+    private void Clearing()
+    {
+        this.tilemap.SetTile(this.pos[0], null);
+        this.tilemap.SetTile(this.pos[1], null);
 
     }
     /// <summary>
@@ -88,16 +98,18 @@ public class DiceGhost : MonoBehaviour
             }
             else { break; }//if we are breaking we get the last position where it was valid and placing that on the board
         }
-
+        //put the main dice back on the board
         this.diceBoard.SetOnBoard(this.trackedDiceGroup);
     }
 
-    
-    //do what im doing in the other drop except for this individula dice
-    //i need to fo it onr at a time
-    private void Drop(Vector3Int singleDice)
+    /// <summary>
+    /// This function takes in a single dice location then iterates down the coloumn to see what is the last available tile.
+    /// in order to find the last avaiable tile it quickly removes the tracked piece then puts the piece back on
+    /// </summary>
+    /// <param name="singleDice cell location + the position of the parent class"></param>
+    private Vector3Int Drop(Vector3Int singleDice)
     {
-        Debug.Log("POS"+singleDice);
+        //Debug.Log("POS" + singleDice);
         Vector3Int position = singleDice;
 
         //where our active piece is
@@ -113,10 +125,10 @@ public class DiceGhost : MonoBehaviour
             //position: //x-> [ -3   2]
             //position: //y-> [  3  -6]
 
-            
+
             //this position equals column we are checking
             position.y = column;
-            
+
 
             if (this.diceBoard.IsValidPositionSingleDice(position))
             {
@@ -126,13 +138,13 @@ public class DiceGhost : MonoBehaviour
         }
 
         Debug.Log($"I would put a tile here at {position}");
+        
         this.diceBoard.SetOnBoard(this.trackedDiceGroup);
-
-
+        return position;
     }
 
     /// <summary>
-    /// puts the ghost piece tile on the dice board
+    /// puts the ghost piece group on the dice board
     /// </summary>
     void Set()
     {
@@ -140,8 +152,26 @@ public class DiceGhost : MonoBehaviour
         this.tilemap.SetTile(this.cells[0] + this.position, this.tile);
     }
 
-    //get reference to the top.
-    //find whih row we are in.
-    //climb down until you find the next avail tile
+
+
+    void Setting()
+    {
+        //TODO maybe at the end I can figure out a way where things should work exactly how they're written so I don't have to keep this hard coded check
+        //
+        //The tiles are one lower than where they should be so bump them up to the next line
+        this.pos[0].y += 1;
+        this.pos[1].y += 1;
+        //when the tiles are ontop of eachother they inhabit the same tile. the check only check on if the other tile map has a tile not this one, which is why they double up.
+        //they see its avaiable on the other board but they dont check to see if its avaible for this board... could consider this.tilemap.HasTile(tilePosition)
+        if (this.pos[1].x == this.pos[0].x)
+        {
+            this.pos[1].y += 1;
+        }
+        //set both tiles on their respective positions
+        this.tilemap.SetTile(this.pos[0], this.tile);
+        this.tilemap.SetTile(this.pos[1], this.tile);
+
+    }
+
 }
 
