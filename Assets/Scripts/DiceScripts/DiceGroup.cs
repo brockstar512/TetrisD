@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class DiceGroup : MonoBehaviour
 {
-
+    //TODO known errors: dice group can peak through the top when you initally start
 
     public DiceBoard diceBoard {get;private set;}//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceData data {get;private set;}
@@ -21,7 +21,7 @@ public class DiceGroup : MonoBehaviour
     private float stepTime;
     private float lockTime;
 
-
+    #region testing regions
 
     DynamicDiceState dynamicDiceState = DynamicDiceState.Right;
 
@@ -33,20 +33,19 @@ public class DiceGroup : MonoBehaviour
         { DynamicDiceState.Left,new Vector3Int(- 1, 0, 0)},
         { DynamicDiceState.Up,new Vector3Int(0, 1, 0)}
     };
+    #endregion
 
 
-
-    ////todo explain the most here
+    //TODO clean the initialize function up and see if i can do a deep dive into explainning whats going on 
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
-        Debug.Log("Spawn location:  "+ position);
+        //Debug.Log("Spawn location:  "+ position);
         this.diceBoard = diceBoard;
         this.position = position;
         this.data = data;
         this.dynamicData = dynamicData;
-        //Debug.Log("die 2:"+dynamicData.number);//
-        //Debug.Log("die 1:" + data.number);
+
 
         this.stepTime = Time.time+ stepDelay;
         this.lockTime = 0f;
@@ -264,6 +263,7 @@ public class DiceGroup : MonoBehaviour
         return valid;
     }
 
+    //TODO we do not check if one dice can disengage after a hard drop. we need to consider that.
     /// <summary>
     /// immedietly moves the tile down until move does not return it being valid then it locks the piece into place
     /// </summary>
@@ -287,6 +287,18 @@ public class DiceGroup : MonoBehaviour
         //this will only run when we get to the bottom because everytome move passes it resets locktime
         if(lockTime >= this.lockDelay)
         {
+            //TODO if one of the dice still has space below if this is where it should disengage
+            //IsValidPositionSingleDice
+            //Vector3Int diceOneCheck = new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z);
+            //Vector3Int diceTwoCheck = new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z);
+            //CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z), new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z));
+            //TODO IGNORE BOUNDS... MAKE A VALID POSITIONDICE WITHOUT BOUNDS CHECKING OR PASS IN A BOOLIEAN FOR boundDoesFactorIn = true
+            //just the cells position by themselves is there local position, so we have to add the dice groups position to get where they are on the tile map
+            if (CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) +this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z)+this.position))
+            {
+                //bool valid = this.diceBoard.IsValidPosition(this, newPosition);
+                Debug.LogError("DISENGAGE");
+            }
             Lock();
         }
     }
@@ -298,6 +310,26 @@ public class DiceGroup : MonoBehaviour
     {
         this.diceBoard.SetOnBoard(this);
         this.diceBoard.SpawnGroup();
+    }
+
+
+    //TODO consider moving this to dice board script
+    /// <summary>
+    /// We pass in the location within the group plus the location of the group within the board, then from there we check if there is an avaiable space between either
+    /// dice piece. If there is an avaiable space between one die and not the other we then check to see if they are ontop of eachother. If ther aren't ontop of eachother
+    /// one dice can continue
+    /// </summary>
+    /// <param name="diceOnePosOnBoard"></param>
+    /// <param name="diceTwoPosOnBoard"></param>
+    /// <returns>a bool wether there is an empty space under one of the dice</returns>
+    private bool CanOnePieceContinue(Vector3Int diceOnePosOnBoard, Vector3Int diceTwoPosOnBoard)
+    {
+        bool canDiceOne = this.diceBoard.IsValidPositionSingleDice(diceOnePosOnBoard);
+        bool canDiceTwo = this.diceBoard.IsValidPositionSingleDice(diceTwoPosOnBoard);
+        bool canOnePieceContinue = (canDiceOne && !canDiceTwo) || (!canDiceOne && canDiceTwo) ? true : false;
+        //check if they are ontop of eachother
+        canOnePieceContinue = (diceOnePosOnBoard.y - 1 == diceTwoPosOnBoard.y) || (diceOnePosOnBoard.y == diceTwoPosOnBoard.y - 1) ? false : canOnePieceContinue;
+        return canOnePieceContinue;
     }
 }
 

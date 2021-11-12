@@ -155,7 +155,7 @@ public class DiceGhost : MonoBehaviour
             else { break; }
         }
 
-        Debug.Log($"I would put a tile here at {position}");
+        //Debug.Log($"I would put a tile here at {position}");
         
         this.diceBoard.SetOnBoard(this.trackedDiceGroup);
         return position;
