@@ -149,7 +149,22 @@ public class DiceBoard : MonoBehaviour
         return true;
 
     }
-    
+    public bool CanOnePieceContinue(Vector3Int diceOnePosOnBoard, Vector3Int diceTwoPosOnBoard, out int? whichDice)
+    {
+        bool canDiceOne = IsValidPositionSingleDice(diceOnePosOnBoard);
+        bool canDiceTwo = IsValidPositionSingleDice(diceTwoPosOnBoard);
+
+        bool canOnePieceContinue = (canDiceOne && !canDiceTwo) || (!canDiceOne && canDiceTwo) ? true : false;
+        //check if they are ontop of eachother
+        canOnePieceContinue = (diceOnePosOnBoard.y - 1 == diceTwoPosOnBoard.y) || (diceOnePosOnBoard.y == diceTwoPosOnBoard.y - 1) ? false : canOnePieceContinue;
+
+        if (canOnePieceContinue)
+            whichDice = canDiceOne == true ? 0 : 1;
+        else
+            whichDice = null;
+
+        return canOnePieceContinue;
+    }
 
 
 }
