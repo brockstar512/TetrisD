@@ -10,18 +10,19 @@ public class DiceBoard : MonoBehaviour
 
     //-todo when all of the above is done.... then work on a bejewelled tutprial to figure out how to handle taking out dice
     public DiceData[] DiceOptions;
-        public Vector3Int spawnPosition;
-        public Tilemap tilemap{get; private set;}
-        public DiceGroup activeGroup {get; private set;}
-        //for is valid
-        public Vector2Int boardSize= new Vector2Int(6,9);//cells on the board
-        public RectInt Bounds {
-            get
-            {
+    public Vector3Int spawnPosition;
+    public Tilemap tilemap { get; private set; }
+    public DiceGroup activeGroup { get; private set; }
+    //for is valid
+    public Vector2Int boardSize = new Vector2Int(6, 9);//cells on the board
+    public RectInt Bounds
+    {
+        get
+        {
             Vector2Int position = new Vector2Int(-this.boardSize.x / 2, -this.boardSize.y / 2);
             return new RectInt(position, this.boardSize);
-            }
-        }   
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -31,10 +32,11 @@ public class DiceBoard : MonoBehaviour
         this.activeGroup = GetComponentInChildren<DiceGroup>();
 
         //initialize all the possible options with their cells array
-        for(int i = 0;i<this.DiceOptions.Length;i++){
-        this.DiceOptions[i].Initialize();
+        for (int i = 0; i < this.DiceOptions.Length; i++)
+        {
+            this.DiceOptions[i].Initialize();
         }
-        
+
     }
     void Start()
     {
@@ -43,28 +45,36 @@ public class DiceBoard : MonoBehaviour
 
     public void SpawnGroup()
     {
-        int random = Random.Range(0,this.DiceOptions.Length);
+        int random = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
         int random2 = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup2 = this.DiceOptions[random2];
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
-    }   
+    }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //TODO explain how this works
     //place the cell/tilegroup in the active dice set on the board
     public void SetOnBoard(DiceGroup diceGroup)
     {
-        this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
-        this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
+        if (diceGroup.dynamicData != null)
+        {
+            this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
+        }
+        else { Debug.Log("dynamic dice is null"); }
+        if (diceGroup.data != null)
+        {
+            this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
+        }
+        else { Debug.Log("data dice is null"); }
 
-       
+
         /*
         for(int i = 0;i< diceGroup.cells.Length;i++)
         {
@@ -89,10 +99,10 @@ public class DiceBoard : MonoBehaviour
 
     public void Clear(DiceGroup group)
     {
-        for(int i = 0;i< group.cells.Length;i++)
+        for (int i = 0; i < group.cells.Length; i++)
         {
             Vector3Int tilePosition = group.cells[i] + group.position;
-            this.tilemap.SetTile(tilePosition,null);
+            this.tilemap.SetTile(tilePosition, null);
         }
 
     }
@@ -108,20 +118,22 @@ public class DiceBoard : MonoBehaviour
             Vector3Int tilePosition = group.cells[i] + position;
             //Debug.Log("Here is the tile position "+ (Vector2Int)tilePosition);
             // An out of bounds tile is invalid
-            if (!bounds.Contains((Vector2Int)tilePosition)) {
+            if (!bounds.Contains((Vector2Int)tilePosition))
+            {
                 //Debug.LogError("bounds does not contain that position");
                 return false;
             }
 
             // A tile already occupies the position, thus invalid
-            if (this.tilemap.HasTile(tilePosition)) {
+            if (this.tilemap.HasTile(tilePosition))
+            {
                 //Debug.LogError("tile map has that tile");
                 return false;
             }
         }
 
         return true;
-        
+
     }
 
 
@@ -166,5 +178,12 @@ public class DiceBoard : MonoBehaviour
         return canOnePieceContinue;
     }
 
+    public void SetSingleDiceOnBoard(DiceGroup diceGroup,int diceToSet)
+    {
+        Tile tileToSet = diceToSet == 0 ? diceGroup.data.tile : diceGroup.dynamicData.tile;
+        Debug.Log($"we are going to set {diceToSet} on the board at  {diceGroup.cells[diceToSet] + diceGroup.position} with tile that is {tileToSet}");
 
+        this.tilemap.SetTile(diceGroup.cells[diceToSet] + diceGroup.position, tileToSet);
+
+    }
 }

@@ -94,8 +94,8 @@ public class DiceGroup : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine( DisengagedDrop());
-            //HardDrop();
+            //StartCoroutine( DisengagedDrop());
+            HardDrop();
 
         }
 
@@ -123,6 +123,7 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void SwapTilesInGroup()
     {
+        
         //swap number as well
         DiceData temp = this.dynamicData;
         this.dynamicData = this.data;
@@ -283,18 +284,36 @@ public class DiceGroup : MonoBehaviour
 
     void HandleDisengagement(int DiceGroupCellIndex)
     {
-        //get refernce which dice will continue
-        Vector3Int diceToContinue = this.cells[DiceGroupCellIndex];
-        //put other dice on the board
+        //if arhument is greater than 1 think about returning         //get refernce which dice will continue
 
+        int leaveDiceBehind = 1 - DiceGroupCellIndex;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
+
+        //put other dice on the board
+        //this.diceBoard.SetSingleDiceOnBoard(this,leaveDiceBehind);
         //null out that piece
 
         //take away control from player to prevent bugs
-
+        //leaveDiceBehind == 0 ? this.data = null : this.dynamicData = null;
+        Tile tileToSet = leaveDiceBehind == 0 ? this.data.tile : this.dynamicData.tile;
+        Debug.Log($"putting {tileToSet} on the board at {this.cells[leaveDiceBehind] + this.position}");
+        this.diceBoard.tilemap.SetTile(this.cells[leaveDiceBehind] + this.position,tileToSet);
+        //if (leaveDiceBehind == 0)
+        //{
+        //    this.data = null;
+        //}
+        //else
+        //{
+        //    this.dynamicData = null;
+        //}
         //drop current dice
+        //_ = what does the discard operand do
 
         //intitae next group
 
+        return;
+        StartCoroutine(DisengagedDrop());
+
+        //StartCoroutine(DisengagedDrop(DiceGroupCellIndex));
     }
 
 
@@ -324,12 +343,17 @@ public class DiceGroup : MonoBehaviour
         if(lockTime >= this.lockDelay)
         {
             //just the cells position by themselves is there local position, so we have to add the dice groups position to get where they are on the tile map
-            int? disengageWhichDice;
-            if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) +this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z)+this.position, out disengageWhichDice))
+            int? continuingDice;
+            if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
             {
-                Debug.LogError($"DISENGAGE dice {disengageWhichDice}");
+                Debug.LogError($"DISENGAGE dice {continuingDice}");
+                //HandleDisengagement((int)continuingDice);//
             }
-            Lock();
+            else
+            {
+                Lock();//it never locks if one can continue //TODO <-read this
+                //todo i need to immediatly push the other tile where it can go than manually lock both
+            }
         }
     }
 
@@ -360,3 +384,17 @@ enum DynamicDiceState
 //right ->data.cellLocation[0].x + 1
 //down -> data.cellLocation[0].y -1
 //left -> data.cellLocation[0].x - 1
+
+
+
+//TODO match 3 tutorials
+//
+//https://www.youtube.com/watch?v=LoUQ0kR-lTg /-song writing excercise
+//
+//https://www.youtube.com/watch?v=PE1GLtgbMR0 /- pretty good
+//
+//https://www.youtube.com/watch?v=gIndP9kGfvI&list=PL4vbr3u7UKWrxEz75MqmTDd899cYAvQ_B&index=8 /-matching logic
+
+//https://www.youtube.com/watch?v=cqJ5b5aFo5U&t=3154s /- probably the one i like the best
+
+//https://www.youtube.com/watch?v=PE1GLtgbMR0  /-this seems pretty good too

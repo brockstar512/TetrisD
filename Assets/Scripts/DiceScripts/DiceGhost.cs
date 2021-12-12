@@ -168,7 +168,7 @@ public class DiceGhost : MonoBehaviour
     /// </summary>
     void Setting()
     {
-        //TODO maybe at the end I can figure out a way where things should work exactly how they're written so I don't have to keep this hard coded check
+        //maybe at the end I can figure out a way where things should work exactly how they're written so I don't have to keep this hard coded check
         //
         //The tiles are one lower than where they should be so bump them up to the next line
         this.pos[0].y += 1;
@@ -182,6 +182,7 @@ public class DiceGhost : MonoBehaviour
         //set both tiles on their respective positions
         this.tilemap.SetTile(this.pos[0], this.tile);
         this.tilemap.SetTile(this.pos[1], this.tile);
+        //todo put null tile if there is no dice 1 or dice 0
 
     }
 
