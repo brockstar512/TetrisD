@@ -6,13 +6,17 @@ using UnityEngine.Tilemaps;
 public class DiceGroup : MonoBehaviour
 {
     //TODO known errors: dice group can peak through the top when you initally start
+    public  DiceDisengage diceDisengage;
+    public DiceGhost diceGhost;
+
 
     public DiceBoard diceBoard {get;private set;}//anytime the piece moves we need to pass that info to redraw that game piece
-    public DiceData data {get;private set;}
-    public DiceData dynamicData { get; private set; }
+    public DiceData data {get;private set;}//the dice that stays still 
+    public DiceData dynamicData { get; private set; }//the dice that roates around the other
     
-    public Vector3Int position {get; private set;}
-    public Vector3Int[] cells {get; private set;}//we have an array of cells to help manipulate the shape when it moves/rotatets
+    public Vector3Int position {get; private set;}//i believe position is position on board
+    //(cell[0]) = data (cell[1]) = dynamicData
+    public Vector3Int[] cells {get; private set;}//we have an array of cells to help manipulate the shape when it moves/rotatets 
 
     //dropping
     public float stepDelay = 1f;
@@ -20,6 +24,8 @@ public class DiceGroup : MonoBehaviour
 
     private float stepTime;
     private float lockTime;
+
+    private bool isDisengaged = false;
 
     #region testing regions
 
@@ -37,13 +43,26 @@ public class DiceGroup : MonoBehaviour
 
     const float DisengageDropSpeed = 0.05f;
 
+    //[ContextMenu("Test Disengage")]//can delete
+    //public void TestDisengage()
+    //{
+    //    int random = Random.Range(0, this.diceBoard.DiceOptions.Length);
+    //    DiceData newGroup = this.diceBoard.DiceOptions[random];
+    //    Vector3Int startPosition = new Vector3Int(-1,3,0);
+    //    diceDisengage.Initialize(diceBoard, startPosition, newGroup, newGroup);
+    //}
+
     //TODO clean the initialize function up and see if i can do a deep dive into explainning whats going on 
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
+        diceDisengage.Initialize(diceBoard);
+        Debug.Log($"We are passing in {data.number} and this one traveling {dynamicData.number} while here is the position {position} and it will end at {position.y+5}");
+
         //Debug.Log("Spawn location:  "+ position);
         this.diceBoard = diceBoard;
         this.position = position;
+        
         this.data = data;
         this.dynamicData = dynamicData;
 
@@ -67,7 +86,7 @@ public class DiceGroup : MonoBehaviour
         }*/
         this.cells[0] = (Vector3Int)data.cellLocation[0];//(Vector3Int)
         //To the right -> 
-        this.cells[1] = new Vector3Int( data.cellLocation[0].x+1, data.cellLocation[0].y, 0); //this is dynamic dice position//TODO This is very imortant
+        this.cells[1] = new Vector3Int( data.cellLocation[0].x + 1, data.cellLocation[0].y , 0); //this is dynamic dice position//TODO This is very imortant
 
 
 
@@ -75,6 +94,7 @@ public class DiceGroup : MonoBehaviour
 
     void Update()
     {
+
         //MoveController();
         this.diceBoard.Clear(this);
 
@@ -347,6 +367,15 @@ public class DiceGroup : MonoBehaviour
             if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
             {
                 Debug.LogError($"DISENGAGE dice {continuingDice}");
+                return;//this is not yet tested
+
+                int leaveDiceBehind = 1 - (int)continuingDice;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
+                DiceData stillData = leaveDiceBehind == 0 ? this.data : this.dynamicData;
+                DiceData travelingDice = leaveDiceBehind == 1 ? this.data : this.dynamicData;
+                Vector3Int holdPos = new Vector3Int((cells[leaveDiceBehind].x + this.position.x), (cells[leaveDiceBehind].y + this.position.y), 0);
+                Vector3Int startPos = new Vector3Int((cells[(int)continuingDice].x + this.position.x), (cells[(int)continuingDice].y + this.position.y), 0);
+                Vector3Int finishPos = diceGhost.GET_LOWEST_Y_COORD;
+                diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
                 //HandleDisengagement((int)continuingDice);//
             }
             else

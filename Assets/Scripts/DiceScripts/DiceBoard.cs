@@ -53,11 +53,7 @@ public class DiceBoard : MonoBehaviour
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     //TODO explain how this works
     //place the cell/tilegroup in the active dice set on the board
@@ -95,7 +91,14 @@ public class DiceBoard : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// based of a position passed in, the tile will be cleared there.
+    /// </summary>
+    /// <param name="position"></param>
+    public void Clear(Vector3Int position)
+    {
+        this.tilemap.SetTile(position, null);
+    }
 
     public void Clear(DiceGroup group)
     {
@@ -176,6 +179,13 @@ public class DiceBoard : MonoBehaviour
             whichDice = null;
 
         return canOnePieceContinue;
+    }
+
+    //or make a place single position on the board with different arguments
+
+    public void SetSingleDiceOnBoard(Vector3Int position, Tile tile)
+    {
+        this.tilemap.SetTile(position, tile);
     }
 
     public void SetSingleDiceOnBoard(DiceGroup diceGroup,int diceToSet)

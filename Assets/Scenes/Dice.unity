@@ -339,7 +339,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363189442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1c12dac4021c41bcb0d72ca08b14c61, type: 3}
   m_Name: 
@@ -644,6 +644,7 @@ GameObject:
   - component: {fileID: 1999377122}
   - component: {fileID: 1999377121}
   - component: {fileID: 1999377123}
+  - component: {fileID: 1999377124}
   m_Layer: 0
   m_Name: 'Tilemap -(Tile map component scale 1.7) '
   m_TagString: Untagged
@@ -763,5 +764,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa83c1742c004fc8b72ea0ad59fe8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceDisengage: {fileID: 1999377124}
   stepDelay: 1
   lockDelay: 0.5
+--- !u!114 &1999377124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999377119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697fad43ac37a468581887b82d4f6331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

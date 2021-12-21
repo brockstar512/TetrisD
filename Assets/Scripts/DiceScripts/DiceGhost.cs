@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class DiceGhost : MonoBehaviour
 {
+    
     public Tile tile;
     public DiceBoard diceBoard;
     public DiceGroup trackedDiceGroup;//piece we are simulating
@@ -13,6 +14,16 @@ public class DiceGhost : MonoBehaviour
     public Vector3Int[] cells { get; private set; }
     public Vector3Int position { get; private set; }
     public Vector3Int[] pos { get; private set; }
+
+    public Vector3Int GET_LOWEST_Y_COORD
+    {
+        get{
+            //if (pos[0].y == pos[1].y)
+            //    return null;
+            Vector3Int getLowestCoord = pos[0].y < pos[1].y ? pos[0] : pos[1];
+            return getLowestCoord;
+        }
+    }
 
 
     private void Awake()
