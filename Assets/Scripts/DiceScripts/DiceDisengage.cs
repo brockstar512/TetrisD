@@ -24,9 +24,9 @@ public class DiceDisengage : MonoBehaviour
         HoldDiceInPlace(holdPos, stillData);
 
         //Vector3Int finish = new Vector3Int(position.x, finishPos.y, 0);
-        Vector3Int finish = new Vector3Int(position.x, position.y + -5, 0);
+        //Vector3Int finish = new Vector3Int(position.x, position.y + -5, 0);
 
-        StartCoroutine(TravelingDice(travelingDice, startPos, finish));
+        StartCoroutine(TravelingDice(travelingDice, startPos, finishPos));
         //TravelingDice(travelingDice, position, finish);
         //TODO the only problem i see right now is getting the finish from ghost dice and then pausing until all these functions are done
 

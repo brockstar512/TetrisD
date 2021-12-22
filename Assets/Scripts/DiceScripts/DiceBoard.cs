@@ -55,10 +55,14 @@ public class DiceBoard : MonoBehaviour
     }
 
 
-    //TODO explain how this works
-    //place the cell/tilegroup in the active dice set on the board
+    /// <summary>
+    /// We are checking if there is still a dice attacked to the dice group. If there is we take that piece and set it at its position in the dice group (diceGroup.cells[1]) and diceGroup.cells[0]
+    /// and add it to the position of where the dice group is on the board diceGroup.position.
+    /// </summary>
+    /// <param name="diceGroup"></param>
     public void SetOnBoard(DiceGroup diceGroup)
     {
+        //Debug.LogWarning("SET ON BOARD");
         if (diceGroup.dynamicData != null)
         {
             this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
@@ -97,11 +101,18 @@ public class DiceBoard : MonoBehaviour
     /// <param name="position"></param>
     public void Clear(Vector3Int position)
     {
+        //Debug.Log("Clear group " + position);
+
         this.tilemap.SetTile(position, null);
+
+        //this.tilemap.HasTile(tilePosition)
+        //Debug.Log("Clear group      " + this.tilemap.HasTile(position));
+
     }
 
     public void Clear(DiceGroup group)
     {
+        //Debug.Log("Clear group");
         for (int i = 0; i < group.cells.Length; i++)
         {
             Vector3Int tilePosition = group.cells[i] + group.position;

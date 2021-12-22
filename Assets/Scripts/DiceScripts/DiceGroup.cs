@@ -25,7 +25,7 @@ public class DiceGroup : MonoBehaviour
     private float stepTime;
     private float lockTime;
 
-    private bool isDisengaged = false;
+    public bool isDisengaging = false;
 
     #region testing regions
 
@@ -94,7 +94,10 @@ public class DiceGroup : MonoBehaviour
 
     void Update()
     {
-
+        //this.diceBoard.Clear(this);
+        //
+        if (isDisengaging)
+            return;
         //MoveController();
         this.diceBoard.Clear(this);
 
@@ -134,8 +137,13 @@ public class DiceGroup : MonoBehaviour
         {
             Step();
         }
-        
-        this.diceBoard.SetOnBoard(this);
+
+        //the disengage check might get switched after this update function runs but before it ends, so the check in the beginning is not good enough.
+        //we also need to check here because this will revert the dice back into the board.
+        if (!isDisengaging)
+        {
+            this.diceBoard.SetOnBoard(this);
+        }
     }
 
     /// <summary>
@@ -287,53 +295,28 @@ public class DiceGroup : MonoBehaviour
         return valid;
     }
 
-    //IEnumerator DisengageDrop(int diceToContinue)//we only need to drop one dice... so we need to figure out which one can drop then only drop that one by passing it in
-    //
-    //this.diceBoard.IsValidPosition(this, new Vector3Int(this.position.x + Vector2Int.down.x, this.position.y + Vector2Int.down.y,0)
-    IEnumerator DisengagedDrop()
+
+
+    void HandleDisengagement(int? continuingDice)
     {
-        while (this.diceBoard.IsValidPosition(this, new Vector3Int(this.position.x + Vector2Int.down.x, this.position.y + Vector2Int.down.y,0)))
-        {
-            this.diceBoard.Clear(this);
-            Move(Vector2Int.down);
-            yield return new WaitForSeconds(DisengageDropSpeed);
-        }
-        Lock();
-        yield return null;
-    }
+        isDisengaging = true;
+        //this.diceBoard.Clear(this);
 
-    void HandleDisengagement(int DiceGroupCellIndex)
-    {
-        //if arhument is greater than 1 think about returning         //get refernce which dice will continue
 
-        int leaveDiceBehind = 1 - DiceGroupCellIndex;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
+        int leaveDiceBehind = 1 - (int)continuingDice;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
+        DiceData stillData = leaveDiceBehind == 0 ? this.data : this.dynamicData;
+        DiceData travelingDice = leaveDiceBehind == 1 ? this.data : this.dynamicData;
+        Vector3Int holdPos = new Vector3Int((cells[leaveDiceBehind].x + this.position.x), (cells[leaveDiceBehind].y + this.position.y), 0);
+        Vector3Int startPos = new Vector3Int((cells[(int)continuingDice].x + this.position.x), (cells[(int)continuingDice].y + this.position.y), 0);
+        
+        Vector3Int finishPos = diceGhost.GET_LOWEST_Y_COORD;
 
-        //put other dice on the board
-        //this.diceBoard.SetSingleDiceOnBoard(this,leaveDiceBehind);
-        //null out that piece
+        this.diceBoard.Clear(startPos);
+        this.diceBoard.Clear(holdPos);
+        
 
-        //take away control from player to prevent bugs
-        //leaveDiceBehind == 0 ? this.data = null : this.dynamicData = null;
-        Tile tileToSet = leaveDiceBehind == 0 ? this.data.tile : this.dynamicData.tile;
-        Debug.Log($"putting {tileToSet} on the board at {this.cells[leaveDiceBehind] + this.position}");
-        this.diceBoard.tilemap.SetTile(this.cells[leaveDiceBehind] + this.position,tileToSet);
-        //if (leaveDiceBehind == 0)
-        //{
-        //    this.data = null;
-        //}
-        //else
-        //{
-        //    this.dynamicData = null;
-        //}
-        //drop current dice
-        //_ = what does the discard operand do
-
-        //intitae next group
-
-        return;
-        StartCoroutine(DisengagedDrop());
-
-        //StartCoroutine(DisengagedDrop(DiceGroupCellIndex));
+        Debug.LogError("clearing board at " + startPos + "  and  " + holdPos+ " while placing the dynamic piece at "+ finishPos);
+        diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
     }
 
 
@@ -347,6 +330,14 @@ public class DiceGroup : MonoBehaviour
         {
             continue;
         }
+        int? continuingDice;
+        if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
+        {
+            Debug.LogError($"DISENGAGE dice {continuingDice}");
+            HandleDisengagement(continuingDice);
+            return;
+        }
+
         Lock(); 
 
     }
@@ -367,22 +358,11 @@ public class DiceGroup : MonoBehaviour
             if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
             {
                 Debug.LogError($"DISENGAGE dice {continuingDice}");
-                return;//this is not yet tested
+                HandleDisengagement(continuingDice);
+                return;
 
-                int leaveDiceBehind = 1 - (int)continuingDice;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
-                DiceData stillData = leaveDiceBehind == 0 ? this.data : this.dynamicData;
-                DiceData travelingDice = leaveDiceBehind == 1 ? this.data : this.dynamicData;
-                Vector3Int holdPos = new Vector3Int((cells[leaveDiceBehind].x + this.position.x), (cells[leaveDiceBehind].y + this.position.y), 0);
-                Vector3Int startPos = new Vector3Int((cells[(int)continuingDice].x + this.position.x), (cells[(int)continuingDice].y + this.position.y), 0);
-                Vector3Int finishPos = diceGhost.GET_LOWEST_Y_COORD;
-                diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
-                //HandleDisengagement((int)continuingDice);//
             }
-            else
-            {
-                Lock();//it never locks if one can continue //TODO <-read this
-                //todo i need to immediatly push the other tile where it can go than manually lock both
-            }
+                Lock();
         }
     }
 

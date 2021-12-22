@@ -39,6 +39,9 @@ public class DiceGhost : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
+        if (trackedDiceGroup.isDisengaging)//this will help avoid null references
+            return;
+
         Clearing();
         Copy();
         //Drop();
