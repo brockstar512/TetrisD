@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class DiceGroup : MonoBehaviour
 {
     //TODO known errors: dice group can peak through the top when you initally start
-    public  DiceDisengage diceDisengage;
+    public  DiceDisengage diceDisengage { get; private set; }
     public DiceGhost diceGhost;
 
 
@@ -26,6 +26,7 @@ public class DiceGroup : MonoBehaviour
     private float lockTime;
 
     public bool isDisengaging = false;
+    //{get;private set;}
 
     #region testing regions
 
@@ -56,6 +57,7 @@ public class DiceGroup : MonoBehaviour
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
+        diceDisengage = this.GetComponent<DiceDisengage>();
         diceDisengage.Initialize(diceBoard);
         Debug.Log($"We are passing in {data.number} and this one traveling {dynamicData.number} while here is the position {position} and it will end at {position.y+5}");
 
@@ -319,6 +321,11 @@ public class DiceGroup : MonoBehaviour
         diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
     }
 
+    public void HandlePostDisengagement()
+    {
+        isDisengaging = false;
+        this.diceBoard.SpawnGroup();
+    }
 
     //TODO we do not check if one dice can disengage after a hard drop. we need to consider that.
     /// <summary>

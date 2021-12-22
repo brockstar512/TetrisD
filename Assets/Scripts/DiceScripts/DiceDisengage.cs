@@ -7,13 +7,15 @@ public class DiceDisengage : MonoBehaviour
 {
     public DiceBoard diceBoard { get; private set; }//anytime the piece moves we need to pass that info to redraw that game piece
     public Vector3Int position { get; private set; }//i believe position is position on board
-    const float DisengageDropSpeed = 0.05f;
+    const float DisengageDropSpeed = 0.025f;//0.05f;
+    public DiceGroup diceGroup { get; private set; }
 
 
 
     public void Initialize(DiceBoard diceBoard)
     {
         this.diceBoard = diceBoard;///this is the only thing here that needs to be initialized
+        this.diceGroup = this.GetComponent<DiceGroup>();
     }
 
     public void Disengage(DiceData stillData, DiceData travelingDice, Vector3Int holdPos, Vector3Int startPos, Vector3Int finishPos)
@@ -72,6 +74,7 @@ public class DiceDisengage : MonoBehaviour
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
+        diceGroup.HandlePostDisengagement();
         yield return null;
     }
 
