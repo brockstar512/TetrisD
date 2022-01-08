@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 public class DiceDisengage : MonoBehaviour
 {
     public DiceBoard diceBoard { get; private set; }//anytime the piece moves we need to pass that info to redraw that game piece
-    public Vector3Int position { get; private set; }//i believe position is position on board
-    const float DisengageDropSpeed = 0.025f;//0.05f;
     public DiceGroup diceGroup { get; private set; }
+    public Vector3Int position { get; private set; }//i believe position is position on board
+    const float DisengageDropSpeed = 0.05f;
 
 
 
@@ -20,17 +20,10 @@ public class DiceDisengage : MonoBehaviour
 
     public void Disengage(DiceData stillData, DiceData travelingDice, Vector3Int holdPos, Vector3Int startPos, Vector3Int finishPos)
     {
-        //int leaveDiceBehind = 1 - DiceGroupCellIndex;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
-        //DiceData stillData = leaveDiceBehind == 0 ? diceGroup.data: diceGroup.dynamicData;
-        //DiceData travelingDice = leaveDiceBehind == 1 ? diceGroup.data : diceGroup.dynamicData;
+
         HoldDiceInPlace(holdPos, stillData);
-
-        //Vector3Int finish = new Vector3Int(position.x, finishPos.y, 0);
-        //Vector3Int finish = new Vector3Int(position.x, position.y + -5, 0);
-
         StartCoroutine(TravelingDice(travelingDice, startPos, finishPos));
-        //TravelingDice(travelingDice, position, finish);
-        //TODO the only problem i see right now is getting the finish from ghost dice and then pausing until all these functions are done
+
 
     }
 
@@ -47,6 +40,8 @@ public class DiceDisengage : MonoBehaviour
         this.diceBoard.SetSingleDiceOnBoard(position, stillData.tile);
     }
 
+
+    //if i dont want to use a corouinte but still want to pace out how quick the dice falls
     //private void TravelingDice(DiceData travelingDice, Vector3Int start, Vector3Int finish)
     //{
     //    Vector3Int current = start;
@@ -60,7 +55,6 @@ public class DiceDisengage : MonoBehaviour
     //        continue;
     //    }
     //}
-
     IEnumerator TravelingDice(DiceData travelingDice, Vector3Int start, Vector3Int finish)
     {
         Vector3Int current = start;
@@ -80,11 +74,4 @@ public class DiceDisengage : MonoBehaviour
 
 
 }
-public struct FreeDice
-{
-    public Vector3Int position { get; private set; }//where you want to place it
-    public Tile tile;
-    public DiceNumber number;
 
-
-}

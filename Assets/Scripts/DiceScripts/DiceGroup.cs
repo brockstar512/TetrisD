@@ -5,18 +5,28 @@ using UnityEngine.Tilemaps;
 
 public class DiceGroup : MonoBehaviour
 {
-    //TODO known errors: dice group can peak through the top when you initally start
-    public  DiceDisengage diceDisengage { get; private set; }
+    public DiceMatch diceMatch;
+
+
+    public DiceDisengage diceDisengage { get; private set; }
     public DiceGhost diceGhost;
 
 
     public DiceBoard diceBoard {get;private set;}//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceData data {get;private set;}//the dice that stays still 
     public DiceData dynamicData { get; private set; }//the dice that roates around the other
-    
-    public Vector3Int position {get; private set;}//i believe position is position on board
-    //(cell[0]) = data (cell[1]) = dynamicData
-    public Vector3Int[] cells {get; private set;}//we have an array of cells to help manipulate the shape when it moves/rotatets 
+
+    /// <summary>
+    /// This is tehe position the group is on the board as it falls down the board.
+    /// </summary>
+    public Vector3Int position {get; private set;}
+    /// <summary>
+    /// We have an array of cells to help manipulate the shape when it moves/rotatets. This also keeps track of the local position of the dice.
+    /// one dice will always be 0,0 within this group but the dynamic dice is moving around and this helps keep track of it.
+    /// (cell[0]) = data (cell[1]) = dynamicData
+    /// </summary>
+    public Vector3Int[] cells {get; private set;}
+
 
     //dropping
     public float stepDelay = 1f;
@@ -44,14 +54,7 @@ public class DiceGroup : MonoBehaviour
 
     const float DisengageDropSpeed = 0.05f;
 
-    //[ContextMenu("Test Disengage")]//can delete
-    //public void TestDisengage()
-    //{
-    //    int random = Random.Range(0, this.diceBoard.DiceOptions.Length);
-    //    DiceData newGroup = this.diceBoard.DiceOptions[random];
-    //    Vector3Int startPosition = new Vector3Int(-1,3,0);
-    //    diceDisengage.Initialize(diceBoard, startPosition, newGroup, newGroup);
-    //}
+
 
     //TODO clean the initialize function up and see if i can do a deep dive into explainning whats going on 
     ///game board           spawn location      dice data currently active
@@ -59,7 +62,6 @@ public class DiceGroup : MonoBehaviour
     {
         diceDisengage = this.GetComponent<DiceDisengage>();
         diceDisengage.Initialize(diceBoard);
-        Debug.Log($"We are passing in {data.number} and this one traveling {dynamicData.number} while here is the position {position} and it will end at {position.y+5}");
 
         //Debug.Log("Spawn location:  "+ position);
         this.diceBoard = diceBoard;
@@ -96,8 +98,7 @@ public class DiceGroup : MonoBehaviour
 
     void Update()
     {
-        //this.diceBoard.Clear(this);
-        //
+
         if (isDisengaging)
             return;
         //MoveController();
@@ -119,7 +120,6 @@ public class DiceGroup : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //StartCoroutine( DisengagedDrop());
             HardDrop();
 
         }
@@ -302,7 +302,6 @@ public class DiceGroup : MonoBehaviour
     void HandleDisengagement(int? continuingDice)
     {
         isDisengaging = true;
-        //this.diceBoard.Clear(this);
 
 
         int leaveDiceBehind = 1 - (int)continuingDice;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
@@ -317,19 +316,20 @@ public class DiceGroup : MonoBehaviour
         this.diceBoard.Clear(holdPos);
         
 
-        Debug.LogError("clearing board at " + startPos + "  and  " + holdPos+ " while placing the dynamic piece at "+ finishPos);
         diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
     }
 
+    /// <summary>
+    /// Once the disengagment logic is done, it will call this function that will reset the boolean and spawn the next dice group.
+    /// </summary>
     public void HandlePostDisengagement()
     {
         isDisengaging = false;
         this.diceBoard.SpawnGroup();
     }
-
-    //TODO we do not check if one dice can disengage after a hard drop. we need to consider that.
+    
     /// <summary>
-    /// immedietly moves the tile down until move does not return it being valid then it locks the piece into place
+    /// immedietly moves the tile down until move does not return it being valid then it locks the piece into place. Diengages the single dice that can move if it can.
     /// </summary>
     void HardDrop()
     {
@@ -364,7 +364,7 @@ public class DiceGroup : MonoBehaviour
             int? continuingDice;
             if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
             {
-                Debug.LogError($"DISENGAGE dice {continuingDice}");
+                //Debug.LogError($"DISENGAGE dice {continuingDice}");
                 HandleDisengagement(continuingDice);
                 return;
 
@@ -378,11 +378,26 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void Lock()
     {
+        //if(false)
+        {
+            
+            DiceImprint staticDice = new DiceImprint(this.data, this.cells[0] + this.position);
+            DiceImprint dynamicDice = new DiceImprint(this.dynamicData, this.cells[1] + this.position);
+
+
+            diceMatch.SetTileDict(this.cells[0] + this.position, staticDice);
+            diceMatch.SetTileDict(this.cells[1] + this.position, dynamicDice);
+        }
+
         this.diceBoard.SetOnBoard(this);
         this.diceBoard.SpawnGroup();
     }
 
 
+    void Imprint()
+    {
+
+    }
 
 
 
@@ -402,7 +417,7 @@ enum DynamicDiceState
 //left -> data.cellLocation[0].x - 1
 
 
-
+//TODO known errors: dice group can peak through the top when you initally start
 //TODO match 3 tutorials
 //
 //https://www.youtube.com/watch?v=LoUQ0kR-lTg /-song writing excercise

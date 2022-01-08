@@ -287,6 +287,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &870368691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870368693}
+  - component: {fileID: 870368692}
+  m_Layer: 0
+  m_Name: Dice Match Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &870368692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870368691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44ec12acd41f43db95163bb93a89505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMap: {fileID: 1999377122}
+  grid: {fileID: 1749936039}
+--- !u!4 &870368693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870368691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1363189442
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,28 +532,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba1fde4e79c247e28fbce2fadf7e1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceMatch: {fileID: 870368692}
   DiceOptions:
   - number: 1
+    color: 0
     tile: {fileID: 11400000, guid: 52a91917d82c34470b4e58b30d082652, type: 2}
     cellLocation:
     - {x: 0, y: 0}
   - number: 2
+    color: 0
     tile: {fileID: 11400000, guid: 710a17f3bc9414ab898c32b3616e3b01, type: 2}
     cellLocation:
     - {x: 0, y: 0}
   - number: 3
+    color: 0
     tile: {fileID: 11400000, guid: ab614f5efb879409e8cb0844551925b9, type: 2}
     cellLocation:
     - {x: 0, y: 0}
   - number: 4
+    color: 0
     tile: {fileID: 11400000, guid: 5693a0b75c28a4ea69b512e360c04a60, type: 2}
     cellLocation:
     - {x: 0, y: 0}
   - number: 5
+    color: 0
     tile: {fileID: 11400000, guid: 70ae23c293e0b4329af74f88ad6aa391, type: 2}
     cellLocation:
     - {x: 0, y: 0}
   - number: 6
+    color: 0
     tile: {fileID: 11400000, guid: 98e27f7c73e224e6abbd8e126734968f, type: 2}
     cellLocation:
     - {x: 0, y: 0}
@@ -764,8 +816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa83c1742c004fc8b72ea0ad59fe8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceDisengage: {fileID: 1999377124}
-  diceGhost: {fileID: 0}
+  diceMatch: {fileID: 870368692}
+  diceGhost: {fileID: 1363189445}
   stepDelay: 1
   lockDelay: 0.5
   isDisengaging: 0

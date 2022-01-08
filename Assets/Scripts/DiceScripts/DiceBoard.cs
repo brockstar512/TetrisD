@@ -5,20 +5,22 @@ using UnityEngine.Tilemaps;
 
 public class DiceBoard : MonoBehaviour
 {
-    //-TODO disengage blocks that can still fall
-    //-TODO document what I have
+    public DiceMatch diceMatch;
 
-    //-todo when all of the above is done.... then work on a bejewelled tutprial to figure out how to handle taking out dice
+
     public DiceData[] DiceOptions;
     public Vector3Int spawnPosition;
     public Tilemap tilemap { get; private set; }
     public DiceGroup activeGroup { get; private set; }
     //for is valid
-    public Vector2Int boardSize = new Vector2Int(6, 9);//cells on the board
+    public Vector2Int boardSize = new Vector2Int(6, 10);//cells on the board
     public RectInt Bounds
     {
         get
         {
+            //Bounds: x-3 y:-5
+            //width 6 height 10
+
             Vector2Int position = new Vector2Int(-this.boardSize.x / 2, -this.boardSize.y / 2);
             return new RectInt(position, this.boardSize);
         }
@@ -28,6 +30,19 @@ public class DiceBoard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //i wonder if it wont go all the way because you can divide 9 by 2 that easily when the bounds is divided by 2
+
+        //Debug.Log($"BOUNDS x : {Bounds.xMin} and {Bounds.xMax}");//BOUNDS x : -3 and 3
+        //Debug.Log($"BOUNDS y : {Bounds.yMin} and {Bounds.yMax}");//BOUNDS y : -5 and 5
+        //Debug.Log($"BOUNDS with and height : {Bounds.width} and {Bounds.height}");//BOUNDS with and height : 6 and 10
+        //Debug.Log($"BOUNDS size :{Bounds.size}");//BOUNDS size :(6, 10)
+        //Debug.Log($"board size :{this.boardSize}");//board size :(6, 10)
+        //Debug.Log($"-this.boardSize.y / 2 :{-this.boardSize.y / 2}");//-this.boardSize.y / 2 :-5
+        //Debug.Log($"this.boardSize.y :{this.boardSize.y}");//this.boardSize.y :10
+
+
+
+
         this.tilemap = GetComponentInChildren<Tilemap>();
         this.activeGroup = GetComponentInChildren<DiceGroup>();
 
@@ -117,6 +132,10 @@ public class DiceBoard : MonoBehaviour
         {
             Vector3Int tilePosition = group.cells[i] + group.position;
             this.tilemap.SetTile(tilePosition, null);
+
+
+     
+
         }
 
     }
@@ -125,7 +144,7 @@ public class DiceBoard : MonoBehaviour
     {
         //Debug.Log($"Is valid?"); 
         RectInt bounds = this.Bounds;
-        // Debug.Log("Here are the bounds "+bounds);
+        //Debug.Log("Here are the bounds " + bounds);
         // The position is only valid if every cell is valid
         for (int i = 0; i < group.cells.Length; i++)
         {
