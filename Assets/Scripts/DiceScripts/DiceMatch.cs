@@ -7,6 +7,8 @@ public class DiceMatch : MonoBehaviour
 {
     [SerializeField]
     Tilemap mainMap;
+    public DiceBoard diceBoard;
+    public Tile testTile;
     [SerializeField]
     Grid grid;
 
@@ -33,6 +35,7 @@ public class DiceMatch : MonoBehaviour
     }
 
     Dictionary<Vector3Int, DiceImprint> TilePos;
+    const float GRAVITY = 0.045f;//0.045f;
 
     //used in the tutorial
     private List<DiceImprint> tileDatas;
@@ -43,6 +46,11 @@ public class DiceMatch : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        
+        //for(int i = 0; i < 0; i++)
+        //{
+        //    Debug.LogError("i was doomed from the beginning");
+        //}
         //dataFromTile = new Dictionary<TileBase, DiceImprint>();
         ////go through the list of tiles then ad them to the dictionary
         //foreach (var tileData in tileDatas)
@@ -108,8 +116,8 @@ public class DiceMatch : MonoBehaviour
         Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
         Vector3Int position = grid.WorldToCell(worldPoint);
         TileBase clickedTile = mainMap.GetTile(position);
-        CheckForMatches();
-        return;
+        //CheckForMatches();
+        //return;
         //
         Debug.Log($"At position {position} there is a {clickedTile} here it is in the dict {TilePos[position].number}");
 
@@ -201,26 +209,9 @@ public class DiceMatch : MonoBehaviour
         }
     }
 
-    void CheckEveryTile()
-    {
 
-    }
 
-    //bool IsThereAHorizontalMatch(Vector3Int position)
-    //{
-    //    DiceNumber number = TilePos[position].number;
-    //    Vector3Int posCheck = new Vector3Int(position.x + (int)number, position.y, 0);
-    //    //Debug.Log($"New Pos: {posCheck}");
-    //    return TilePos[position].number == TilePos[posCheck].number;
-    //}
 
-    //bool IsThereAVerticalMatch(Vector3Int position)
-    //{
-    //    DiceNumber number = TilePos[position].number;
-    //    Vector3Int posCheck = new Vector3Int(position.x, position.y + (int)number, 0);
-    //    //Debug.Log($"New Pos: {posCheck}");
-    //    return TilePos[position].number == TilePos[posCheck].number;
-    //}
     //List<Vector3Int>
     bool IsConnected(Vector3Int position, Vector3Int checkingPosition, bool inBounds)
     {
@@ -244,15 +235,115 @@ public class DiceMatch : MonoBehaviour
         
         return true;
     }
-
+    [ContextMenu("Apply gravity")]
     void ApplyGravity()
     {
+
         //start from the bottom
+        for (int x =(int)XGridCell.One_Left; x<= (int)XGridCell.Six_Right; x++)
+        {
+            int MovingDiceInRow = -1;
+            //Debug.LogError(position);
+            for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
+            {
+                Vector3Int position = new Vector3Int(x, y, 0);
+                Debug.LogError(position);// iterating correctly
+                //Vector3Int below = new Vector3Int(position.x, -1+ position.y, 0);
+
+
+
+
+                //TODO also if it has a dice below it continue
+                //if (mainMap.HasTile(below))
+                //    continue;
+
+                //we can skip the tiles that are empty
+                if (!mainMap.HasTile(position))//(y doesnt have a tile)
+                    continue;
+
+                Vector3Int startPos = position;
+                Vector3Int finishPos= new Vector3Int();
+                //we found a tile.. if there is another tile under it or we are at the bottom don't run
+                //we are falling until we have a tile or we are at the bottom
+                //falling is the position of the current dice
+
+                //Vector3Int? newPosition = new Vector3Int?();//this might ntot have to be null because if it past here it has a tile
+                for (int falling = position.y;(mainMap.HasTile(new Vector3Int(x,falling-1,0)) || (falling >= (int)YGridCell.Nine_Bottom)); falling--)
+                {
+
+                    Vector3Int newPosition = new Vector3Int(x, falling, 0);
+                    Debug.Log(newPosition);
+                    finishPos = newPosition;
+
+
+                }
+                //get final position
+                MovingDiceInRow++;
+                finishPos = new Vector3Int(finishPos.x, finishPos.y + MovingDiceInRow,0);
+                //Debug.LogError($"Start {startPos} and finsh {finishPos}");
+                if (mainMap.HasTile(finishPos))
+                    continue;
+
+
+                //StartCoroutine(TravelingDice(currentTile, startPos, finishPos));
+                //Debug.Log($"--------------------------");
+
+
+
+            }
+
+
+        }
         //iterate up the column until you have a tile
         //go down until you do have a tile
         //repeat starting from your current location
 
         //go to next column
+
     }
-  
+
+
+
+    IEnumerator TravelingDice(DiceData die, Vector3Int start, Vector3Int finish)
+    {
+
+        TilePos[start] = new DiceImprint(start);
+
+        Vector3Int current = start;
+
+        while (current != finish)
+        {
+            this.diceBoard.Clear(current);
+            current = new Vector3Int(current.x, current.y + -1, 0);
+            this.diceBoard.SetSingleDiceOnBoard(current, die.tile);
+            yield return new WaitForSeconds(GRAVITY);
+        }
+        this.diceBoard.SetSingleDiceOnBoard(finish, die.tile);
+
+        TilePos[finish] = new DiceImprint(die,finish);
+        yield return null;
+    }
+
+    //IEnumerator TravelingDice(Tile tile, Vector3Int start, Vector3Int finish)
+    //{
+
+    //    TilePos[start] = new DiceImprint(start);
+
+    //    Vector3Int current = start;
+
+    //    while (current != finish)
+    //    {
+    //        this.diceBoard.Clear(current);
+    //        current = new Vector3Int(current.x, current.y + -1, 0);
+    //        this.diceBoard.SetSingleDiceOnBoard(current, tile);
+    //        yield return new WaitForSeconds(GRAVITY);
+    //    }
+    //    this.diceBoard.SetSingleDiceOnBoard(finish, tile);
+    //    DiceData die = new DiceData();
+    //    die.number = DiceNumber.Six;
+    //    die.tile = tile;
+    //    TilePos[finish] = new DiceImprint(die, finish);
+    //    yield return null;
+    //}
+
 }

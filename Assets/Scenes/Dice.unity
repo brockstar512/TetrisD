@@ -317,6 +317,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMap: {fileID: 1999377122}
+  diceBoard: {fileID: 1749936041}
+  testTile: {fileID: 11400000, guid: 98e27f7c73e224e6abbd8e126734968f, type: 2}
   grid: {fileID: 1749936039}
 --- !u!4 &870368693
 Transform:
@@ -384,7 +386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363189442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1c12dac4021c41bcb0d72ca08b14c61, type: 3}
   m_Name: 

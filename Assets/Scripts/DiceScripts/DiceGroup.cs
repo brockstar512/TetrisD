@@ -98,7 +98,7 @@ public class DiceGroup : MonoBehaviour
 
     void Update()
     {
-
+        return;
         if (isDisengaging)
             return;
         //MoveController();

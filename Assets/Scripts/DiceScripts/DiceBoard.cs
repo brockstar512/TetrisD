@@ -55,9 +55,49 @@ public class DiceBoard : MonoBehaviour
     }
     void Start()
     {
+        TestGravity();
+
+
+        return;
         SpawnGroup();
     }
 
+    //put random tiles up high
+    [ContextMenu("Test gravity")]
+    void TestGravity()
+    {
+        
+        int random = Random.Range(0, this.DiceOptions.Length);
+        DiceData dice1 = this.DiceOptions[random];
+        DiceData dice2 = this.DiceOptions[random];
+        DiceData dice3 = this.DiceOptions[random];
+        DiceData dice4 = this.DiceOptions[random];
+        DiceData dice5 = this.DiceOptions[random];
+        DiceData dice6 = this.DiceOptions[random];
+
+        Vector3Int position = new Vector3Int(-2,2,0);
+        Vector3Int position1 = new Vector3Int(-2, 1, 0);
+        Vector3Int position2 = new Vector3Int(-2, 0, 0);
+        Vector3Int position3 = new Vector3Int(1, 3, 0);
+        Vector3Int position4 = new Vector3Int(-2, -5, 0);
+        Vector3Int position5 = new Vector3Int(1, 0, 0);
+
+
+
+
+
+
+        SetSingleDiceOnBoard(position, dice1.tile);
+        SetSingleDiceOnBoard(position1, dice2.tile);
+        SetSingleDiceOnBoard(position2, dice3.tile);
+        SetSingleDiceOnBoard(position3, dice4.tile);
+        SetSingleDiceOnBoard(position4, dice5.tile);
+        SetSingleDiceOnBoard(position5, dice6.tile);
+
+
+
+
+    }
     public void SpawnGroup()
     {
         int random = Random.Range(0, this.DiceOptions.Length);
