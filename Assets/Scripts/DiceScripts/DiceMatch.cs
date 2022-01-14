@@ -8,10 +8,10 @@ public class DiceMatch : MonoBehaviour
     [SerializeField]
     Tilemap mainMap;
     public DiceBoard diceBoard;
-    public Tile testTile;
+    
     [SerializeField]
     Grid grid;
-
+    
     private enum YGridCell
     {
         One_Top =3,
@@ -37,37 +37,19 @@ public class DiceMatch : MonoBehaviour
     Dictionary<Vector3Int, DiceImprint> TilePos;
     const float GRAVITY = 0.045f;//0.045f;
 
-    //used in the tutorial
-    private List<DiceImprint> tileDatas;
-    Dictionary<TileBase, DiceImprint> dataFromTile;
+    //todo should I have the bools do checks in there function then return a list of dice
+    #region testing regions
+    #endregion
 
 
-
-    // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        
-        //for(int i = 0; i < 0; i++)
-        //{
-        //    Debug.LogError("i was doomed from the beginning");
-        //}
-        //dataFromTile = new Dictionary<TileBase, DiceImprint>();
-        ////go through the list of tiles then ad them to the dictionary
-        //foreach (var tileData in tileDatas)
-        //{
-        //    foreach (var tile in tileData.tiles)
-        //    {
+        Initialize();
+    }
 
-        //        dataFromTile.Add(tile, tileData);
-        //    }
-        //}
-
-
-
+    void Initialize()
+    {
         TilePos = new Dictionary<Vector3Int, DiceImprint>();
-        //might not need to preinitialize dictionary with value... especially if i just check with
-        //bool hasTile = mainMap.HasTile(position);
-
 
         for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
         {
@@ -77,8 +59,6 @@ public class DiceMatch : MonoBehaviour
                 DiceImprint emptyTile = new DiceImprint(tile);
                 TilePos.Add(tile,emptyTile);
                 //Debug.Log($"KEYS:{tile}");//KEYS:(2, 3, 0)
-
-
             }
         }
 
@@ -89,13 +69,6 @@ public class DiceMatch : MonoBehaviour
     {
         //if(TilePos.TryGetValue(Pos, out die)) return;//if there is a value at that key
         //TilePos.Add(Pos, die);
-        TilePos[Pos] = die;
-    }
-
-    public void UpdateDict(Vector3Int Pos, DiceImprint die)
-    {
-        
-
         TilePos[Pos] = die;
     }
 
@@ -116,29 +89,55 @@ public class DiceMatch : MonoBehaviour
         Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
         Vector3Int position = grid.WorldToCell(worldPoint);
         TileBase clickedTile = mainMap.GetTile(position);
-        //CheckForMatches();
-        //return;
-        //
-        Debug.Log($"At position {position} there is a {clickedTile} here it is in the dict {TilePos[position].number}");
 
 
-
+        //RemoveDiceClicked(position);
+        CheckForMatches();
         return;
-        //RemoveTileDict(position);
-        if (TilePos.ContainsKey(position))
+        ////
+        //Debug.Log($"At position {position} there is a {clickedTile} here it is in the dict {TilePos[position].number}");
+
+
+
+        //return;
+        ////RemoveTileDict(position);
+        //if (TilePos.ContainsKey(position))
+        //{
+        //    Debug.Log($"At position {position} there is a {clickedTile} it should now be removed in the dict {TilePos[position].number}");
+        //}
+
+
+    }
+
+    [ContextMenu("Read Values")]
+    void ReadValues()
+    {
+        foreach(KeyValuePair<Vector3Int, DiceImprint > entry in TilePos)
         {
-            Debug.Log($"At position {position} there is a {clickedTile} it should now be removed in the dict {TilePos[position].number}");
+            if((int)entry.Value.number > 0)
+            {
+                Debug.Log($"At Position {entry.Key} there is a value of {entry.Value.number} and color {entry.Value.color}");
+            }
+            
         }
-
-
+    }
+    void RemoveDiceClicked(Vector3Int position)
+    {
+        diceBoard.Clear(position);
+        TilePos[position] = new DiceImprint(position);
+        //ApplyGravity();
     }
 
     void CheckForMatches()
     {
         //mainMap
         //check the rows first (this is just the lowest row)
+        //
 
-        List<Vector3Int> MatchedDice = new List<Vector3Int>();
+
+        //
+        Dictionary<Vector3Int, int> MatchedDice = new Dictionary<Vector3Int, int>();
+
 
         for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
         {
@@ -173,7 +172,8 @@ public class DiceMatch : MonoBehaviour
                 bool withinVerticalBounds = (position.y + (int)TilePos[position].number) < 3 ? true : false;//TODO maybe dont hard code this
                 //getting the current number we are expecting
                 DiceNumber number = TilePos[position].number;
-
+                Debug.LogError($"We are creating a new between dice");
+                List<Vector3Int> BetweenDice = new List<Vector3Int>();
                 //if it is within our bounds
                 if (withinHorizontalBounds)
                 {
@@ -182,12 +182,29 @@ public class DiceMatch : MonoBehaviour
 
                     //if the numbers are the same check if they are connected
                     bool hasHorizontalMatch = TilePos[position].number == TilePos[horizontalPosCheck].number;
+                    bool hasHorizontalColorMatch = TilePos[position].color == TilePos[horizontalPosCheck].color;
 
-                    if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds))//&& we do the bounds check
+                    if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))//&& we do the bounds check
                     {
                         Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {horizontalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[horizontalPosCheck].number}");
 
+                        foreach(Vector3Int item in BetweenDice)
+                        {
+                            MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 0;
+                            //MatchedDice.ContainsKey
+                        }
+                        ////if theyre the same color take all of them.
+                        //if (!hasHorizontalColorMatch)
+                        //{
+                        //    MatchedDice[position] += 1;
+                        //    MatchedDice[horizontalPosCheck] += 1;
+                        //}
 
+                        ////if they arent just take the beginning and end
+                        //else
+                        //{
+                            
+                        //}
 
                     }
                 }
@@ -195,46 +212,80 @@ public class DiceMatch : MonoBehaviour
                     Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number + 1, 0);
 
                     bool hasVerticalMatch = TilePos[position].number == TilePos[verticalPosCheck].number;
+                    bool hashasVerticalColorMatch = TilePos[position].color == TilePos[verticalPosCheck].color;
 
-                    if (hasVerticalMatch && IsConnected(position, verticalPosCheck, withinVerticalBounds))
+                    if (hasVerticalMatch && IsConnected(position, verticalPosCheck, withinVerticalBounds, BetweenDice))
                     {
                         Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {verticalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[verticalPosCheck].number}");
-
-                        //Debug.Log(IsThereAVerticalMatch(position));
+                        foreach (Vector3Int item in BetweenDice)
+                        {
+     
+                            MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 0;
+                                //MatchedDice.ContainsKey
+                            
+                        }
+                        //if theyre the same color take all of them.
+                        //if they arent just take the beginning and end
 
                     }
                 }
 
             }
         }
+        foreach(KeyValuePair<Vector3Int, int>  pair in MatchedDice)
+        {
+            //this confused me because i forgot that if one dice is in the same line as a dice thats going to be remove it still counts as a chain
+            //they don't always have to be bookends to count as a chain
+            Debug.Log($"<color=red>Matches In Dictionary </color>: {pair.Key} -> {pair.Value} and here is the number {(int)TilePos[pair.Key].number}");
+        }
+        //Debug.Break();
+        RemoveTiles(MatchedDice);
+    }
+
+    void RemoveTiles(Dictionary<Vector3Int, int> MatchedDice)
+    {
+        foreach (KeyValuePair<Vector3Int, int> pair in MatchedDice) {
+            //ToDO send the int to the animator for the special effects
+            diceBoard.Clear(pair.Key);
+            TilePos[pair.Key] = new DiceImprint(pair.Key);
+        }
+
     }
 
 
-
-
-    //List<Vector3Int>
-    bool IsConnected(Vector3Int position, Vector3Int checkingPosition, bool inBounds)
+    //TODO needs tlc
+    bool IsConnected(Vector3Int position, Vector3Int checkingPosition, bool inBounds, List<Vector3Int>listOfDiceToRemove)
     {
+        listOfDiceToRemove.Clear();
         if (!inBounds)
             return false;
-        
-        
-        List<Vector3Int> inBetweenDice = new List<Vector3Int>();
-        inBetweenDice.Add(position);
-        inBetweenDice.Add(checkingPosition);
+
+
+        listOfDiceToRemove.Add(position);
+        listOfDiceToRemove.Add(checkingPosition);
+        bool sameColor = TilePos[position].color == TilePos[checkingPosition].color;
+
+        //List<Vector3Int> inBetweenDice = new List<Vector3Int>();
 
         Vector3Int directionalCheck = position.x == checkingPosition.x ? new Vector3Int(0,-1,0)  : new Vector3Int(-1, 0, 0);
+
         while(position != checkingPosition)
         {
             checkingPosition += directionalCheck;
             if (!mainMap.HasTile(checkingPosition))
+            {
+                listOfDiceToRemove.Clear();
                 return false;
+            }
 
-            inBetweenDice.Add(checkingPosition);
+            if (sameColor)
+                listOfDiceToRemove.Add(checkingPosition);
+
         }
-        
+
         return true;
     }
+
     [ContextMenu("Apply gravity")]
     void ApplyGravity()
     {
@@ -247,7 +298,7 @@ public class DiceMatch : MonoBehaviour
             for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
             {
                 Vector3Int position = new Vector3Int(x, y, 0);
-                Debug.LogError(position);// iterating correctly
+                //Debug.LogError(position);// iterating correctly
                 //Vector3Int below = new Vector3Int(position.x, -1+ position.y, 0);
 
 
@@ -267,6 +318,9 @@ public class DiceMatch : MonoBehaviour
                 //we are falling until we have a tile or we are at the bottom
                 //falling is the position of the current dice
 
+                //Tile currentTile = TilePos[position].tile;
+                DiceImprint currentDice = new DiceImprint(TilePos[position], position);
+
                 //Vector3Int? newPosition = new Vector3Int?();//this might ntot have to be null because if it past here it has a tile
                 for (int falling = position.y;(mainMap.HasTile(new Vector3Int(x,falling-1,0)) || (falling >= (int)YGridCell.Nine_Bottom)); falling--)
                 {
@@ -284,8 +338,10 @@ public class DiceMatch : MonoBehaviour
                 if (mainMap.HasTile(finishPos))
                     continue;
 
-
+                //TODO Need to get the dice group 
                 //StartCoroutine(TravelingDice(currentTile, startPos, finishPos));
+                StartCoroutine(TravelingDice(currentDice, startPos, finishPos));
+
                 //Debug.Log($"--------------------------");
 
 
@@ -304,7 +360,7 @@ public class DiceMatch : MonoBehaviour
 
 
 
-    IEnumerator TravelingDice(DiceData die, Vector3Int start, Vector3Int finish)
+    IEnumerator TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
     {
 
         TilePos[start] = new DiceImprint(start);
@@ -347,3 +403,7 @@ public class DiceMatch : MonoBehaviour
     //}
 
 }
+//todo
+//small chain - dictionary of dice that count
+//big chain - waterfall for those that count
+//todo create states

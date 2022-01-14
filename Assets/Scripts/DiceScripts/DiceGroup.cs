@@ -35,8 +35,20 @@ public class DiceGroup : MonoBehaviour
     private float stepTime;
     private float lockTime;
 
-    public bool isDisengaging = false;
+    public bool isDisengaging = false;//is playing or playerHasControll
     //{get;private set;}
+
+
+    public enum GameState
+    {
+        None,
+        Disengaging,
+        Scoring,
+        Playing,
+
+    }
+    public GameState gameState;
+
 
     #region testing regions
 
@@ -52,7 +64,7 @@ public class DiceGroup : MonoBehaviour
     };
     #endregion
 
-    const float DisengageDropSpeed = 0.05f;
+    //const float DisengageDropSpeed = 0.05f;
 
 
 
@@ -96,9 +108,10 @@ public class DiceGroup : MonoBehaviour
 
     }
 
+    #region Update
     void Update()
     {
-        return;
+        
         if (isDisengaging)
             return;
         //MoveController();
@@ -148,17 +161,9 @@ public class DiceGroup : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Swaps the dice data information in the tiles
-    /// </summary>
-    void SwapTilesInGroup()
-    {
-        
-        //swap number as well
-        DiceData temp = this.dynamicData;
-        this.dynamicData = this.data;
-        this.data = temp;
-    }
+    #endregion
+
+    #region Rotation Methods
 
     /// <summary>
     /// Rotate takes in either a right or left parameter. If it's right, it will check what state the dynamic die
@@ -273,6 +278,9 @@ public class DiceGroup : MonoBehaviour
         SwapTilesInGroup();
     }
 
+    #endregion
+
+    #region Movement Methods
     /// <summary>
     /// Moves tile after checking is valid position which check the bounds of the board, then if that tile has a tile on it
     /// if the tile does not and it is in the bounds then you can move there.... reverts the locktime to 0
@@ -297,36 +305,6 @@ public class DiceGroup : MonoBehaviour
         return valid;
     }
 
-
-
-    void HandleDisengagement(int? continuingDice)
-    {
-        isDisengaging = true;
-
-
-        int leaveDiceBehind = 1 - (int)continuingDice;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
-        DiceData stillData = leaveDiceBehind == 0 ? this.data : this.dynamicData;
-        DiceData travelingDice = leaveDiceBehind == 1 ? this.data : this.dynamicData;
-        Vector3Int holdPos = new Vector3Int((cells[leaveDiceBehind].x + this.position.x), (cells[leaveDiceBehind].y + this.position.y), 0);
-        Vector3Int startPos = new Vector3Int((cells[(int)continuingDice].x + this.position.x), (cells[(int)continuingDice].y + this.position.y), 0);
-        
-        Vector3Int finishPos = diceGhost.GET_LOWEST_Y_COORD;
-
-        this.diceBoard.Clear(startPos);
-        this.diceBoard.Clear(holdPos);
-        
-
-        diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
-    }
-
-    /// <summary>
-    /// Once the disengagment logic is done, it will call this function that will reset the boolean and spawn the next dice group.
-    /// </summary>
-    public void HandlePostDisengagement()
-    {
-        isDisengaging = false;
-        this.diceBoard.SpawnGroup();
-    }
     
     /// <summary>
     /// immedietly moves the tile down until move does not return it being valid then it locks the piece into place. Diengages the single dice that can move if it can.
@@ -392,11 +370,50 @@ public class DiceGroup : MonoBehaviour
         this.diceBoard.SetOnBoard(this);
         this.diceBoard.SpawnGroup();
     }
+    #endregion
+
+    #region Disengagement Methods
+    void HandleDisengagement(int? continuingDice)
+    {
+        isDisengaging = true;
 
 
-    void Imprint()
+        int leaveDiceBehind = 1 - (int)continuingDice;//if the coninuing dice is 1 this will be 0. if the coninuing dice is 0 this will be 1
+        DiceData stillData = leaveDiceBehind == 0 ? this.data : this.dynamicData;
+        DiceData travelingDice = leaveDiceBehind == 1 ? this.data : this.dynamicData;
+        Vector3Int holdPos = new Vector3Int((cells[leaveDiceBehind].x + this.position.x), (cells[leaveDiceBehind].y + this.position.y), 0);
+        Vector3Int startPos = new Vector3Int((cells[(int)continuingDice].x + this.position.x), (cells[(int)continuingDice].y + this.position.y), 0);
+
+        Vector3Int finishPos = diceGhost.GET_LOWEST_Y_COORD;
+
+        this.diceBoard.Clear(startPos);
+        this.diceBoard.Clear(holdPos);
+
+
+        diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
+    }
+
+    /// <summary>
+    /// Once the disengagment logic is done, it will call this function that will reset the boolean and spawn the next dice group.
+    /// </summary>
+    public void HandlePostDisengagement()
+    {
+        isDisengaging = false;
+        this.diceBoard.SpawnGroup();
+    }
+    #endregion
+
+
+    /// <summary>
+    /// Swaps the dice data information in the tiles
+    /// </summary>
+    void SwapTilesInGroup()
     {
 
+        //swap number as well
+        DiceData temp = this.dynamicData;
+        this.dynamicData = this.data;
+        this.data = temp;
     }
 
 
@@ -415,17 +432,3 @@ enum DynamicDiceState
 //right ->data.cellLocation[0].x + 1
 //down -> data.cellLocation[0].y -1
 //left -> data.cellLocation[0].x - 1
-
-
-//TODO known errors: dice group can peak through the top when you initally start
-//TODO match 3 tutorials
-//
-//https://www.youtube.com/watch?v=LoUQ0kR-lTg /-song writing excercise
-//
-//https://www.youtube.com/watch?v=PE1GLtgbMR0 /- pretty good
-//
-//https://www.youtube.com/watch?v=gIndP9kGfvI&list=PL4vbr3u7UKWrxEz75MqmTDd899cYAvQ_B&index=8 /-matching logic
-
-//https://www.youtube.com/watch?v=cqJ5b5aFo5U&t=3154s /- probably the one i like the best
-
-//https://www.youtube.com/watch?v=PE1GLtgbMR0  /-this seems pretty good too

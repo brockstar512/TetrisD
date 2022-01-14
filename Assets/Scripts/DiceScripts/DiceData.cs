@@ -60,6 +60,15 @@ public struct DiceImprint
         this.tile = die.tile;
         this.position = new Vector2Int(boardPos.x, boardPos.y);
     }
+
+    public DiceImprint(DiceImprint die, Vector3Int boardPos)
+    {
+        this.number = die.number;
+        this.color = die.color;
+        this.tile = die.tile;
+        this.position = new Vector2Int(boardPos.x, boardPos.y);
+    }
+
     public DiceImprint(Vector3Int boardPos)
     {
         this.number = DiceNumber.Zero;

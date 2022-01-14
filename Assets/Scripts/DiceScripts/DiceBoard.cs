@@ -30,8 +30,8 @@ public class DiceBoard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        #region Bound Testing
         //i wonder if it wont go all the way because you can divide 9 by 2 that easily when the bounds is divided by 2
-
         //Debug.Log($"BOUNDS x : {Bounds.xMin} and {Bounds.xMax}");//BOUNDS x : -3 and 3
         //Debug.Log($"BOUNDS y : {Bounds.yMin} and {Bounds.yMax}");//BOUNDS y : -5 and 5
         //Debug.Log($"BOUNDS with and height : {Bounds.width} and {Bounds.height}");//BOUNDS with and height : 6 and 10
@@ -39,8 +39,7 @@ public class DiceBoard : MonoBehaviour
         //Debug.Log($"board size :{this.boardSize}");//board size :(6, 10)
         //Debug.Log($"-this.boardSize.y / 2 :{-this.boardSize.y / 2}");//-this.boardSize.y / 2 :-5
         //Debug.Log($"this.boardSize.y :{this.boardSize.y}");//this.boardSize.y :10
-
-
+        #endregion
 
 
         this.tilemap = GetComponentInChildren<Tilemap>();
@@ -55,49 +54,12 @@ public class DiceBoard : MonoBehaviour
     }
     void Start()
     {
-        TestGravity();
-
-
-        return;
         SpawnGroup();
-    }
-
-    //put random tiles up high
-    [ContextMenu("Test gravity")]
-    void TestGravity()
-    {
-        
-        int random = Random.Range(0, this.DiceOptions.Length);
-        DiceData dice1 = this.DiceOptions[random];
-        DiceData dice2 = this.DiceOptions[random];
-        DiceData dice3 = this.DiceOptions[random];
-        DiceData dice4 = this.DiceOptions[random];
-        DiceData dice5 = this.DiceOptions[random];
-        DiceData dice6 = this.DiceOptions[random];
-
-        Vector3Int position = new Vector3Int(-2,2,0);
-        Vector3Int position1 = new Vector3Int(-2, 1, 0);
-        Vector3Int position2 = new Vector3Int(-2, 0, 0);
-        Vector3Int position3 = new Vector3Int(1, 3, 0);
-        Vector3Int position4 = new Vector3Int(-2, -5, 0);
-        Vector3Int position5 = new Vector3Int(1, 0, 0);
-
-
-
-
-
-
-        SetSingleDiceOnBoard(position, dice1.tile);
-        SetSingleDiceOnBoard(position1, dice2.tile);
-        SetSingleDiceOnBoard(position2, dice3.tile);
-        SetSingleDiceOnBoard(position3, dice4.tile);
-        SetSingleDiceOnBoard(position4, dice5.tile);
-        SetSingleDiceOnBoard(position5, dice6.tile);
-
-
-
 
     }
+
+
+
     public void SpawnGroup()
     {
         int random = Random.Range(0, this.DiceOptions.Length);
@@ -128,26 +90,6 @@ public class DiceBoard : MonoBehaviour
             this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
         }
         else { Debug.Log("data dice is null"); }
-
-
-        /*
-        for(int i = 0;i< diceGroup.cells.Length;i++)
-        {
-            //each tile in this dice group array is placed on the map
-            Vector3Int tilePosition = diceGroup.cells[i]+ diceGroup.position;
-            //what is the position it needs to be placed(more important if there is more than 1)/which tile to use
-            //we have a position where we are falling/place what are the coordinates from that location do the other tiles need to go to fill in that shape
-
-
-            //TODO explain why this is also taken out
-            //THIS SHOULD ITERATIVLY place second dice [] of datadice
-            //this.tilemap.SetTile(tilePosition, diceGroup.datacollection[i].tile);//
-            this.tilemap.SetTile(tilePosition,diceGroup.dynamicData.tile);//this is places 2nd dice on
-            this.tilemap.SetTile(tilePosition, diceGroup.data.tile);//this is placeing 1st dice on
-
-        }*/
-
-
     }
 
     /// <summary>
@@ -266,4 +208,35 @@ public class DiceBoard : MonoBehaviour
         this.tilemap.SetTile(diceGroup.cells[diceToSet] + diceGroup.position, tileToSet);
 
     }
+
+
+
+    #region Testing Gravity
+    //put random tiles up high
+    [ContextMenu("Test gravity")]
+    void TestGravity()
+    {
+        int random = Random.Range(0, this.DiceOptions.Length);
+        DiceData dice1 = this.DiceOptions[random];
+        DiceData dice2 = this.DiceOptions[random];
+        DiceData dice3 = this.DiceOptions[random];
+        DiceData dice4 = this.DiceOptions[random];
+        DiceData dice5 = this.DiceOptions[random];
+        DiceData dice6 = this.DiceOptions[random];
+
+        Vector3Int position = new Vector3Int(-2, 2, 0);
+        Vector3Int position1 = new Vector3Int(-2, 1, 0);
+        Vector3Int position2 = new Vector3Int(-2, 0, 0);
+        Vector3Int position3 = new Vector3Int(1, 3, 0);
+        Vector3Int position4 = new Vector3Int(-2, -5, 0);
+        Vector3Int position5 = new Vector3Int(1, 0, 0);
+
+        SetSingleDiceOnBoard(position, dice1.tile);
+        SetSingleDiceOnBoard(position1, dice2.tile);
+        SetSingleDiceOnBoard(position2, dice3.tile);
+        SetSingleDiceOnBoard(position3, dice4.tile);
+        SetSingleDiceOnBoard(position4, dice5.tile);
+        SetSingleDiceOnBoard(position5, dice6.tile);
+    }
+    #endregion
 }
