@@ -92,7 +92,7 @@ public class DiceMatch : MonoBehaviour
 
 
         //RemoveDiceClicked(position);
-        CheckForMatches();
+        //CheckForMatches();
         return;
         ////
         //Debug.Log($"At position {position} there is a {clickedTile} here it is in the dict {TilePos[position].number}");
@@ -236,7 +236,7 @@ public class DiceMatch : MonoBehaviour
         {
             //this confused me because i forgot that if one dice is in the same line as a dice thats going to be remove it still counts as a chain
             //they don't always have to be bookends to count as a chain
-            Debug.Log($"<color=red>Matches In Dictionary </color>: {pair.Key} -> {pair.Value} and here is the number {(int)TilePos[pair.Key].number}");
+            //Debug.Log($"<color=red>Matches In Dictionary </color>: {pair.Key} -> {pair.Value} and here is the number {(int)TilePos[pair.Key].number}");
         }
         //Debug.Break();
         RemoveTiles(MatchedDice);

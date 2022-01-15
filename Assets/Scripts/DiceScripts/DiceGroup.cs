@@ -39,6 +39,13 @@ public class DiceGroup : MonoBehaviour
     //{get;private set;}
 
 
+    //TODO
+    //-clean check for match
+    //-clean state manager
+    //-clean public fields
+    //-chaining
+    //-animation
+    //-visual queues
     public enum GameState
     {
         None,
@@ -47,7 +54,9 @@ public class DiceGroup : MonoBehaviour
         Playing,
 
     }
-    public GameState gameState;
+    public GameState gameState = GameState.None;
+
+ 
 
 
     #region testing regions
@@ -368,6 +377,7 @@ public class DiceGroup : MonoBehaviour
         }
 
         this.diceBoard.SetOnBoard(this);
+        Debug.Log("SCORE:");
         this.diceBoard.SpawnGroup();
     }
     #endregion
@@ -399,6 +409,7 @@ public class DiceGroup : MonoBehaviour
     public void HandlePostDisengagement()
     {
         isDisengaging = false;
+        Debug.Log("SCORE:");
         this.diceBoard.SpawnGroup();
     }
     #endregion
@@ -417,6 +428,27 @@ public class DiceGroup : MonoBehaviour
     }
 
 
+
+    //out 
+    public void StateManager(ref GameState from, GameState to)
+    {
+        switch (to)
+        {
+            case GameState.Disengaging:
+                from = to;
+                break;
+            case GameState.Playing:
+                from = to;
+                //this.diceBoard.SpawnGroup();
+                break;
+            case GameState.Scoring:
+                from = to;
+                //check for score
+                break;
+            default:
+                break;
+        }
+    }
 
 }
 
