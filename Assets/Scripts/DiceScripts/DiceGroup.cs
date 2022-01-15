@@ -378,7 +378,8 @@ public class DiceGroup : MonoBehaviour
 
         this.diceBoard.SetOnBoard(this);
         Debug.Log("SCORE:");
-        this.diceBoard.SpawnGroup();
+        //this.diceBoard.SpawnGroupq();
+        diceMatch.Score();
     }
     #endregion
 
@@ -411,6 +412,7 @@ public class DiceGroup : MonoBehaviour
         isDisengaging = false;
         Debug.Log("SCORE:");
         this.diceBoard.SpawnGroup();
+        //diceMatch.Score();
     }
     #endregion
 
