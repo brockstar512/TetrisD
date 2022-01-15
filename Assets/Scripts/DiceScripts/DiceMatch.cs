@@ -5,13 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class DiceMatch : MonoBehaviour
 {
-    [SerializeField]
-    Tilemap mainMap;
     public DiceBoard diceBoard;
-    
-    [SerializeField]
-    Grid grid;
-    
+    [SerializeField] Tilemap mainMap;    
+    [SerializeField] Grid grid;
+
+    #region Grid Data
     private enum YGridCell
     {
         One_Top =3,
@@ -35,16 +33,24 @@ public class DiceMatch : MonoBehaviour
     }
 
     Dictionary<Vector3Int, DiceImprint> TilePos;
+    #endregion 
+
     const float GRAVITY = 0.045f;//0.045f;
-
-    //todo should I have the bools do checks in there function then return a list of dice
-    #region testing regions
-    #endregion
-
+    private int Chain;
 
     private void Awake()
     {
         Initialize();
+    }
+
+    void Update()
+    {
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            MouseTileReader();
+        }
+
     }
 
     void Initialize()
@@ -64,91 +70,44 @@ public class DiceMatch : MonoBehaviour
 
     }
 
-    //maybe this tile should only have a key if there is a dice in it
+    /// <summary>
+    /// replaces the dice value in the tile pos dictionary
+    /// </summary>
+    /// <param name="Pos"></param>
+    /// <param name="die"></param>
     public void SetTileDict(Vector3Int Pos, DiceImprint die)
     {
-        //if(TilePos.TryGetValue(Pos, out die)) return;//if there is a value at that key
-        //TilePos.Add(Pos, die);
         TilePos[Pos] = die;
     }
+
+    /// <summary>
+    /// deletes the tiles that have a match
+    /// </summary>
+    /// <param name="Pos"></param>
     public void RemoveTileDict(Vector3Int Pos)
     {
-        //if(TilePos.TryGetValue(Pos, out die)) return;//if there is a value at that key
-        //TilePos.Add(Pos, die);
         TilePos[Pos] = new DiceImprint(Pos);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        if(Input.GetMouseButtonDown(0))
-        {
-            MouseTileReader();
-        }
-
-    }
-
-    private void MouseTileReader()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
-        Vector3Int position = grid.WorldToCell(worldPoint);
-        TileBase clickedTile = mainMap.GetTile(position);
-
-
-        //RemoveDiceClicked(position);
-        //CheckForMatches();
-        return;
-        ////
-        //Debug.Log($"At position {position} there is a {clickedTile} here it is in the dict {TilePos[position].number}");
-
-
-
-        //return;
-        ////RemoveTileDict(position);
-        //if (TilePos.ContainsKey(position))
-        //{
-        //    Debug.Log($"At position {position} there is a {clickedTile} it should now be removed in the dict {TilePos[position].number}");
-        //}
-
-
-    }
-
-    [ContextMenu("Read Values")]
-    void ReadValues()
-    {
-        foreach(KeyValuePair<Vector3Int, DiceImprint > entry in TilePos)
-        {
-            if((int)entry.Value.number > 0)
-            {
-                Debug.Log($"At Position {entry.Key} there is a value of {entry.Value.number} and color {entry.Value.color}");
-            }
-            
-        }
-    }
-    //void RemoveDiceClicked(Vector3Int position)
-    //{
-    //    diceBoard.Clear(position);
-    //    TilePos[position] = new DiceImprint(position);
-    //    //ApplyGravity();
-    //}
-
     public void Score()
     {
+        Chain = 0;
         CheckForMatches();
     }
 
+    /// <summary>
+    /// this is the Main function of this script. It checks every tile and sees if there is a match. From there it handles the logic of which functions to call next
+    /// </summary>
     void CheckForMatches()
     {
-
+        bool hasMatch = false;
         //-3 -2 -1 0 1 2
 
-        //3
-        //2
-        //1
-        //0
-        //-1
+        //3  (...)
+        //2  (...)
+        //1  (...)
+        //0  (...)
+        //-1 (...)
         //-2 (4th)
         //-3 (3rd)
         //-4 (2nd)
@@ -172,8 +131,6 @@ public class DiceMatch : MonoBehaviour
                 if (!hasTile)
                     continue;
 
-                Debug.Log($"We are checking {position}");
-
                 //Do they have a pair in bounds
                 bool withinHorizontalBounds = (position.x + (int)TilePos[position].number) < 2 ? true : false;
                 bool withinVerticalBounds = (position.y + (int)TilePos[position].number) < 3 ? true : false;
@@ -181,7 +138,7 @@ public class DiceMatch : MonoBehaviour
                 //get the number of the current position
                 DiceNumber number = TilePos[position].number;
 
-                Debug.Log($"We are checking dice number {number}");//when dice diengage theyre value isn't kept in the pos dict
+                //if the dice is zero go to the next tile
                 if (number == DiceNumber.Zero)
                     continue;
 
@@ -199,22 +156,28 @@ public class DiceMatch : MonoBehaviour
 
                     //if the colors are the same?
                     bool hasHorizontalColorMatch = TilePos[position].color == TilePos[horizontalPosCheck].color;
-                    //TODO I stopped here
-                    if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))//&& we do the bounds check
+
+                    //if there is a horizontal match and they have a dice in between them...
+                    if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))
                     {
+
+                        //figure out if we need to loop through all this again because the board has changed
+                        hasMatch = true;
+                        //add the start position
                         BetweenDice.Add(position);
+                        //add the matching dice
                         BetweenDice.Add(horizontalPosCheck);
+                        //this log will tell you what the position and number of the matching dice is
                         //Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {horizontalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[horizontalPosCheck].number}");
 
+                        //add the inbetween tiles and give them a value that corresponds with how often they occur
                         foreach (Vector3Int item in BetweenDice)
                         {
-                            //Debug.Log(MatchedDice.ContainsKey(item));
                             MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;
-                            //MatchedDice.ContainsKey
                         }
-
                     }
                 }
+                //we do the same with the vertial bounds as we did with the horizontal.
                 if (withinVerticalBounds) {
                     Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number + 1, 0);
 
@@ -223,36 +186,52 @@ public class DiceMatch : MonoBehaviour
 
                     if (hasVerticalMatch && IsConnected(position, verticalPosCheck, withinVerticalBounds, BetweenDice))
                     {
+                        //figure out if we need to loop through all this again because the board has changed
+                        hasMatch = true;
                         BetweenDice.Add(position);
                         BetweenDice.Add(verticalPosCheck);
                         //Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {verticalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[verticalPosCheck].number}");
                         foreach (Vector3Int item in BetweenDice)
                         {
-                            Debug.Log(MatchedDice.ContainsKey(item));
-                            MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;
-                                //MatchedDice.ContainsKey
-                            
+                            MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;                            
                         }
-                        //if theyre the same color take all of them.
-                        //if they arent just take the beginning and end
-
                     }
                 }
 
             }
         }
-        foreach(KeyValuePair<Vector3Int, int>  pair in MatchedDice)
+
+        #region Helper Log
         {
-                                                           //location to delete    //level of animation                 //tile number
-            Debug.Log($"<color=red>Matches In Dictionary </color>: {pair.Key} -> {pair.Value} and here is the number {(int)TilePos[pair.Key].number}");
+            /* this will tell you the tile that will be removed the level of animation and the tile number.
+            foreach(KeyValuePair<Vector3Int, int>  pair in MatchedDice)
+            {
+                                                               //location to delete    //level of animation                 //tile number
+                Debug.Log($"<color=red>Matches In Dictionary </color>: {pair.Key} -> {pair.Value} and here is the number {(int)TilePos[pair.Key].number}");
+            }
+            */
         }
-        //Debug.Break();
-        RemoveTiles(MatchedDice);
+        #endregion
+        //if (hasMatch)
+        {
+            //pass in the matched dice dictionary if there is a match otherwise we should continue playing
+            RemoveTiles(MatchedDice);
+            //keep track of how many times we've ran this for waterfall bonus
+            Chain++;
+            return;
+        }
+        //continue playing.
+        //diceBoard.SpawnGroup();
     }
 
+    /// <summary>
+    /// We pass in the dictionary of all the dice that need to be removed. the key is the location that needs to be removed and the value is
+    /// how many chains that tile was involved with. At the endit applies gravity to the free floating tiles.
+    /// </summary>
+    /// <param name="MatchedDice"></param>
     void RemoveTiles(Dictionary<Vector3Int, int> MatchedDice)
     {
-        
+        //Debug.LogError("removing tiles");
         foreach (KeyValuePair<Vector3Int, int> pair in MatchedDice) {
             //TODO send the int to the animator for the special effects
             //-the key is the tile position to remove
@@ -264,12 +243,21 @@ public class DiceMatch : MonoBehaviour
             //reset position to 0
             TilePos[pair.Key] = new DiceImprint(pair.Key);
         }
-        //diceBoard.SpawnGroup();
+        //apply the gravity
         ApplyGravity();
     }
 
-
-    bool IsConnected(Vector3Int position, Vector3Int checkingPosition, bool inBounds, List<Vector3Int>listOfDiceToRemove)
+    /// <summary>
+    /// This sunction check to see if there is a tile in every cell between the tile you are at and that tiles number away. if it is the same color it will add it to the
+    /// list of dice to remove. if it is not the same color it will just return that it is completely connected. We pass in the current position. The position that tiles number distance away.
+    /// If that checked position is in bounds. The list that will gather which dice should also be removed if any.
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="checkingPosition"></param>
+    /// <param name="inBounds"></param>
+    /// <param name="listOfDiceToRemove"></param>
+    /// <returns></returns>
+    bool IsConnected(in Vector3Int position, Vector3Int checkingPosition,in bool inBounds, List<Vector3Int>listOfDiceToRemove)
     {
         //if what we're checking is out of bounds just ditch it.
         listOfDiceToRemove.Clear();
@@ -308,8 +296,9 @@ public class DiceMatch : MonoBehaviour
         return true;
     }
 
-    //todo this needs tlc
-    [ContextMenu("Apply gravity")]
+    /// <summary>
+    /// This function just looks at all the empty spaces and pulls the tiles that are above them down so there are no more remaining gaps.
+    /// </summary>
     void ApplyGravity()
     {
 
@@ -317,70 +306,56 @@ public class DiceMatch : MonoBehaviour
         for (int x =(int)XGridCell.One_Left; x<= (int)XGridCell.Six_Right; x++)
         {
             int MovingDiceInRow = -1;
-            //Debug.LogError(position);
+
             for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
             {
                 Vector3Int position = new Vector3Int(x, y, 0);
-                //Debug.LogError(position);// iterating correctly
-                //Vector3Int below = new Vector3Int(position.x, -1+ position.y, 0);
-
-
-
-
-                //TODO also if it has a dice below it continue
-                //if (mainMap.HasTile(below))
-                //    continue;
-
+ 
                 //we can skip the tiles that are empty
                 if (!mainMap.HasTile(position))//(y doesnt have a tile)
                     continue;
 
                 Vector3Int startPos = position;
                 Vector3Int finishPos= new Vector3Int();
+
                 //we found a tile.. if there is another tile under it or we are at the bottom don't run
                 //we are falling until we have a tile or we are at the bottom
                 //falling is the position of the current dice
 
-                //Tile currentTile = TilePos[position].tile;
+
                 DiceImprint currentDice = new DiceImprint(TilePos[position], position);
 
-                //Vector3Int? newPosition = new Vector3Int?();//this might ntot have to be null because if it past here it has a tile
                 for (int falling = position.y;(mainMap.HasTile(new Vector3Int(x,falling-1,0)) || (falling >= (int)YGridCell.Nine_Bottom)); falling--)
                 {
-
                     Vector3Int newPosition = new Vector3Int(x, falling, 0);
-                    //Debug.Log(newPosition);
                     finishPos = newPosition;
-
-
                 }
+
                 //get final position
                 MovingDiceInRow++;
                 finishPos = new Vector3Int(finishPos.x, finishPos.y + MovingDiceInRow,0);
-                //Debug.LogError($"Start {startPos} and finsh {finishPos}");
+
                 if (mainMap.HasTile(finishPos))
                     continue;
 
                 StartCoroutine(TravelingDice(currentDice, startPos, finishPos));
 
-                //Debug.Log($"--------------------------");
-
-
-
             }
 
-            diceBoard.SpawnGroup();
+            //board has changed now so check again for matches
+            //CheckForMatches();
+
+            diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
         }
-        //iterate up the column until you have a tile
-        //go down until you do have a tile
-        //repeat starting from your current location
-
-        //go to next column
-
     }
 
-
-
+    /// <summary>
+    /// This function pushes the remaining dice down from what you pass in as start to what you pass in as finish.
+    /// </summary>
+    /// <param name="die"></param>
+    /// <param name="start"></param>
+    /// <param name="finish"></param>
+    /// <returns></returns>
     IEnumerator TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
     {
 
@@ -401,30 +376,39 @@ public class DiceMatch : MonoBehaviour
         yield return null;
     }
 
-    //IEnumerator TravelingDice(Tile tile, Vector3Int start, Vector3Int finish)
-    //{
+    #region Test Functions
 
-    //    TilePos[start] = new DiceImprint(start);
+    private void MouseTileReader()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
+        Vector3Int position = grid.WorldToCell(worldPoint);
+        TileBase clickedTile = mainMap.GetTile(position);
+        ReadValues(position);
+    }
 
-    //    Vector3Int current = start;
+    void ReadValues(Vector3Int position)
+    {
+        Debug.Log($"At Position {TilePos[position].position} there is a value of {TilePos[position].number} and color {TilePos[position].color}");
+    }
 
-    //    while (current != finish)
-    //    {
-    //        this.diceBoard.Clear(current);
-    //        current = new Vector3Int(current.x, current.y + -1, 0);
-    //        this.diceBoard.SetSingleDiceOnBoard(current, tile);
-    //        yield return new WaitForSeconds(GRAVITY);
-    //    }
-    //    this.diceBoard.SetSingleDiceOnBoard(finish, tile);
-    //    DiceData die = new DiceData();
-    //    die.number = DiceNumber.Six;
-    //    die.tile = tile;
-    //    TilePos[finish] = new DiceImprint(die, finish);
-    //    yield return null;
-    //}
+    void ReadValues()
+    {
+        foreach (KeyValuePair<Vector3Int, DiceImprint> entry in TilePos)
+        {
+            if ((int)entry.Value.number > 0)
+            {
+                Debug.Log($"At Position {entry.Key} there is a value of {entry.Value.number} and color {entry.Value.color}");
+            }
+
+        }
+    }
+    void RemoveDiceClicked(Vector3Int position)
+    {
+        diceBoard.Clear(position);
+        TilePos[position] = new DiceImprint(position);
+        //ApplyGravity();
+    }
+    #endregion
 
 }
-//todo
-//small chain - dictionary of dice that count
-//big chain - waterfall for those that count
-//todo create states

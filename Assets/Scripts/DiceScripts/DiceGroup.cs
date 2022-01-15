@@ -327,7 +327,7 @@ public class DiceGroup : MonoBehaviour
         int? continuingDice;
         if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
         {
-            Debug.LogError($"DISENGAGE dice {continuingDice}");
+            //Debug.LogError($"DISENGAGE dice {continuingDice}");
             HandleDisengagement(continuingDice);
             return;
         }
