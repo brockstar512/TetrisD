@@ -377,7 +377,7 @@ public class DiceGroup : MonoBehaviour
         }
 
         this.diceBoard.SetOnBoard(this);
-        Debug.Log("SCORE:");
+        //Debug.Log("SCORE:");
         //this.diceBoard.SpawnGroupq();
         diceMatch.Score();
     }
@@ -415,7 +415,7 @@ public class DiceGroup : MonoBehaviour
     public void HandlePostDisengagement()
     {
         isDisengaging = false;
-        Debug.Log("SCORE:");
+        //Debug.Log("SCORE:");
         //this.diceBoard.SpawnGroup();
         diceMatch.Score();
     }

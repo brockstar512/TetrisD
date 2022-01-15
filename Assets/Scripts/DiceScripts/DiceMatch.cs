@@ -345,6 +345,9 @@ public class DiceMatch : MonoBehaviour
             //board has changed now so check again for matches
             //CheckForMatches();
 
+            //I want this to run after the coroutines are finished
+
+
             diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
         }
     }
