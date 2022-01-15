@@ -143,8 +143,8 @@ public class DiceMatch : MonoBehaviour
         //1
         //0
         //-1
-        //-2
-        //-3
+        //-2 (4th)
+        //-3 (3rd)
         //-4 (2nd)
         //-5 (1st) (then this column)
 
@@ -156,15 +156,17 @@ public class DiceMatch : MonoBehaviour
 
             for (int x = (int)XGridCell.One_Left; x<= (int)XGridCell.Six_Right; x++)
             {
-
+                //what position are we checking
                 Vector3Int position = new Vector3Int(x, y, 0);
+                //does it have a tile?
                 bool hasTile = mainMap.HasTile(position);
 
 
-                //if there isnt a tile break
+                //if there isnt a tile go to the next one
                 if (!hasTile)
-                    break;
+                    continue;
 
+                Debug.Log($"We are checking {position}");
 
                 //Do they have a pair in bounds
                 bool withinHorizontalBounds = (position.x + (int)TilePos[position].number) < 2 ? true : false;
@@ -172,10 +174,12 @@ public class DiceMatch : MonoBehaviour
 
                 //get the number of the current position
                 DiceNumber number = TilePos[position].number;
-                if (number == DiceNumber.Zero)
-                    break;
 
-                //Debug.Log($"Here is a list for the dice inbetween");
+                //
+                if (number == DiceNumber.Zero)
+                    continue;
+
+                //get a list of the dice inbetween in case they are the same color
                 List<Vector3Int> BetweenDice = new List<Vector3Int>();
 
                 //if it is within our bounds
@@ -189,7 +193,7 @@ public class DiceMatch : MonoBehaviour
 
                     //if the colors are the same?
                     bool hasHorizontalColorMatch = TilePos[position].color == TilePos[horizontalPosCheck].color;
-
+                    //TODO I stopped here
                     if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))//&& we do the bounds check
                     {
                         BetweenDice.Add(position);
@@ -198,7 +202,7 @@ public class DiceMatch : MonoBehaviour
 
                         foreach (Vector3Int item in BetweenDice)
                         {
-                            Debug.Log(MatchedDice.ContainsKey(item));
+                            //Debug.Log(MatchedDice.ContainsKey(item));
                             MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;
                             //MatchedDice.ContainsKey
                         }
