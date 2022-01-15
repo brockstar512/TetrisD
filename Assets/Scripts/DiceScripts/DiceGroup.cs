@@ -402,6 +402,11 @@ public class DiceGroup : MonoBehaviour
 
 
         diceDisengage.Disengage(stillData, travelingDice, holdPos, startPos, finishPos);
+        //this seems a little redundant with the positions being passed into both but i suppose the dice hold the position has well as the dict
+        DiceImprint still = new DiceImprint(stillData, holdPos);
+        DiceImprint falling = new DiceImprint(travelingDice, finishPos);
+        diceMatch.SetTileDict(holdPos, still);
+        diceMatch.SetTileDict(finishPos, falling);
     }
 
     /// <summary>
@@ -411,8 +416,8 @@ public class DiceGroup : MonoBehaviour
     {
         isDisengaging = false;
         Debug.Log("SCORE:");
-        this.diceBoard.SpawnGroup();
-        //diceMatch.Score();
+        //this.diceBoard.SpawnGroup();
+        diceMatch.Score();
     }
     #endregion
 

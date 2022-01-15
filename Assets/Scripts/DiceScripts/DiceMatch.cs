@@ -71,6 +71,12 @@ public class DiceMatch : MonoBehaviour
         //TilePos.Add(Pos, die);
         TilePos[Pos] = die;
     }
+    public void RemoveTileDict(Vector3Int Pos)
+    {
+        //if(TilePos.TryGetValue(Pos, out die)) return;//if there is a value at that key
+        //TilePos.Add(Pos, die);
+        TilePos[Pos] = new DiceImprint(Pos);
+    }
 
     // Update is called once per frame
     void Update()
@@ -121,12 +127,12 @@ public class DiceMatch : MonoBehaviour
             
         }
     }
-    void RemoveDiceClicked(Vector3Int position)
-    {
-        diceBoard.Clear(position);
-        TilePos[position] = new DiceImprint(position);
-        //ApplyGravity();
-    }
+    //void RemoveDiceClicked(Vector3Int position)
+    //{
+    //    diceBoard.Clear(position);
+    //    TilePos[position] = new DiceImprint(position);
+    //    //ApplyGravity();
+    //}
 
     public void Score()
     {
@@ -175,7 +181,7 @@ public class DiceMatch : MonoBehaviour
                 //get the number of the current position
                 DiceNumber number = TilePos[position].number;
 
-                //
+                Debug.Log($"We are checking dice number {number}");//when dice diengage theyre value isn't kept in the pos dict
                 if (number == DiceNumber.Zero)
                     continue;
 
