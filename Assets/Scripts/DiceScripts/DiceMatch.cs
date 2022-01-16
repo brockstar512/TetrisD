@@ -8,6 +8,7 @@ public class DiceMatch : MonoBehaviour
     public DiceBoard diceBoard;
     [SerializeField] Tilemap mainMap;    
     [SerializeField] Grid grid;
+    List<bool> TaskList = new List<bool>();
 
     #region Grid Data
     private enum YGridCell
@@ -31,7 +32,7 @@ public class DiceMatch : MonoBehaviour
         Five = 1,
         Six_Right = 2,
     }
-
+    bool taskIsRunning = false;
     Dictionary<Vector3Int, DiceImprint> TilePos;
     #endregion 
 
@@ -41,14 +42,28 @@ public class DiceMatch : MonoBehaviour
     private void Awake()
     {
         Initialize();
+        //TaskList.Add(true);
     }
 
     void Update()
     {
+        if (taskIsRunning)
+        {
+            if (TaskList.Contains(false))
+                return;
+
+            Debug.Log("TurnOFFTaskManager");
+            taskIsRunning = false;
+            //read again
+            //for know we'll just spawn again
+            //diceBoard.SpawnGroup();
+            CheckForMatches();
+
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
-            MouseTileReader();
+            //MouseTileReader();
         }
 
     }
@@ -199,8 +214,9 @@ public class DiceMatch : MonoBehaviour
                 }
 
             }
-        }
 
+        }
+        Debug.Log("Here is the chain " + Chain);
         #region Helper Log
         {
             /* this will tell you the tile that will be removed the level of animation and the tile number.
@@ -212,7 +228,7 @@ public class DiceMatch : MonoBehaviour
             */
         }
         #endregion
-        //if (hasMatch)
+        if (hasMatch)
         {
             //pass in the matched dice dictionary if there is a match otherwise we should continue playing
             RemoveTiles(MatchedDice);
@@ -221,7 +237,7 @@ public class DiceMatch : MonoBehaviour
             return;
         }
         //continue playing.
-        //diceBoard.SpawnGroup();
+        diceBoard.SpawnGroup();
     }
 
     /// <summary>
@@ -301,6 +317,7 @@ public class DiceMatch : MonoBehaviour
     /// </summary>
     void ApplyGravity()
     {
+        TaskList.Clear();
 
         //start from the bottom
         for (int x =(int)XGridCell.One_Left; x<= (int)XGridCell.Six_Right; x++)
@@ -338,6 +355,7 @@ public class DiceMatch : MonoBehaviour
                 if (mainMap.HasTile(finishPos))
                     continue;
 
+                TaskList.Add(false);
                 StartCoroutine(TravelingDice(currentDice, startPos, finishPos));
 
             }
@@ -348,8 +366,12 @@ public class DiceMatch : MonoBehaviour
             //I want this to run after the coroutines are finished
 
 
-            diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
         }
+
+        Debug.Log("TurnOnTaskManager");
+        taskIsRunning = true;
+        diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
+
     }
 
     /// <summary>
@@ -376,6 +398,14 @@ public class DiceMatch : MonoBehaviour
         this.diceBoard.SetSingleDiceOnBoard(finish, die.tile);
 
         TilePos[finish] = new DiceImprint(die,finish);
+        for(int i =0; i < TaskList.Count; i++)
+        {
+            if (!TaskList[i])
+            {
+                TaskList[i] = false;
+                break;
+            }
+        }
         yield return null;
     }
 
