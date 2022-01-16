@@ -42,7 +42,6 @@ public class DiceMatch : MonoBehaviour
     private void Awake()
     {
         Initialize();
-        //TaskList.Add(true);
     }
 
     void Update()
@@ -54,9 +53,8 @@ public class DiceMatch : MonoBehaviour
 
             Debug.Log("TurnOFFTaskManager");
             taskIsRunning = false;
-            //read again
-            //for know we'll just spawn again
-            //diceBoard.SpawnGroup();
+
+            //read board again
             CheckForMatches();
 
         }
@@ -216,7 +214,7 @@ public class DiceMatch : MonoBehaviour
             }
 
         }
-        Debug.Log("Here is the chain " + Chain);
+
         #region Helper Log
         {
             /* this will tell you the tile that will be removed the level of animation and the tile number.
@@ -359,19 +357,10 @@ public class DiceMatch : MonoBehaviour
                 StartCoroutine(TravelingDice(currentDice, startPos, finishPos));
 
             }
-
-            //board has changed now so check again for matches
-            //CheckForMatches();
-
-            //I want this to run after the coroutines are finished
-
-
         }
-
         Debug.Log("TurnOnTaskManager");
         taskIsRunning = true;
         diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
-
     }
 
     /// <summary>
