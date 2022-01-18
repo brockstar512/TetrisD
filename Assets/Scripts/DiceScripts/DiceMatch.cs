@@ -9,6 +9,7 @@ public class DiceMatch : MonoBehaviour
     [SerializeField] Tilemap mainMap;    
     [SerializeField] Grid grid;
     List<bool> TaskList = new List<bool>();
+    public DiceFXController diceFXController;
 
     #region Grid Data
     private enum YGridCell
@@ -51,7 +52,7 @@ public class DiceMatch : MonoBehaviour
             if (TaskList.Contains(false))
                 return;
 
-            Debug.Log("TurnOFFTaskManager");
+            //Debug.Log("TurnOFFTaskManager");
             taskIsRunning = false;
 
             //read board again
@@ -256,7 +257,13 @@ public class DiceMatch : MonoBehaviour
 
             //reset position to 0
             TilePos[pair.Key] = new DiceImprint(pair.Key);
+
+            //make tasks then apply gravity once the tasks are finished
+            //diceFXController.FX(DiceFXController.TileEffect.pop, pair.Key);
+            diceFXController.FX(pair.Key);
+
         }
+        Debug.LogError("APPLY GRAVITY");
         //apply the gravity
         ApplyGravity();
     }
@@ -358,7 +365,7 @@ public class DiceMatch : MonoBehaviour
 
             }
         }
-        Debug.Log("TurnOnTaskManager");
+        //Debug.Log("TurnOnTaskManager");
         taskIsRunning = true;
         diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
     }

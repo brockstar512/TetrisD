@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08622e6e624246bd8ec2a0f4c925816, type: 3}
+  m_Name: PopFX
+  m_EditorClassIdentifier: 
+  effect: 5
+  FPS: 8
+  tiles:
+  - {fileID: 11400000, guid: f0fb7359557bd49a487df5613b3d5109, type: 2}
+  - {fileID: 11400000, guid: 6c7d95e5fc2424a169091efb44ab2450, type: 2}
+  - {fileID: 11400000, guid: fcc77da9d06f541b8a9db0227d11dd45, type: 2}
+  - {fileID: 11400000, guid: ac224913bb05f4887b7a0cc369c1084e, type: 2}
+  map: {fileID: 0}

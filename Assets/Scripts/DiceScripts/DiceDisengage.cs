@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class DiceDisengage : MonoBehaviour
 {
+    public DiceFXController diceFXController;
     public DiceBoard diceBoard { get; private set; }//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceGroup diceGroup { get; private set; }
     public Vector3Int position { get; private set; }//i believe position is position on board
@@ -67,6 +68,8 @@ public class DiceDisengage : MonoBehaviour
             this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
+
+        diceFXController.FX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
         diceGroup.HandlePostDisengagement();
         yield return null;

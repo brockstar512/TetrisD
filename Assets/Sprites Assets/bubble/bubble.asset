@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: bubble
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -5712959122012955994, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 5435921867156881161, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: -4870265009442684133, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: -5572994966305385033, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 3403141494019581715, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: -594048738490451725, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 202192575422197428, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 7907927230998996524, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: -7186795469899899285, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 6590299901797142365, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: -3663232725478290531, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: -8875763432559473096, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 6821316095109485184, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  - {fileID: 1460379025253301930, guid: a4c37167c5b56462aaf9e7e45751fd77, type: 3}
+  m_MinSpeed: 24
+  m_MaxSpeed: 24
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

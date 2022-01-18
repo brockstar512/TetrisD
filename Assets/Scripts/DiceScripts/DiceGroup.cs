@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class DiceGroup : MonoBehaviour
 {
     public DiceMatch diceMatch;
-
+    public DiceFXController diceFXController;
 
     public DiceDisengage diceDisengage { get; private set; }
     public DiceGhost diceGhost;
@@ -332,6 +332,9 @@ public class DiceGroup : MonoBehaviour
             return;
         }
 
+        diceFXController.FX(DiceFXController.TileEffect.slam, this.cells[0] + this.position);
+        diceFXController.FX(DiceFXController.TileEffect.slam, this.cells[1] + this.position);
+        //TODO look at sorting layers and make fx the highest sorting order
         Lock(); 
 
     }
