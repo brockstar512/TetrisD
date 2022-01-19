@@ -5,15 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class DiceFXController : MonoBehaviour
 {
-    public GameObject popFXPrefab;
-    public GameObject bubbleFXPrefab;
-    public GameObject slamFXPrefab;
-    public GameObject explosionFXPrefab;
-    public GameObject explosionTwoFXPrefab;
-    public GameObject touchFXPrefab;
-    public GameObject disengageFXPrefab;
 
-    public  Effect popFXP;
+    public Effect popFX;
+    public Effect slamFX;
+    public Effect disengageLeftFX;
+    public Effect disengageRightFX;
+
+
 
     //public AnimatedTile m_Bubble;
     //public AnimatedTile m_Slam;
@@ -26,17 +24,19 @@ public class DiceFXController : MonoBehaviour
 
     public enum TileEffect
     {
+        none,
         bubble,
         slam,
         explosion,
         explosionTwo,
-        disengage,
+        disengageLeft,
+        disengageRight,
         pop,
         touch
     }
 
-    public TileEffect effect;
-    public Vector3Int location = new Vector3Int(0, 0, 0);
+    private TileEffect effect = TileEffect.none;
+    private Vector3Int location = new Vector3Int(0, 0, 0);
 
 
     //public Transform m_GridParent;
@@ -48,54 +48,32 @@ public class DiceFXController : MonoBehaviour
     public Tilemap map;
 
 
-    GameObject ConfigureTile(TileEffect effect)
+    Effect ConfigureTile(TileEffect effect)
     {
-        GameObject tileSequence;
+        Effect tileSequence;
         switch(effect)
         {
-            case TileEffect.bubble:
-                tileSequence = bubbleFXPrefab;
-            break;
-            case TileEffect.explosion:
-                tileSequence = explosionFXPrefab;
-                break;
-            case TileEffect.explosionTwo:
-                tileSequence = explosionTwoFXPrefab;
-                break;
             case TileEffect.pop:
-                tileSequence = popFXPrefab;
-                break;
-            case TileEffect.touch:
-                tileSequence = touchFXPrefab;
-                break;
+                tileSequence = popFX;
+            break;
             case TileEffect.slam:
-                tileSequence = slamFXPrefab;
+                tileSequence = slamFX;
                 break;
-            case TileEffect.disengage:
-                tileSequence = disengageFXPrefab;
+            case TileEffect.disengageLeft:
+                tileSequence = disengageLeftFX;
                 break;
+
             default:
-                tileSequence = slamFXPrefab;
+                tileSequence = popFX;
                 break;
         }
-
-
         return tileSequence;
     }
 
     public void FX(TileEffect effect, Vector3Int location)
     {
-        GameObject fx = ConfigureTile(effect);
-        fx = Instantiate(fx, this.transform);
-        fx.GetComponent<DiceFX>().map = this.map;
-        fx.GetComponent<DiceFX>().location = location;
-        fx.GetComponent<DiceFX>().FXStart();
-    }
-
-    public void FX(Vector3Int location)
-    {
-       popFXP.map = this.map;
-       StartCoroutine(popFXP.Animate(location));
+        Effect effectConfig = ConfigureTile(effect);
+       StartCoroutine(effectConfig.Animate(location,map));
        
     }
 

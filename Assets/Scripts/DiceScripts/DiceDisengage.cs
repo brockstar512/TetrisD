@@ -24,6 +24,7 @@ public class DiceDisengage : MonoBehaviour
 
         HoldDiceInPlace(holdPos, stillData);
         StartCoroutine(TravelingDice(travelingDice, startPos, finishPos));
+        diceFXController.FX(DiceFXController.TileEffect.disengageLeft, startPos);
 
 
     }

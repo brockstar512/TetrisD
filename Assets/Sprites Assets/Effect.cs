@@ -13,12 +13,13 @@ public class Effect : ScriptableObject
     public float FPS;
     //public float framesPerSecond;
     public Tile[] tiles;
-    public Tilemap map;
 
 
 
-    public IEnumerator Animate(Vector3Int pos)
+
+    public IEnumerator Animate(Vector3Int pos, Tilemap map)
     {
+        //Tilemap map = map;
         for(int i = 0; i < tiles.Length; i++)
         {
             map.SetTile(pos, tiles[i]);

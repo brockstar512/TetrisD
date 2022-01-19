@@ -260,10 +260,11 @@ public class DiceMatch : MonoBehaviour
 
             //make tasks then apply gravity once the tasks are finished
             //diceFXController.FX(DiceFXController.TileEffect.pop, pair.Key);
-            diceFXController.FX(pair.Key);
+            diceFXController.FX(DiceFXController.TileEffect.pop,pair.Key);
 
         }
-        Debug.LogError("APPLY GRAVITY");
+        Debug.LogError("APPLY GRAVITY");//this needs to wait before the animation pops finish
+        //await
         //apply the gravity
         ApplyGravity();
     }
