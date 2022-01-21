@@ -45,7 +45,8 @@ public class DiceFXController : MonoBehaviour
     //public Tile m_tilePrefabStatic;
     // while (tileSequence.m_AnimatedSprites[tileSequence.m_AnimatedSprites.Length-1] !=)
 
-    public Tilemap map;
+    public Tilemap fxMap;
+    public Tilemap mainMap;
 
 
     Effect ConfigureTile(TileEffect effect)
@@ -72,9 +73,19 @@ public class DiceFXController : MonoBehaviour
 
     public void FX(TileEffect effect, Vector3Int location)
     {
+        //making sure that space is cleared
+        this.mainMap.SetTile(location, null);
         Effect effectConfig = ConfigureTile(effect);
-       StartCoroutine(effectConfig.Animate(location,map));
+       StartCoroutine(effectConfig.Animate(location,fxMap));
        
+    }
+    public void OverlayFX(TileEffect effect, Vector3Int location)
+    {
+        //making sure that space is cleared
+        this.mainMap.SetTile(location, null);
+        Effect effectConfig = ConfigureTile(effect);
+        StartCoroutine(effectConfig.Animate(location, fxMap));
+
     }
 
 

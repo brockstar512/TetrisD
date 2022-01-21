@@ -332,8 +332,8 @@ public class DiceGroup : MonoBehaviour
             return;
         }
 
-        diceFXController.FX(DiceFXController.TileEffect.slam, this.cells[0] + this.position);
-        diceFXController.FX(DiceFXController.TileEffect.slam, this.cells[1] + this.position);
+        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, this.cells[0] + this.position);
+        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, this.cells[1] + this.position);
         //TODO look at sorting layers and make fx the highest sorting order
         Lock(); 
 

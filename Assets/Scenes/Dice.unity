@@ -538,7 +538,8 @@ MonoBehaviour:
   slamFX: {fileID: 11400000, guid: 6275f8edd7c2a44f4a31df4c4d0abcd4, type: 2}
   disengageLeftFX: {fileID: 11400000, guid: 0204ed68a59ba48858c2c3aa0fa27b0c, type: 2}
   disengageRightFX: {fileID: 11400000, guid: 0c2d61b349621474da463e6f51be0853, type: 2}
-  map: {fileID: 1893731120}
+  fxMap: {fileID: 1893731120}
+  mainMap: {fileID: 1999377122}
 --- !u!1 &1749936038
 GameObject:
   m_ObjectHideFlags: 0

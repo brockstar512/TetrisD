@@ -47,18 +47,18 @@ public class DiceMatch : MonoBehaviour
 
     void Update()
     {
-        if (taskIsRunning)
-        {
-            if (TaskList.Contains(false))
-                return;
+        //if (taskIsRunning)
+        //{
+        //    if (TaskList.Contains(false))
+        //        return;
 
-            //Debug.Log("TurnOFFTaskManager");
-            taskIsRunning = false;
+        //    //Debug.Log("TurnOFFTaskManager");
+        //    taskIsRunning = false;
 
-            //read board again
-            CheckForMatches();
+        //    //read board again
+        //    CheckForMatches();
 
-        }
+        //}
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -236,7 +236,7 @@ public class DiceMatch : MonoBehaviour
             return;
         }
         //continue playing.
-        diceBoard.SpawnGroup();
+        //diceBoard.SpawnGroup();
     }
 
     /// <summary>
@@ -248,26 +248,27 @@ public class DiceMatch : MonoBehaviour
     {
         //Debug.LogError("removing tiles");
         foreach (KeyValuePair<Vector3Int, int> pair in MatchedDice) {
-            //TODO send the int to the animator for the special effects
             //-the key is the tile position to remove
             //-the value is how many chains is that tile included in
-
+            
             //delete this position from the board
             diceBoard.Clear(pair.Key);
-
+            Debug.Log("Clearing "+ pair.Key);
             //reset position to 0
             TilePos[pair.Key] = new DiceImprint(pair.Key);
 
             //make tasks then apply gravity once the tasks are finished
             //diceFXController.FX(DiceFXController.TileEffect.pop, pair.Key);
-            diceFXController.FX(DiceFXController.TileEffect.pop,pair.Key);
+            diceFXController.FX(DiceFXController.TileEffect.pop, pair.Key);
 
         }
-        Debug.LogError("APPLY GRAVITY");//this needs to wait before the animation pops finish
+        //Debug.LogError("APPLY GRAVITY");//this needs to wait before the animation pops finish
         //await
         //apply the gravity
-        ApplyGravity();
+        //ApplyGravity();
     }
+
+
 
     /// <summary>
     /// This sunction check to see if there is a tile in every cell between the tile you are at and that tiles number away. if it is the same color it will add it to the

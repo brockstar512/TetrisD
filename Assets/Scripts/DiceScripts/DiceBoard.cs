@@ -62,6 +62,7 @@ public class DiceBoard : MonoBehaviour
 
     public void SpawnGroup()
     {
+        Debug.Log("Spawning");
         int random = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
         int random2 = Random.Range(0, this.DiceOptions.Length);

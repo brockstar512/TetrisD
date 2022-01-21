@@ -24,7 +24,7 @@ public class DiceDisengage : MonoBehaviour
 
         HoldDiceInPlace(holdPos, stillData);
         StartCoroutine(TravelingDice(travelingDice, startPos, finishPos));
-        diceFXController.FX(DiceFXController.TileEffect.disengageLeft, startPos);
+        diceFXController.OverlayFX(DiceFXController.TileEffect.disengageLeft, startPos);
 
 
     }
@@ -70,7 +70,7 @@ public class DiceDisengage : MonoBehaviour
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
 
-        diceFXController.FX(DiceFXController.TileEffect.slam, finish);
+        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
         diceGroup.HandlePostDisengagement();
         yield return null;
