@@ -382,7 +382,7 @@ public class DiceGroup : MonoBehaviour
         }
 
         this.diceBoard.SetOnBoard(this);
-        Debug.Log("SCORE:");
+        Debug.Log("SCORE:");//1ST
         //this.diceBoard.SpawnGroupq();
         diceMatch.Score();
     }

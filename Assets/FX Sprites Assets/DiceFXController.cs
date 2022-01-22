@@ -12,6 +12,9 @@ public class DiceFXController : MonoBehaviour
     public Effect slamFX;
     public Effect disengageLeftFX;
     public Effect disengageRightFX;
+    public Effect bigSlamRightFX;
+    public Effect bigSlamLeftFX;
+
 
 
 
@@ -33,6 +36,8 @@ public class DiceFXController : MonoBehaviour
         explosionTwo,
         disengageLeft,
         disengageRight,
+        bigSlamRight,
+        bigSlamLeft,
         pop,
         touch
     }

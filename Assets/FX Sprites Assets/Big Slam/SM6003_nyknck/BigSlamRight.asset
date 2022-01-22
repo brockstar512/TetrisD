@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08622e6e624246bd8ec2a0f4c925816, type: 3}
+  m_Name: BigSlamRight
+  m_EditorClassIdentifier: 
+  effect: 7
+  FPS: 12
+  tiles:
+  - {fileID: 11400000, guid: 8c2b05e9551d046f49d6b913c103c1f2, type: 2}
+  - {fileID: 11400000, guid: b83d33a74c67b437497194e5fca8dfe6, type: 2}
+  - {fileID: 11400000, guid: 24537fa6986654032aa519e11f11648a, type: 2}
+  - {fileID: 11400000, guid: 78eb22de9bd814f759239a1b374359e1, type: 2}
+  - {fileID: 11400000, guid: d49d517dbb17649b592437e0552ee31e, type: 2}
+  isDoneAnimating: 0

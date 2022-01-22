@@ -61,6 +61,8 @@ public class DiceBoard : MonoBehaviour
     //maybe pause this before continuing
     public void SpawnGroup()
     {
+        Debug.Log("SPAWNING NEXT GROUP");//LAST
+        this.activeGroup.isScoring = false;
         int random = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
         int random2 = Random.Range(0, this.DiceOptions.Length);

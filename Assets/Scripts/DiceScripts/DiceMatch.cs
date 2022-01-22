@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
+
 
 public class DiceMatch : MonoBehaviour
 {
+    public DiceFXController diceFXController;
     public DiceBoard diceBoard;
     [SerializeField] Tilemap mainMap;    
     [SerializeField] Grid grid;
@@ -47,19 +50,7 @@ public class DiceMatch : MonoBehaviour
 
     void Update()
     {
-        if (taskIsRunning)
-        {
-            if (TaskList.Contains(false))
-                return;
 
-            Debug.Log("TurnOFFTaskManager");
-            taskIsRunning = false;
-            //read again
-            //for know we'll just spawn again
-            //diceBoard.SpawnGroup();
-            //CheckForMatches();
-
-        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -106,8 +97,11 @@ public class DiceMatch : MonoBehaviour
 
     public void Score()
     {
+        
+        diceBoard.ClearGroupFromBoard();
         Chain = 0;
         CheckForMatches();
+
     }
 
     /// <summary>
@@ -216,7 +210,7 @@ public class DiceMatch : MonoBehaviour
             }
 
         }
-        Debug.Log("Here is the chain " + Chain);
+        //Debug.Log("Here is the chain " + Chain);
         #region Helper Log
         {
             /* this will tell you the tile that will be removed the level of animation and the tile number.
@@ -230,6 +224,8 @@ public class DiceMatch : MonoBehaviour
         #endregion
         if (hasMatch)
         {
+
+            Debug.Log("There was a match");//4th
             //pass in the matched dice dictionary if there is a match otherwise we should continue playing
             RemoveTiles(MatchedDice);
             //keep track of how many times we've ran this for waterfall bonus
@@ -245,11 +241,12 @@ public class DiceMatch : MonoBehaviour
     /// how many chains that tile was involved with. At the endit applies gravity to the free floating tiles.
     /// </summary>
     /// <param name="MatchedDice"></param>
-    void RemoveTiles(Dictionary<Vector3Int, int> MatchedDice)
+    async void RemoveTiles(Dictionary<Vector3Int, int> MatchedDice)
     {
+        List<Task> tasks = new List<Task>();
+
         //Debug.LogError("removing tiles");
         foreach (KeyValuePair<Vector3Int, int> pair in MatchedDice) {
-            //TODO send the int to the animator for the special effects
             //-the key is the tile position to remove
             //-the value is how many chains is that tile included in
 
@@ -258,7 +255,12 @@ public class DiceMatch : MonoBehaviour
 
             //reset position to 0
             TilePos[pair.Key] = new DiceImprint(pair.Key);
+
+            tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.pop, pair.Key));
+
         }
+        //when all animations are finished
+        await Task.WhenAll(tasks);
         //apply the gravity
         ApplyGravity();
     }
@@ -315,9 +317,9 @@ public class DiceMatch : MonoBehaviour
     /// <summary>
     /// This function just looks at all the empty spaces and pulls the tiles that are above them down so there are no more remaining gaps.
     /// </summary>
-    void ApplyGravity()
+    private async void ApplyGravity()
     {
-        TaskList.Clear();
+        List<Task> tasks = new List<Task>();
 
         //start from the bottom
         for (int x =(int)XGridCell.One_Left; x<= (int)XGridCell.Six_Right; x++)
@@ -355,24 +357,18 @@ public class DiceMatch : MonoBehaviour
                 if (mainMap.HasTile(finishPos))
                     continue;
 
-                TaskList.Add(false);
-                StartCoroutine(TravelingDice(currentDice, startPos, finishPos));
+
+                //move the dice down until it can't anymore
+                tasks.Add(TravelingDice(currentDice, startPos, finishPos));
 
             }
 
-            //board has changed now so check again for matches
-            //CheckForMatches();
-
-            //I want this to run after the coroutines are finished
-
-
         }
 
-        Debug.Log("TurnOnTaskManager");
-        taskIsRunning = true;
-        //without this the last two dice stay where they are... this being diceBoard.SpawnGroup();
-        //diceBoard.SpawnGroup();//this removes the existing dice
-        diceBoard.ClearGroupFromBoard();
+        //when all the dice are moved down
+        await Task.WhenAll(tasks);
+        //check for the matches again
+        CheckForMatches();
     }
 
     /// <summary>
@@ -382,7 +378,35 @@ public class DiceMatch : MonoBehaviour
     /// <param name="start"></param>
     /// <param name="finish"></param>
     /// <returns></returns>
-    IEnumerator TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
+    //IEnumerator TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
+    //{
+
+    //    TilePos[start] = new DiceImprint(start);
+
+    //    Vector3Int current = start;
+
+    //    while (current != finish)
+    //    {
+    //        this.diceBoard.Clear(current);
+    //        current = new Vector3Int(current.x, current.y + -1, 0);
+    //        this.diceBoard.SetSingleDiceOnBoard(current, die.tile);
+    //        yield return new WaitForSeconds(GRAVITY);
+    //    }
+    //    this.diceBoard.SetSingleDiceOnBoard(finish, die.tile);
+
+    //    TilePos[finish] = new DiceImprint(die,finish);
+    //    for(int i =0; i < TaskList.Count; i++)
+    //    {
+    //        if (!TaskList[i])
+    //        {
+    //            TaskList[i] = false;
+    //            break;
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    public async Task TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
     {
 
         TilePos[start] = new DiceImprint(start);
@@ -394,20 +418,11 @@ public class DiceMatch : MonoBehaviour
             this.diceBoard.Clear(current);
             current = new Vector3Int(current.x, current.y + -1, 0);
             this.diceBoard.SetSingleDiceOnBoard(current, die.tile);
-            yield return new WaitForSeconds(GRAVITY);
+            await Task.Delay(((int)(GRAVITY *1000)));
         }
         this.diceBoard.SetSingleDiceOnBoard(finish, die.tile);
 
-        TilePos[finish] = new DiceImprint(die,finish);
-        for(int i =0; i < TaskList.Count; i++)
-        {
-            if (!TaskList[i])
-            {
-                TaskList[i] = false;
-                break;
-            }
-        }
-        yield return null;
+        TilePos[finish] = new DiceImprint(die, finish);
     }
 
     #region Test Functions

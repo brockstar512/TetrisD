@@ -15,7 +15,7 @@ public class Effect : ScriptableObject
     public float FPS;
     //public float framesPerSecond;
     public Tile[] tiles;
-    public bool isDoneAnimating = false;
+    //public bool isDoneAnimating = false;
 
 
 
@@ -23,7 +23,7 @@ public class Effect : ScriptableObject
     public IEnumerator Animate(Vector3Int pos, Tilemap map)
     {
 
-        isDoneAnimating = false;
+        //isDoneAnimating = false;
         //Tilemap map = map;
         for (int i = 0; i < tiles.Length; i++)
         {
@@ -31,7 +31,7 @@ public class Effect : ScriptableObject
             yield return new WaitForSeconds(Mathf.Pow(FPS,-1));//how long we show this image
         }
         map.SetTile(pos, null);
-        isDoneAnimating = true;
+        //isDoneAnimating = true;
         yield return null;
     }
 
