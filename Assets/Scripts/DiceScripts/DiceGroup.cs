@@ -339,7 +339,8 @@ public class DiceGroup : MonoBehaviour
         }
 
         Lock();
-
+        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, this.cells[0] + this.position);
+        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, this.cells[1] + this.position);
         //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, );
         //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight,);
 
