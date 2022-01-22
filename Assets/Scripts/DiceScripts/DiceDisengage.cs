@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
+
 
 public class DiceDisengage : MonoBehaviour
 {
@@ -72,12 +74,20 @@ public class DiceDisengage : MonoBehaviour
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
         Debug.Log("FX");
-        diceFXController.FX(DiceFXController.TileEffect.slam, finish);
+        //diceFXController.FX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
-        diceGroup.HandlePostDisengagement();
+        DisengageDropFX(finish);
+        //diceGroup.HandlePostDisengagement();
         yield return null;
     }
 
+    async void DisengageDropFX(Vector3Int location)
+    {
+        List<Task> tasks = new List<Task>();
+        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.slam, location));
+        await Task.WhenAll(tasks);
+        diceGroup.HandlePostDisengagement();
+    }
 
 }
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
+
 
 public class DiceGroup : MonoBehaviour
 {
@@ -338,11 +340,23 @@ public class DiceGroup : MonoBehaviour
             return;
         }
         Debug.Log("FX");
-        diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, this.cells[0] + this.position);
-        diceFXController.FX(DiceFXController.TileEffect.bigSlamRight, this.cells[1] + this.position);
+        //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, this.cells[0] + this.position);
+        //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight, this.cells[1] + this.position);
+        //Lock();
+        HardDropFX(this.cells[0] + this.position, this.cells[1] + this.position);
+
+    }
+
+    async void HardDropFX(Vector3Int locationLeft, Vector3Int locationRight)
+    {
+        List<Task> tasks = new List<Task>();
+        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamLeft, locationLeft));
+        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamRight, locationRight));
+        await Task.WhenAll(tasks);
         Lock();
 
     }
+
 
     /// <summary>
     /// resets the step time and forces the tile group to move down
