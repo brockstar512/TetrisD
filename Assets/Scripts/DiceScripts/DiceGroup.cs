@@ -36,6 +36,7 @@ public class DiceGroup : MonoBehaviour
     private float lockTime;
 
     public bool isDisengaging = false;//is playing or playerHasControll
+    public bool isScoring = false;
     //{get;private set;}
 
 
@@ -91,6 +92,8 @@ public class DiceGroup : MonoBehaviour
         this.data = data;
         this.dynamicData = dynamicData;
 
+        if (isScoring)
+            return;
 
         this.stepTime = Time.time+ stepDelay;
         this.lockTime = 0f;
@@ -120,7 +123,9 @@ public class DiceGroup : MonoBehaviour
     #region Update
     void Update()
     {
-        
+        if (isScoring)
+            return;
+
         if (isDisengaging)
             return;
         //MoveController();
@@ -164,7 +169,7 @@ public class DiceGroup : MonoBehaviour
 
         //the disengage check might get switched after this update function runs but before it ends, so the check in the beginning is not good enough.
         //we also need to check here because this will revert the dice back into the board.
-        if (!isDisengaging)
+        if (!isDisengaging && !isScoring)
         {
             this.diceBoard.SetOnBoard(this);
         }
@@ -377,7 +382,7 @@ public class DiceGroup : MonoBehaviour
         }
 
         this.diceBoard.SetOnBoard(this);
-        //Debug.Log("SCORE:");
+        Debug.Log("SCORE:");
         //this.diceBoard.SpawnGroupq();
         diceMatch.Score();
     }
@@ -435,7 +440,14 @@ public class DiceGroup : MonoBehaviour
     }
 
 
+    public void ClearGroupFromBoard()
+    {
+        isScoring = true;
+        DiceData newGroup = null;
+        DiceData newGroup2 = null;
+        this.Initialize(diceBoard, diceBoard.spawnPosition, newGroup, newGroup2);
 
+    }
     //out 
     public void StateManager(ref GameState from, GameState to)
     {

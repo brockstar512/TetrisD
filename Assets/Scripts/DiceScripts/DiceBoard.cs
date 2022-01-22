@@ -7,7 +7,6 @@ public class DiceBoard : MonoBehaviour
 {
     public DiceMatch diceMatch;
 
-
     public DiceData[] DiceOptions;
     public Vector3Int spawnPosition;
     public Tilemap tilemap { get; private set; }
@@ -59,7 +58,7 @@ public class DiceBoard : MonoBehaviour
     }
 
 
-
+    //maybe pause this before continuing
     public void SpawnGroup()
     {
         int random = Random.Range(0, this.DiceOptions.Length);
@@ -68,6 +67,16 @@ public class DiceBoard : MonoBehaviour
         DiceData newGroup2 = this.DiceOptions[random2];
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
+
+    }
+    public void ClearGroupFromBoard()
+    {
+        this.activeGroup.isScoring = true;
+        DiceData newGroup = null;
+        DiceData newGroup2 = null;
+        this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
+        //Debug.Break();//i think the above is what resets it for match
+       // SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
     }
 

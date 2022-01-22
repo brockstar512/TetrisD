@@ -57,7 +57,7 @@ public class DiceMatch : MonoBehaviour
             //read again
             //for know we'll just spawn again
             //diceBoard.SpawnGroup();
-            CheckForMatches();
+            //CheckForMatches();
 
         }
 
@@ -370,8 +370,9 @@ public class DiceMatch : MonoBehaviour
 
         Debug.Log("TurnOnTaskManager");
         taskIsRunning = true;
-        diceBoard.SpawnGroup();//this needs to be removed at some point when i figure out how to do waterfall checks without coroutines getting in the way
-
+        //without this the last two dice stay where they are... this being diceBoard.SpawnGroup();
+        //diceBoard.SpawnGroup();//this removes the existing dice
+        diceBoard.ClearGroupFromBoard();
     }
 
     /// <summary>
