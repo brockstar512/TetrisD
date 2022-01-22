@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class DiceDisengage : MonoBehaviour
 {
+    public DiceFXController diceFXController;
+
     public DiceBoard diceBoard { get; private set; }//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceGroup diceGroup { get; private set; }
     public Vector3Int position { get; private set; }//i believe position is position on board
@@ -24,7 +26,19 @@ public class DiceDisengage : MonoBehaviour
         HoldDiceInPlace(holdPos, stillData);
         StartCoroutine(TravelingDice(travelingDice, startPos, finishPos));
 
+        //diceFXController.FX(DiceFXController.TileEffect.disengageLeft, startPos);
+        //diceFXController.FX(DiceFXController.TileEffect.disengageRight, startPos);
 
+
+        //if the y of the diengaging dice is great than the y of the still one its right
+        if (holdPos.x < startPos.x)
+        {
+            diceFXController.FX(DiceFXController.TileEffect.disengageLeft, startPos);
+        }
+        else
+        {
+            diceFXController.FX(DiceFXController.TileEffect.disengageRight, startPos);
+        }
     }
 
 
@@ -67,8 +81,8 @@ public class DiceDisengage : MonoBehaviour
             this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
-
-        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, finish);
+        Debug.LogError("FINISHED THIS EFFECT");
+        //diceFXController.OverlayFX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
         diceGroup.HandlePostDisengagement();
         yield return null;

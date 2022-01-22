@@ -316,6 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44ec12acd41f43db95163bb93a89505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceFXController: {fileID: 0}
   diceBoard: {fileID: 1749936041}
   mainMap: {fileID: 1999377122}
   grid: {fileID: 1749936039}
@@ -534,6 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceMatch: {fileID: 870368692}
+  diceFXController: {fileID: 1903845430354739680}
   DiceOptions:
   - number: 1
     color: 0
@@ -818,6 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceMatch: {fileID: 870368692}
+  diceFXController: {fileID: 1903845430354739680}
   diceGhost: {fileID: 1363189445}
   stepDelay: 1
   lockDelay: 0.5
@@ -836,6 +839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697fad43ac37a468581887b82d4f6331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceFXController: {fileID: 1903845430354739680}
 --- !u!483693784 &1903845430004917952
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -1014,14 +1018,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5951a03a6ed04b22a9c850d4c0eb93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceBoard: {fileID: 0}
+  diceBoard: {fileID: 1749936041}
   popFX: {fileID: 11400000, guid: 32a264c7be20b47359a69b32608ffb23, type: 2}
   slamFX: {fileID: 11400000, guid: 6275f8edd7c2a44f4a31df4c4d0abcd4, type: 2}
   disengageLeftFX: {fileID: 11400000, guid: 0204ed68a59ba48858c2c3aa0fa27b0c, type: 2}
   disengageRightFX: {fileID: 11400000, guid: 0c2d61b349621474da463e6f51be0853, type: 2}
   bigSlamRightFX: {fileID: 11400000, guid: 9ca284f2000194e85ae038e7d808614e, type: 2}
   bigSlamLeftFX: {fileID: 11400000, guid: 3c7cbd492d8db43cb9411734be3b3b0a, type: 2}
-  map: {fileID: 0}
+  map: {fileID: 1903845430004917983}
 --- !u!4 &1903845430354739681
 Transform:
   m_ObjectHideFlags: 0
