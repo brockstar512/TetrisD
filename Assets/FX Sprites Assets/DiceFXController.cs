@@ -67,6 +67,12 @@ public class DiceFXController : MonoBehaviour
             case TileEffect.disengageRight:
                 tileSequence = disengageRightFX;
                 break;
+            case TileEffect.bigSlamLeft:
+                tileSequence = bigSlamLeftFX;
+                break;
+            case TileEffect.bigSlamRight:
+                tileSequence = bigSlamRightFX;
+                break;
 
             default:
                 Debug.LogError("FX Not Found");

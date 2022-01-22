@@ -33,10 +33,14 @@ public class DiceDisengage : MonoBehaviour
         //if the y of the diengaging dice is great than the y of the still one its right
         if (holdPos.x < startPos.x)
         {
+            Debug.Log("FX");
+
             diceFXController.FX(DiceFXController.TileEffect.disengageLeft, startPos);
         }
         else
         {
+            Debug.Log("FX");
+
             diceFXController.FX(DiceFXController.TileEffect.disengageRight, startPos);
         }
     }
@@ -55,20 +59,6 @@ public class DiceDisengage : MonoBehaviour
     }
 
 
-    //if i dont want to use a corouinte but still want to pace out how quick the dice falls
-    //private void TravelingDice(DiceData travelingDice, Vector3Int start, Vector3Int finish)
-    //{
-    //    Vector3Int current = start;
-    //    this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
-
-    //    while (current != finish)
-    //    {
-    //        this.diceBoard.Clear(current);
-    //        current = new Vector3Int(current.x, current.y + -1, 0);
-    //        this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
-    //        continue;
-    //    }
-    //}
     IEnumerator TravelingDice(DiceData travelingDice, Vector3Int start, Vector3Int finish)
     {
         Vector3Int current = start;
@@ -81,8 +71,8 @@ public class DiceDisengage : MonoBehaviour
             this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
-        Debug.LogError("FINISHED THIS EFFECT");
-        //diceFXController.OverlayFX(DiceFXController.TileEffect.slam, finish);
+        Debug.Log("FX");
+        diceFXController.FX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
         diceGroup.HandlePostDisengagement();
         yield return null;

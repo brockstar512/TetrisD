@@ -337,14 +337,10 @@ public class DiceGroup : MonoBehaviour
             HandleDisengagement(continuingDice);
             return;
         }
-
+        Debug.Log("FX");
+        diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, this.cells[0] + this.position);
+        diceFXController.FX(DiceFXController.TileEffect.bigSlamRight, this.cells[1] + this.position);
         Lock();
-        Debug.LogError("FINISH THIS EFFECT");
-        //diceFXController.OverlayFX(DiceFXController.TileEffect.slam, this.cells[0] + this.position);
-        //diceFXController.OverlayFX(DiceFXController.TileEffect.slam, this.cells[1] + this.position);
-        //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, );
-        //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight,);
-
 
     }
 
@@ -383,7 +379,7 @@ public class DiceGroup : MonoBehaviour
             DiceImprint staticDice = new DiceImprint(this.data, this.cells[0] + this.position);
             DiceImprint dynamicDice = new DiceImprint(this.dynamicData, this.cells[1] + this.position);
 
-
+            
             diceMatch.SetTileDict(this.cells[0] + this.position, staticDice);
             diceMatch.SetTileDict(this.cells[1] + this.position, dynamicDice);
         }
