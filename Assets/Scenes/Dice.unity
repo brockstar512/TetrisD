@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44ec12acd41f43db95163bb93a89505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceFXController: {fileID: 0}
+  diceFXController: {fileID: 1903845430354739680}
   diceBoard: {fileID: 1749936041}
   mainMap: {fileID: 1999377122}
   grid: {fileID: 1749936039}
