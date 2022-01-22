@@ -67,6 +67,8 @@ public class DiceDisengage : MonoBehaviour
             this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
+
+        diceFXController.OverlayFX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
         diceGroup.HandlePostDisengagement();
         yield return null;
