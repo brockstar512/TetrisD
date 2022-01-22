@@ -46,11 +46,6 @@ public class DiceFXController : MonoBehaviour
     private Vector3Int location = new Vector3Int(0, 0, 0);
 
 
-    //public Transform m_GridParent;
-    //public GameObject m_TileMap_Prefab;
-    //public AnimatedTile m_tilePrefabAnimated;
-    //public Tile m_tilePrefabStatic;
-    // while (tileSequence.m_AnimatedSprites[tileSequence.m_AnimatedSprites.Length-1] !=)
 
     public Tilemap map;
 

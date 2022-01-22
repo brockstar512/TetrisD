@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class DiceGroup : MonoBehaviour
 {
     public DiceMatch diceMatch;
+    public DiceFXController diceFXController;
 
 
     public DiceDisengage diceDisengage { get; private set; }
@@ -337,7 +338,11 @@ public class DiceGroup : MonoBehaviour
             return;
         }
 
-        Lock(); 
+        Lock();
+
+        //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, );
+        //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight,);
+
 
     }
 
@@ -382,7 +387,6 @@ public class DiceGroup : MonoBehaviour
         }
 
         this.diceBoard.SetOnBoard(this);
-        Debug.Log("SCORE:");//1ST
         //this.diceBoard.SpawnGroupq();
         diceMatch.Score();
     }
@@ -420,8 +424,6 @@ public class DiceGroup : MonoBehaviour
     public void HandlePostDisengagement()
     {
         isDisengaging = false;
-        //Debug.Log("SCORE:");
-        //this.diceBoard.SpawnGroup();
         diceMatch.Score();
     }
     #endregion

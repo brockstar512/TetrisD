@@ -210,7 +210,6 @@ public class DiceMatch : MonoBehaviour
             }
 
         }
-        //Debug.Log("Here is the chain " + Chain);
         #region Helper Log
         {
             /* this will tell you the tile that will be removed the level of animation and the tile number.
@@ -224,8 +223,6 @@ public class DiceMatch : MonoBehaviour
         #endregion
         if (hasMatch)
         {
-
-            Debug.Log("There was a match");//4th
             //pass in the matched dice dictionary if there is a match otherwise we should continue playing
             RemoveTiles(MatchedDice);
             //keep track of how many times we've ran this for waterfall bonus

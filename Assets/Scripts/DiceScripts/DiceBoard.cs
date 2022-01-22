@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class DiceBoard : MonoBehaviour
 {
     public DiceMatch diceMatch;
+    public DiceFXController diceFXController;
 
     public DiceData[] DiceOptions;
     public Vector3Int spawnPosition;
@@ -58,10 +59,8 @@ public class DiceBoard : MonoBehaviour
     }
 
 
-    //maybe pause this before continuing
     public void SpawnGroup()
     {
-        Debug.Log("SPAWNING NEXT GROUP");//LAST
         this.activeGroup.isScoring = false;
         int random = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
@@ -71,15 +70,14 @@ public class DiceBoard : MonoBehaviour
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
     }
+
+    //this should be in a state manager method
     public void ClearGroupFromBoard()
     {
         this.activeGroup.isScoring = true;
         DiceData newGroup = null;
         DiceData newGroup2 = null;
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
-        //Debug.Break();//i think the above is what resets it for match
-       // SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
-
     }
 
 
