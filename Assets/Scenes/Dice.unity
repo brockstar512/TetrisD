@@ -316,8 +316,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44ec12acd41f43db95163bb93a89505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMap: {fileID: 1999377122}
   diceBoard: {fileID: 1749936041}
+  mainMap: {fileID: 1999377122}
   grid: {fileID: 1749936039}
 --- !u!4 &870368693
 Transform:
@@ -822,6 +822,7 @@ MonoBehaviour:
   stepDelay: 1
   lockDelay: 0.5
   isDisengaging: 0
+  isScoring: 0
   gameState: 0
 --- !u!114 &1999377124
 MonoBehaviour:
