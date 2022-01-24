@@ -158,7 +158,7 @@ public class DiceMatch : MonoBehaviour
                 if (withinHorizontalBounds)
                 {
                     //get the dice x number away
-                    Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number + 1, position.y, 0);
+                    Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number, position.y, 0);
 
                     //if the numbers are the same?
                     bool hasHorizontalMatch = TilePos[position].number == TilePos[horizontalPosCheck].number;
@@ -188,7 +188,7 @@ public class DiceMatch : MonoBehaviour
                 }
                 //we do the same with the vertial bounds as we did with the horizontal.
                 if (withinVerticalBounds) {
-                    Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number + 1, 0);
+                    Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number, 0);
 
                     bool hasVerticalMatch = TilePos[position].number == TilePos[verticalPosCheck].number;
                     bool hashasVerticalColorMatch = TilePos[position].color == TilePos[verticalPosCheck].color;
