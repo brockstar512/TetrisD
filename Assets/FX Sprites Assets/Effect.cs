@@ -19,7 +19,7 @@ public class Effect : ScriptableObject
 
 
 
-
+    //not every pixel effect needs to be waited on which is why some are tasks and others are just corouines
     public IEnumerator Animate(Vector3Int pos, Tilemap map)
     {
 

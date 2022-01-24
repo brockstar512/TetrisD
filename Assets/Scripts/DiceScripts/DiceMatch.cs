@@ -422,6 +422,54 @@ public class DiceMatch : MonoBehaviour
         TilePos[finish] = new DiceImprint(die, finish);
     }
 
+    [ContextMenu("TestExplode")]
+    void TestExplode()
+    {
+        Debug.Log("Testing explose");
+        Vector3Int first = new Vector3Int(3,3,0);
+        Vector3Int second = new Vector3Int(-3,-3,0);
+        Vector3Int third = new Vector3Int(3, -3, 0);
+        Vector3Int fourth = new Vector3Int(-3, 3, 0);
+
+        //ExplodeFX(first);
+        ExplodeFX(second);
+        //ExplodeFX(third);
+        //ExplodeFX(fourth);
+        //first a then b then c... etc
+        //1a//1b
+        //2a//2b
+        //3a//3b
+
+
+    }
+
+
+    public void ExplodeFX(Vector3Int location)
+    {
+        //the bomb should not have a dice number or it should be higher than 6
+        if (TilePos[location].number != DiceNumber.Zero)
+            return;
+
+        //first a then b then c... etc
+        //1a//1b
+        //2a//2b
+        //3a//3b
+
+        for (int x = location.x + -1; x <= location.x - -1; x+=1)
+        {
+            //Debug.Log($"Y is starting {location.y - -1} and stopping at {location.y - 1}");
+            //good
+            for (int y = location.y - -1; y >= location.y - 1; y+=-1)
+            {
+                //ignoring the bomb tile
+                if (location.x == x && location.y == y)
+                    continue;
+
+                Debug.Log($"The bomb is at {location}: all the surrounding tiles are {x},{y}");
+            }
+        }
+    }
+
     #region Test Functions
 
     private void MouseTileReader()
