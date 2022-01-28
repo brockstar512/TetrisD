@@ -34,14 +34,14 @@ public class TimeManager : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(CountDown());
+        //StartCoroutine(CountDown());
     }
 
     // Update is called once per frame
     void Update()
     {
         //timerText.text = CountUp();
-        //timerText.text = CountDown();
+        timerText.text = CountDown();
     }
     string CountUp()
     {
@@ -52,35 +52,35 @@ public class TimeManager : MonoBehaviour
         return minutes + ":" + seconds;
     }
 
-    //string CountDown()
-    //{
-    //    //if (currentTime <= 0)
-    //    //    return;
-    //    //startTime -= Time.deltaTime;
-    //    Debug.Log(startTime);
-    //    float t = startTime- Time.time;
-    //    Debug.Log(t);
-    //    string minutes = ((int)t / 60).ToString();
-    //    float sec = Mathf.Floor(t % 60);
-    //    string seconds = sec < 10 ? "0" + sec.ToString("f0") : sec.ToString("f0");
-    //    return minutes + ":" + seconds;
-    //    //return  ":";
-    //}
-
-    IEnumerator CountDown()
+    string CountDown()
     {
-        countDownDisplay.text = "";
-        countDownDisplay.gameObject.SetActive(true);
-        while (countDownTime > 0)
-        {
-            //countDownDisplay.sprite = numbers[countDownTime];
-            countDownDisplay.text = countDownTime.ToString();
-            yield return new WaitForSeconds(1f);
-            countDownTime--;
-        }
-        //countDownDisplay.sprite= numbers[0];
-        countDownDisplay.text = "GO!";
-        yield return new WaitForSeconds(1f);
-        countDownDisplay.gameObject.SetActive(false);
+        //if (currentTime <= 0)
+        //    return;
+        //startTime -= Time.deltaTime;
+        Debug.Log(startTime);
+        float t = startTime - Time.time;
+        Debug.Log(t);
+        string minutes = ((int)t / 60).ToString();
+        float sec = Mathf.Floor(t % 60);
+        string seconds = sec < 10 ? "0" + sec.ToString("f0") : sec.ToString("f0");
+        return minutes + ":" + seconds;
+        //return  ":";
     }
+
+    //IEnumerator CountDown()
+    //{
+    //    countDownDisplay.text = "";
+    //    countDownDisplay.gameObject.SetActive(true);
+    //    while (countDownTime > 0)
+    //    {
+    //        //countDownDisplay.sprite = numbers[countDownTime];
+    //        countDownDisplay.text = countDownTime.ToString();
+    //        yield return new WaitForSeconds(1f);
+    //        countDownTime--;
+    //    }
+    //    //countDownDisplay.sprite= numbers[0];
+    //    countDownDisplay.text = "GO!";
+    //    yield return new WaitForSeconds(1f);
+    //    countDownDisplay.gameObject.SetActive(false);
+    //}
 }

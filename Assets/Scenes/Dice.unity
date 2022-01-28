@@ -608,7 +608,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 944837330}
-  - component: {fileID: 944837329}
+  - component: {fileID: 944837332}
+  - component: {fileID: 944837331}
   - component: {fileID: 944837328}
   m_Layer: 0
   m_Name: Timer
@@ -625,35 +626,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944837327}
   m_CullTransparentMesh: 1
---- !u!114 &944837329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944837327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04dc0a27c12e49e78a5645178bd011f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numbers:
-  - {fileID: 1027220811180441228, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: 6344450860940149684, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: -7219941887585066893, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: -4132646010149116747, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: -6458803116269486315, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: -5675893933299647951, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: -4161404354145563590, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: 3574872482978451933, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: -3801096074040553326, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  - {fileID: 1655056258002020830, guid: 4d931f083d3c34905a0ed958668e7f8d, type: 3}
-  timerText: {fileID: 1744700416}
-  min: 5
-  sec: 30
-  countUp: 0
-  countDownTime: 3
-  countDownDisplay: {fileID: 1577071082}
 --- !u!224 &944837330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -674,6 +646,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 10.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &944837331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944837327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80cede772e7c54c4190cfd668b5436c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1744700416}
+  countDownDisplay: {fileID: 1577071082}
+  isCounting: 0
+--- !u!114 &944837332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944837327}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee151fc8a946447585b4c73643f6dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1744700416}
+  countDownDisplay: {fileID: 1577071082}
+  isCounting: 0
+  min: 5
+  sec: 10
 --- !u!1 &984879879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,8 +1109,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c1b898a67217b4b718a652393ff6e516, type: 2}
+  m_sharedMaterial: {fileID: -4502348454367827551, guid: c1b898a67217b4b718a652393ff6e516, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1385,8 +1389,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 06e093080935e4f6e8c22af330364ecc, type: 2}
+  m_sharedMaterial: {fileID: 8433896337074038398, guid: 06e093080935e4f6e8c22af330364ecc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
