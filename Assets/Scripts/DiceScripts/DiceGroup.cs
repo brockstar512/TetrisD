@@ -40,6 +40,7 @@ public class DiceGroup : MonoBehaviour
 
     public bool isDisengaging = false;//is playing or playerHasControll
     public bool isScoring = false;
+    public bool isHorizontal{ get{return this.cells[0].y == this.cells[1].y; } }
     //{get;private set;}
 
 
@@ -350,8 +351,26 @@ public class DiceGroup : MonoBehaviour
     async void HardDropFX(Vector3Int locationLeft, Vector3Int locationRight)
     {
         List<Task> tasks = new List<Task>();
-        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamLeft, locationLeft));
-        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamRight, locationRight));
+        //this decides which hard drop fx to do
+        switch(isHorizontal)
+        {
+            case true:
+            //Debug.Log($"is it horizontal {isHorizontal}");
+            tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamLeft, locationLeft));
+            tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamRight, locationRight));
+                break;
+            case false:
+                switch(this.cells[0].y < this.cells[1].y)
+                {
+                    case true:
+                        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.slam, locationLeft));
+                        break;
+                    case false:
+                        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.slam, locationRight));
+                        break;
+                }
+                break;
+        }
         await Task.WhenAll(tasks);
         Lock();
 
