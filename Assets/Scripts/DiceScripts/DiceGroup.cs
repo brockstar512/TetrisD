@@ -40,6 +40,7 @@ public class DiceGroup : MonoBehaviour
 
     public bool isDisengaging = false;//is playing or playerHasControll
     public bool isScoring = false;
+    public bool isPlaying = false;
     public bool isHorizontal{ get{return this.cells[0].y == this.cells[1].y; } }
     //{get;private set;}
 
@@ -131,6 +132,9 @@ public class DiceGroup : MonoBehaviour
             return;
 
         if (isDisengaging)
+            return;
+
+        if (!isPlaying)
             return;
         //MoveController();
         this.diceBoard.Clear(this);

@@ -12,66 +12,73 @@ public class CountDown : MonoBehaviour, IClock
     private float startTime;
     public int min;
     public int sec;
+    public event StartGameDelegate startGameDelegate;
 
-    enum CountDownText
+    string[] countDownText =
     {
-        Start,
-        Set,
-        Ready,
-    }
+        "START",
+        "READY",
+        ""
+    };
     private void Awake()
     {
-        //StartCoroutine(GameCountDown());
+        StartCoroutine(GameCountDown());
+        startGameDelegate += StartClock;
+
+
+        startTime = (min * 60) + sec;
+        timerText.text = Clock();
+
+    }
+    private void OnDisable()
+    {
+        startGameDelegate -= StartClock;
     }
 
     void Update()
     {
-        Debug.Log(isCounting);
         if (isCounting)
             timerText.text = Clock();
     }
 
     public IEnumerator GameCountDown()
     {
-        CountDownText text;
-        startTime = (min * 60) + sec;
-
         countDownDisplay.text = "";
         countDownDisplay.gameObject.SetActive(true);
         while (countDownTime > 0)
         {
-            text = (CountDownText)countDownTime;
-            countDownDisplay.text = text.ToString();
+            countDownDisplay.text = countDownText[countDownTime];
             yield return new WaitForSeconds(1f);
             countDownTime--;
         }
-        isCounting = true;
-        text = (CountDownText)countDownTime;
-        countDownDisplay.text = text.ToString();
+        //give the last sign a second
+        countDownDisplay.text = countDownText[countDownTime];
         yield return new WaitForSeconds(1f);
-        //Clock();
         
-        //start the game
         countDownDisplay.gameObject.SetActive(false);
+        startGameDelegate?.Invoke();
+
     }
 
+    private void StartClock()
+    {
+        //startTime = (min * 60) + sec;
+        isCounting = true;
+
+    }
     public string Clock()
     {
-        //if (currentTime <= 0)
-        //    return;
-        //startTime -= Time.deltaTime;
-        Debug.Log(startTime);
-        float t = startTime - Time.time;
-        Debug.Log(t);
+        if (isCounting)
+        {
+            startTime -= Time.deltaTime;
+        }
+        float t = startTime;
         string minutes = ((int)t / 60).ToString();
         float sec = Mathf.Floor(t % 60);
         string seconds = sec < 10 ? "0" + sec.ToString("f0") : sec.ToString("f0");
         return minutes + ":" + seconds;
     }
 
-    public IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(1f);
 
-    }
+
 }

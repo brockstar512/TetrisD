@@ -7,6 +7,7 @@ public class DiceBoard : MonoBehaviour
 {
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
+    [SerializeField] CountDown currentClock;
 
     public DiceData[] DiceOptions;
     public Vector3Int spawnPosition;
@@ -26,6 +27,16 @@ public class DiceBoard : MonoBehaviour
         }
     }
 
+    public CurrentState currentState = CurrentState.Beginning;
+    public enum CurrentState
+    {
+        Beginning,
+        Playing,
+        Disengaging,
+        Scoring,
+        GameOver,
+    }
+    
 
     // Start is called before the first frame update
     void Awake()
@@ -51,16 +62,20 @@ public class DiceBoard : MonoBehaviour
             this.DiceOptions[i].Initialize();
         }
 
+        currentClock.startGameDelegate += SpawnGroup;
+
     }
     void Start()
     {
-        SpawnGroup();
+        //clock.startGameDelegate+= SpawnGroup;
+        //SpawnGroup();
 
     }
 
 
     public void SpawnGroup()
     {
+        this.activeGroup.isPlaying = true;
         this.activeGroup.isScoring = false;
         int random = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
@@ -160,7 +175,6 @@ public class DiceBoard : MonoBehaviour
 
     }
 
-
     public bool IsValidPositionSingleDice(Vector3Int position)
     {
         //get the bounds
@@ -219,33 +233,51 @@ public class DiceBoard : MonoBehaviour
     }
 
 
-
-    #region Testing Gravity
-    //put random tiles up high
-    [ContextMenu("Test gravity")]
-    void TestGravity()
+    public CurrentState StateManager(CurrentState from, CurrentState to)
     {
-        int random = Random.Range(0, this.DiceOptions.Length);
-        DiceData dice1 = this.DiceOptions[random];
-        DiceData dice2 = this.DiceOptions[random];
-        DiceData dice3 = this.DiceOptions[random];
-        DiceData dice4 = this.DiceOptions[random];
-        DiceData dice5 = this.DiceOptions[random];
-        DiceData dice6 = this.DiceOptions[random];
-
-        Vector3Int position = new Vector3Int(-2, 2, 0);
-        Vector3Int position1 = new Vector3Int(-2, 1, 0);
-        Vector3Int position2 = new Vector3Int(-2, 0, 0);
-        Vector3Int position3 = new Vector3Int(1, 3, 0);
-        Vector3Int position4 = new Vector3Int(-2, -5, 0);
-        Vector3Int position5 = new Vector3Int(1, 0, 0);
-
-        SetSingleDiceOnBoard(position, dice1.tile);
-        SetSingleDiceOnBoard(position1, dice2.tile);
-        SetSingleDiceOnBoard(position2, dice3.tile);
-        SetSingleDiceOnBoard(position3, dice4.tile);
-        SetSingleDiceOnBoard(position4, dice5.tile);
-        SetSingleDiceOnBoard(position5, dice6.tile);
+        switch (to)
+        {
+            case CurrentState.Beginning:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.Disengaging:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.Playing:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.Scoring:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.GameOver:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+        }
+        return to;
     }
-    #endregion
 }

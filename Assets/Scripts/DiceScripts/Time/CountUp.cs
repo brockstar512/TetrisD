@@ -16,13 +16,20 @@ public class CountUp : MonoBehaviour, IClock
         "READY",
         ""
     };
+    public event StartGameDelegate startGameDelegate;
+
+
 
     private void Awake()
     {
         StartCoroutine(GameCountDown());
+        startGameDelegate += StartClock;
     }
+    private void OnDisable()
+    {
+        startGameDelegate -= StartClock;
 
-
+    }
 
     void Update()
    {
@@ -43,13 +50,18 @@ public class CountUp : MonoBehaviour, IClock
             yield return new WaitForSeconds(1f);
             countDownTime--;
         }
-        isCounting = true;
-        startTime = Time.time;
-        countDownDisplay.text = countDownText[countDownTime];
+        startGameDelegate?.Invoke();
+
         yield return new WaitForSeconds(1f);
         //Clock();
         //start the game
         countDownDisplay.gameObject.SetActive(false);
+    }
+    private void StartClock()
+    {
+        isCounting = true;
+        startTime = Time.time;
+        countDownDisplay.text = countDownText[countDownTime];
     }
 
     public string Clock()
@@ -61,9 +73,5 @@ public class CountUp : MonoBehaviour, IClock
         return minutes + ":" + seconds;
     }
 
-    public IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(1f);
 
-    }
 }
