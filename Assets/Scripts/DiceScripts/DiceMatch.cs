@@ -97,7 +97,7 @@ public class DiceMatch : MonoBehaviour
 
     public void Score()
     {
-        
+        Debug.Log($"Scoring");
         diceBoard.ClearGroupFromBoard();
         Chain = 0;
         CheckForMatches();
@@ -134,15 +134,18 @@ public class DiceMatch : MonoBehaviour
                 Vector3Int position = new Vector3Int(x, y, 0);
                 //does it have a tile?
                 bool hasTile = mainMap.HasTile(position);
-
+                //if (hasTile)
+                //{
+                //    Debug.Log($"This position of {x},{y} it has a tile and it is a {TilePos[position].number} ");
+                //}
 
                 //if there isnt a tile go to the next one
                 if (!hasTile)
                     continue;
 
                 //Do they have a pair in bounds
-                bool withinHorizontalBounds = (position.x + (int)TilePos[position].number) < 2 ? true : false;
-                bool withinVerticalBounds = (position.y + (int)TilePos[position].number) < 3 ? true : false;
+                bool withinHorizontalBounds = (position.x + (int)TilePos[position].number) <= 2 ? true : false;
+                bool withinVerticalBounds = (position.y + (int)TilePos[position].number) <= 3 ? true : false;
 
                 //get the number of the current position
                 DiceNumber number = TilePos[position].number;
@@ -153,10 +156,13 @@ public class DiceMatch : MonoBehaviour
 
                 //get a list of the dice inbetween in case they are the same color
                 List<Vector3Int> BetweenDice = new List<Vector3Int>();
+                //Debug.Log($"withing horizontal bounds? {withinHorizontalBounds}");
+                //Debug.Log($"withing vertical bounds? {withinVerticalBounds}");
 
                 //if it is within our bounds
                 if (withinHorizontalBounds)
                 {
+
                     //get the dice x number away
                     Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number, position.y, 0);
 
@@ -274,6 +280,7 @@ public class DiceMatch : MonoBehaviour
     /// <returns></returns>
     bool IsConnected(in Vector3Int position, Vector3Int checkingPosition,in bool inBounds, List<Vector3Int>listOfDiceToRemove)
     {
+        //Debug.Log($"We are checking {position} againt position {checkingPosition} and is it in bounds? {inBounds}");
         //if what we're checking is out of bounds just ditch it.
         listOfDiceToRemove.Clear();
         if (!inBounds)

@@ -344,7 +344,7 @@ public class DiceGroup : MonoBehaviour
             HandleDisengagement(continuingDice);
             return;
         }
-        Debug.Log("FX");
+        //Debug.Log("FX");
         //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, this.cells[0] + this.position);
         //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight, this.cells[1] + this.position);
         //Lock();

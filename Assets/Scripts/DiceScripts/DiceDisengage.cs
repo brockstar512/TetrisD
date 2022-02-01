@@ -35,13 +35,13 @@ public class DiceDisengage : MonoBehaviour
         //if the y of the diengaging dice is great than the y of the still one its right
         if (holdPos.x < startPos.x)
         {
-            Debug.Log("FX");
+            //Debug.Log("FX");
 
             diceFXController.FX(DiceFXController.TileEffect.disengageLeft, startPos);
         }
         else
         {
-            Debug.Log("FX");
+            //Debug.Log("FX");
 
             diceFXController.FX(DiceFXController.TileEffect.disengageRight, startPos);
         }
@@ -73,7 +73,7 @@ public class DiceDisengage : MonoBehaviour
             this.diceBoard.SetSingleDiceOnBoard(current, travelingDice.tile);
             yield return new WaitForSeconds(DisengageDropSpeed);
         }
-        Debug.Log("FX");
+        //Debug.Log("FX");
         //diceFXController.FX(DiceFXController.TileEffect.slam, finish);
         this.diceBoard.SetSingleDiceOnBoard(finish, travelingDice.tile);
         DisengageDropFX(finish);

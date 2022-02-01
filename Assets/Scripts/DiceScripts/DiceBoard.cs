@@ -65,12 +65,7 @@ public class DiceBoard : MonoBehaviour
         currentClock.startGameDelegate += SpawnGroup;
 
     }
-    void Start()
-    {
-        //clock.startGameDelegate += SpawnGroup;
-        //SpawnGroup();
 
-    }
 
 
     public void SpawnGroup()

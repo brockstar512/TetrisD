@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 3096516644007060290}
   - component: {fileID: 3096516644007060288}
   - component: {fileID: 3096516644007060291}
+  - component: {fileID: 2341240071298323429}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -573,6 +574,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2341240071298323429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096516644007059645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93428b698c0a47b8abdb79a1d85e158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3096516644357069709
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +597,7 @@ GameObject:
   - component: {fileID: 3096516644357069712}
   - component: {fileID: 3096516644357069714}
   - component: {fileID: 3096516644357069715}
+  - component: {fileID: 334563147473391147}
   m_Layer: 0
   m_Name: UI Elements (Count Down)
   m_TagString: Untagged
@@ -636,6 +650,23 @@ MonoBehaviour:
   isCounting: 0
   min: 5
   sec: 30
+--- !u!114 &334563147473391147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096516644357069709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1c1ff9ba06148d0a7999d6c722c2f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 3096516644007060291}
+  CountFPS: 30
+  Duration: 1
+  NumberFormat: N0
+  persistantScore: 0
 --- !u!1 &3096516644371197382
 GameObject:
   m_ObjectHideFlags: 0
