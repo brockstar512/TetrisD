@@ -31,13 +31,16 @@ public class ScoreManager : MonoBehaviour
 
     //}
 
-    void HardDropBonus()
+    void HardDropBonus(int depth)
     {
+
         //depth / did break?
     }
 
     public void Bookend(int DiceNumber, bool isSameColor, int chain)//6 * 1.5
     {
+        Debug.Log($"<color=yellow>{chain}</color>");
+
         //What about the dice in between? is clearning that amount a bonus enough
         //or should there be extra for the inbetween dice
         //Numbers

@@ -116,7 +116,7 @@ public class DiceMatch : MonoBehaviour
     /// <summary>
     /// this is the Main function of this script. It checks every tile and sees if there is a match. From there it handles the logic of which functions to call next
     /// </summary>
-    void CheckForMatches()
+    async void CheckForMatches()
     {
         bool hasMatch = false;
         //-3 -2 -1 0 1 2
@@ -174,14 +174,11 @@ public class DiceMatch : MonoBehaviour
                 ////if its a bomb
                 if (number == DiceNumber.Seven)
                 {
-                    //return;
-                    //TODO BUG:this needs to change. the score should not be scored when the dice is removed but it needs to also removed after the bomb
                     //todo the only bug now is that the disentigration doesnt happen after but before the explosion
                     hasMatch = true;
-                    ExplodeFX(position, BetweenDice);
+                    await ExplodeFX(position, BetweenDice);
                     foreach (Vector3Int item in BetweenDice)
                     {
-                        Debug.Log($"Adding this position to the dictionary {item}");
                         MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;
                     }
                 }
@@ -258,11 +255,8 @@ public class DiceMatch : MonoBehaviour
             */
         }
         #endregion
-        Debug.Log($"DICE MATCH {hasMatch}");
         if (hasMatch)
         {
-            Debug.Log($"DICE MATCH removing tiles");
-
             //pass in the matched dice dictionary if there is a match otherwise we should continue playing
             RemoveTiles(MatchedDice);
             //keep track of how many times we've ran this for waterfall bonus
@@ -452,7 +446,7 @@ public class DiceMatch : MonoBehaviour
 
     }
 
-    public async void ExplodeFX(Vector3Int location, List<Vector3Int> listOfDiceToRemove)
+    public async Task ExplodeFX(Vector3Int location, List<Vector3Int> listOfDiceToRemove)
     {
         //the bomb should not have a dice number or it should be higher than 6
         //if (TilePos[location].number != DiceNumber.Zero)
