@@ -41,7 +41,7 @@ public class DiceData
     public void Initialize()
     {
         this.cellLocation[0] = new Vector2Int(0,0);//this could just in the fields
-        color = DiceColor.White;
+        //color = DiceColor.White;
     }
 
 }

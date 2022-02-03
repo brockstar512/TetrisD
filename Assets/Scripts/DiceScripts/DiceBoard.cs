@@ -74,8 +74,11 @@ public class DiceBoard : MonoBehaviour
         this.activeGroup.isScoring = false;
         int random = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup = this.DiceOptions[random];
+        Debug.Log($"This is the new group {newGroup.color}");
         int random2 = Random.Range(0, this.DiceOptions.Length);
         DiceData newGroup2 = this.DiceOptions[random2];
+        Debug.Log($"This is new group number two {newGroup2.color}");
+
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
