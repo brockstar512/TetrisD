@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08622e6e624246bd8ec2a0f4c925816, type: 3}
   m_Name: ExplosionFX
   m_EditorClassIdentifier: 
-  effect: 0
+  effect: 3
   FPS: 12
   tiles:
   - {fileID: 11400000, guid: 5011f3cd4118c41618341a312008e9f0, type: 2}

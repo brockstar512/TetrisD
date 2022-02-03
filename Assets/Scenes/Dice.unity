@@ -653,6 +653,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8974658370611484885, guid: 629e1779497b04bf3952b5f9ed2291ed, type: 3}
+      propertyPath: diceMatch
+      value: 
+      objectReference: {fileID: 870368692}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 629e1779497b04bf3952b5f9ed2291ed, type: 3}
 --- !u!1 &1749936038
@@ -1236,6 +1240,7 @@ MonoBehaviour:
   disengageRightFX: {fileID: 11400000, guid: 0c2d61b349621474da463e6f51be0853, type: 2}
   bigSlamRightFX: {fileID: 11400000, guid: 9ca284f2000194e85ae038e7d808614e, type: 2}
   bigSlamLeftFX: {fileID: 11400000, guid: 3c7cbd492d8db43cb9411734be3b3b0a, type: 2}
+  explosionFX: {fileID: 11400000, guid: 2dcd3b1f47cb6427bb18be647319397f, type: 2}
   map: {fileID: 1903845430004917983}
 --- !u!4 &1903845430354739681
 Transform:

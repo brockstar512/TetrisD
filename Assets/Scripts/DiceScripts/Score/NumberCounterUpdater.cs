@@ -5,14 +5,16 @@ public class NumberCounterUpdater : MonoBehaviour
 {
     public NumberCounter NumberCounter;
     public TMP_InputField InputField;
+    public int newValue;
 
-    public void SetValue()
+
+    public void SetValue(int value)
     {
-        int value;
+        newValue += value;
 
-        if (int.TryParse(InputField.text, out value))
-        {
+        //if (int.TryParse(InputField.text, out value))
+        //{
             NumberCounter.Value = value;
-        }
+        //}
     }
 }

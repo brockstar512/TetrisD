@@ -14,6 +14,7 @@ public class DiceFXController : MonoBehaviour
     public Effect disengageRightFX;
     public Effect bigSlamRightFX;
     public Effect bigSlamLeftFX;
+    public Effect explosionFX;
 
 
 
@@ -73,7 +74,9 @@ public class DiceFXController : MonoBehaviour
             case TileEffect.bigSlamRight:
                 tileSequence = bigSlamRightFX;
                 break;
-
+            case TileEffect.explosion:
+                tileSequence = explosionFX;
+                break;
             default:
                 Debug.LogError("FX Not Found");
                 tileSequence = popFX;

@@ -12,7 +12,8 @@ public enum DiceNumber
     Three,
     Four,
     Five,
-    Six
+    Six,
+    Seven
 
 }
 public enum DiceColor

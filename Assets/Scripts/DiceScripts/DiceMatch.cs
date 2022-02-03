@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
-
+using System.Linq;
 
 public class DiceMatch : MonoBehaviour
 {
+    public event Action<int, bool, int> scoreEvent;
+    public event Action<int> bombEvent;
+
+
+
     public DiceFXController diceFXController;
     public DiceBoard diceBoard;
     [SerializeField] Tilemap mainMap;    
@@ -154,14 +160,26 @@ public class DiceMatch : MonoBehaviour
                 if (number == DiceNumber.Zero)
                     continue;
 
+                ////if its a bomb
+                //if (number == DiceNumber.Seven)
+                //ExplodeFX
+
+
+
+                Debug.Log($"Bug check 1 {withinHorizontalBounds} for dice {TilePos[position].number} its checking position starting at {position} to {(position.x + (int)TilePos[position].number)} away on the x axis");
+
+
                 //get a list of the dice inbetween in case they are the same color
                 List<Vector3Int> BetweenDice = new List<Vector3Int>();
                 //Debug.Log($"withing horizontal bounds? {withinHorizontalBounds}");
                 //Debug.Log($"withing vertical bounds? {withinVerticalBounds}");
 
+
+                Debug.Log($"Bug check abov if");
                 //if it is within our bounds
                 if (withinHorizontalBounds)
                 {
+                    Debug.Log($"Bug check below if");
 
                     //get the dice x number away
                     Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number, position.y, 0);
@@ -172,9 +190,12 @@ public class DiceMatch : MonoBehaviour
                     //if the colors are the same?
                     bool hasHorizontalColorMatch = TilePos[position].color == TilePos[horizontalPosCheck].color;
 
-                    //if there is a horizontal match and they have a dice in between them...
+                        Debug.Log($"Bug check 2 {withinHorizontalBounds} for dice {TilePos[position].number} is there a match: {hasHorizontalMatch} between {TilePos[position].number} and { TilePos[horizontalPosCheck].number}");
+
+                     //if there is a horizontal match and they have a dice in between them...
                     if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))
                     {
+                        scoreEvent?.Invoke((int)TilePos[position].number, hasHorizontalColorMatch, Chain);
 
                         //figure out if we need to loop through all this again because the board has changed
                         hasMatch = true;
@@ -182,10 +203,10 @@ public class DiceMatch : MonoBehaviour
                         BetweenDice.Add(position);
                         //add the matching dice
                         BetweenDice.Add(horizontalPosCheck);
-                        //this log will tell you what the position and number of the matching dice is
-                        //Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {horizontalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[horizontalPosCheck].number}");
+                            //this log will tell you what the position and number of the matching dice is
+                            Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {horizontalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[horizontalPosCheck].number}");
 
-                        //add the inbetween tiles and give them a value that corresponds with how often they occur
+                            //add the inbetween tiles and give them a value that corresponds with how often they occur
                         foreach (Vector3Int item in BetweenDice)
                         {
                             MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;
@@ -201,6 +222,8 @@ public class DiceMatch : MonoBehaviour
 
                     if (hasVerticalMatch && IsConnected(position, verticalPosCheck, withinVerticalBounds, BetweenDice))
                     {
+                        scoreEvent?.Invoke((int)TilePos[position].number, hashasVerticalColorMatch, Chain);
+
                         //figure out if we need to loop through all this again because the board has changed
                         hasMatch = true;
                         BetweenDice.Add(position);
@@ -375,40 +398,6 @@ public class DiceMatch : MonoBehaviour
         CheckForMatches();
     }
 
-    /// <summary>
-    /// This function pushes the remaining dice down from what you pass in as start to what you pass in as finish.
-    /// </summary>
-    /// <param name="die"></param>
-    /// <param name="start"></param>
-    /// <param name="finish"></param>
-    /// <returns></returns>
-    //IEnumerator TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
-    //{
-
-    //    TilePos[start] = new DiceImprint(start);
-
-    //    Vector3Int current = start;
-
-    //    while (current != finish)
-    //    {
-    //        this.diceBoard.Clear(current);
-    //        current = new Vector3Int(current.x, current.y + -1, 0);
-    //        this.diceBoard.SetSingleDiceOnBoard(current, die.tile);
-    //        yield return new WaitForSeconds(GRAVITY);
-    //    }
-    //    this.diceBoard.SetSingleDiceOnBoard(finish, die.tile);
-
-    //    TilePos[finish] = new DiceImprint(die,finish);
-    //    for(int i =0; i < TaskList.Count; i++)
-    //    {
-    //        if (!TaskList[i])
-    //        {
-    //            TaskList[i] = false;
-    //            break;
-    //        }
-    //    }
-    //    yield return null;
-    //}
 
     public async Task TravelingDice(DiceImprint die, Vector3Int start, Vector3Int finish)
     {
@@ -437,11 +426,13 @@ public class DiceMatch : MonoBehaviour
         Vector3Int second = new Vector3Int(-3,-3,0);
         Vector3Int third = new Vector3Int(3, -3, 0);
         Vector3Int fourth = new Vector3Int(-3, 3, 0);
+        Vector3Int five = new Vector3Int(-3, -5, 0);
+
 
         //ExplodeFX(first);
-        ExplodeFX(second);
+        //ExplodeFX(second);
         //ExplodeFX(third);
-        //ExplodeFX(fourth);
+        //ExplodeFX(five);
         //first a then b then c... etc
         //1a//1b
         //2a//2b
@@ -450,13 +441,17 @@ public class DiceMatch : MonoBehaviour
 
     }
 
-
-    public void ExplodeFX(Vector3Int location)
+    public async void ExplodeFX(Vector3Int location, List<Vector3Int> tilesToRemove)
     {
         //the bomb should not have a dice number or it should be higher than 6
-        if (TilePos[location].number != DiceNumber.Zero)
-            return;
+        //if (TilePos[location].number != DiceNumber.Zero)
+        //    return;
 
+        List < Vector3Int > ExplodingTiles = new List<Vector3Int>();
+
+        ///do the exploding animation
+        List<Task> tasks = new List<Task>();
+        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.explosion, location));
         //first a then b then c... etc
         //1a//1b
         //2a//2b
@@ -464,17 +459,39 @@ public class DiceMatch : MonoBehaviour
 
         for (int x = location.x + -1; x <= location.x - -1; x+=1)
         {
-            //Debug.Log($"Y is starting {location.y - -1} and stopping at {location.y - 1}");
-            //good
+            if (x < Enum.GetValues(typeof(XGridCell)).Cast<int>().Min() || x > Enum.GetValues(typeof(XGridCell)).Cast<int>().Max())//bounds
+                continue;
+
+                //Debug.Log($"Y is starting {location.y - -1} and stopping at {location.y - 1}");
+                //good
             for (int y = location.y - -1; y >= location.y - 1; y+=-1)
             {
-                //ignoring the bomb tile
-                if (location.x == x && location.y == y)
+                if (y < Enum.GetValues(typeof(YGridCell)).Cast<int>().Min() || y > Enum.GetValues(typeof(YGridCell)).Cast<int>().Max())//bounds
                     continue;
 
-                Debug.Log($"The bomb is at {location}: all the surrounding tiles are {x},{y}");
+                //ignoring the bomb tile or empty tiles
+                Vector3Int tileLocation = new Vector3Int(x, y, 0);
+                if (location.x == x && location.y == y || (!mainMap.HasTile(tileLocation)))
+                    continue;
+
+              //TODO make these different animation then the pop animation. i can excluded these compltely from that logic
+
+
+                //ExplodingTiles.Add(explosion);
+                //Debug.Log($"The bomb is at {location}: all the surrounding tiles are {x},{y}");
             }
         }
+
+        //await the bomb fx
+        //return the surrounding bomb tiles
+        await Task.WhenAll(tasks);
+
+        //score the bomb
+        bombEvent?.Invoke(ExplodingTiles.Count);
+        //add the exploding tiles to the list to be removed
+        ExplodingTiles.ForEach(tile => tilesToRemove.Add(tile));
+
+
     }
 
     #region Test Functions

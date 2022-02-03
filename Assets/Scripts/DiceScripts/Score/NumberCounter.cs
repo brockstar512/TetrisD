@@ -11,6 +11,7 @@ public class NumberCounter : MonoBehaviour
     public string NumberFormat = "N0";
     private int _value;
     public int persistantScore = 0;
+    public int valueToAdd = 0;
     public int Value
     {
         get
@@ -33,8 +34,9 @@ public class NumberCounter : MonoBehaviour
     [ContextMenu("Test")]
     public void NumberTest()
     {
-        persistantScore += 550;
-        UpdateText(persistantScore);
+        persistantScore += valueToAdd;
+
+        Value = persistantScore;
     }
 
     private void UpdateText(int newValue)
@@ -48,6 +50,7 @@ public class NumberCounter : MonoBehaviour
     {
         WaitForSeconds Wait = new WaitForSeconds(1f / CountFPS);
         int previousValue = _value;
+        Debug.Log(previousValue);
         int stepAmount;
 
         if (newValue - previousValue < 0)
@@ -61,6 +64,7 @@ public class NumberCounter : MonoBehaviour
 
         if (previousValue < newValue)
         {
+
             while (previousValue < newValue)
             {
                 previousValue += stepAmount;
@@ -76,6 +80,8 @@ public class NumberCounter : MonoBehaviour
         }
         else
         {
+            Debug.Log($"else previous value {previousValue} and new value {newValue}");
+
             while (previousValue > newValue)
             {
                 previousValue += stepAmount; // (-20 - 0) / (30 * 1) = -0.66667 -> -1              0 + -1 = -1
