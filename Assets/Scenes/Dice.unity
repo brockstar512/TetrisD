@@ -750,6 +750,11 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 98e27f7c73e224e6abbd8e126734968f, type: 2}
     cellLocation:
     - {x: 0, y: 0}
+  - number: 7
+    color: 0
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    cellLocation:
+    - {x: 0, y: 0}
   spawnPosition: {x: -1, y: 3, z: 0}
   boardSize: {x: 6, y: 10}
   currentState: 0

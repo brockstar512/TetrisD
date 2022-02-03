@@ -49,15 +49,22 @@ public class ScoreManager : MonoBehaviour
         scoreToAdd += score;
         Debug.Log($"scoreToAdd:: {scoreToAdd}");
         //numberCounterUpdater.SetValue(scoreToAdd);
-        numberCounter.Value = scoreToAdd;
+        UpdateScore(scoreToAdd);
+
     }
 
 
     public void Bomb(int DiceNumber)
     {
         //# of dice involved? * .75 (every square involved)//8 * .75 = 6
-        scoreToAdd+= Mathf.CeilToInt(DiceNumber * .75f);
+        scoreToAdd+= Mathf.CeilToInt(DiceNumber * 7.5f);
+        UpdateScore(scoreToAdd);
 
+    }
+
+    void UpdateScore(int score)
+    {
+        numberCounter.Value = score;
     }
 
     private float WaterFallBonus(int chain)

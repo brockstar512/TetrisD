@@ -99,6 +99,9 @@ public class DiceMatch : MonoBehaviour
     public void RemoveTileDict(Vector3Int Pos)
     {
         TilePos[Pos] = new DiceImprint(Pos);
+        //if ive forgotten to remove tile from the board remove it now
+        if(mainMap.HasTile(Pos))
+            diceBoard.Clear(Pos);
     }
 
     public void Score()
@@ -160,13 +163,6 @@ public class DiceMatch : MonoBehaviour
                 if (number == DiceNumber.Zero)
                     continue;
 
-                ////if its a bomb
-                //if (number == DiceNumber.Seven)
-                //ExplodeFX
-
-
-
-                Debug.Log($"Bug check 1 {withinHorizontalBounds} for dice {TilePos[position].number} its checking position starting at {position} to {(position.x + (int)TilePos[position].number)} away on the x axis");
 
 
                 //get a list of the dice inbetween in case they are the same color
@@ -175,11 +171,24 @@ public class DiceMatch : MonoBehaviour
                 //Debug.Log($"withing vertical bounds? {withinVerticalBounds}");
 
 
-                Debug.Log($"Bug check abov if");
+                ////if its a bomb
+                if (number == DiceNumber.Seven)
+                {
+                    //return;
+                    //TODO BUG:this needs to change. the score should not be scored when the dice is removed but it needs to also removed after the bomb
+                    //todo the only bug now is that the disentigration doesnt happen after but before the explosion
+                    hasMatch = true;
+                    ExplodeFX(position, BetweenDice);
+                    foreach (Vector3Int item in BetweenDice)
+                    {
+                        Debug.Log($"Adding this position to the dictionary {item}");
+                        MatchedDice[item] = MatchedDice.ContainsKey(item) ? MatchedDice[item] + 1 : 1;
+                    }
+                }
+
                 //if it is within our bounds
                 if (withinHorizontalBounds)
                 {
-                    Debug.Log($"Bug check below if");
 
                     //get the dice x number away
                     Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number, position.y, 0);
@@ -190,7 +199,6 @@ public class DiceMatch : MonoBehaviour
                     //if the colors are the same?
                     bool hasHorizontalColorMatch = TilePos[position].color == TilePos[horizontalPosCheck].color;
 
-                        Debug.Log($"Bug check 2 {withinHorizontalBounds} for dice {TilePos[position].number} is there a match: {hasHorizontalMatch} between {TilePos[position].number} and { TilePos[horizontalPosCheck].number}");
 
                      //if there is a horizontal match and they have a dice in between them...
                     if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))
@@ -204,7 +212,7 @@ public class DiceMatch : MonoBehaviour
                         //add the matching dice
                         BetweenDice.Add(horizontalPosCheck);
                             //this log will tell you what the position and number of the matching dice is
-                            Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {horizontalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[horizontalPosCheck].number}");
+                            //Debug.Log($"<color=green>Match</color> pos {position} comparing with other position {horizontalPosCheck} the two numbers are {TilePos[position].number} and {TilePos[horizontalPosCheck].number}");
 
                             //add the inbetween tiles and give them a value that corresponds with how often they occur
                         foreach (Vector3Int item in BetweenDice)
@@ -250,8 +258,11 @@ public class DiceMatch : MonoBehaviour
             */
         }
         #endregion
+        Debug.Log($"DICE MATCH {hasMatch}");
         if (hasMatch)
         {
+            Debug.Log($"DICE MATCH removing tiles");
+
             //pass in the matched dice dictionary if there is a match otherwise we should continue playing
             RemoveTiles(MatchedDice);
             //keep track of how many times we've ran this for waterfall bonus
@@ -441,7 +452,7 @@ public class DiceMatch : MonoBehaviour
 
     }
 
-    public async void ExplodeFX(Vector3Int location, List<Vector3Int> tilesToRemove)
+    public async void ExplodeFX(Vector3Int location, List<Vector3Int> listOfDiceToRemove)
     {
         //the bomb should not have a dice number or it should be higher than 6
         //if (TilePos[location].number != DiceNumber.Zero)
@@ -451,6 +462,10 @@ public class DiceMatch : MonoBehaviour
 
         ///do the exploding animation
         List<Task> tasks = new List<Task>();
+        //clear board 
+        diceBoard.Clear(location);
+        //clear the dictionary position
+        TilePos[location] = new DiceImprint(location);
         tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.explosion, location));
         //first a then b then c... etc
         //1a//1b
@@ -474,13 +489,15 @@ public class DiceMatch : MonoBehaviour
                 if (location.x == x && location.y == y || (!mainMap.HasTile(tileLocation)))
                     continue;
 
-              //TODO make these different animation then the pop animation. i can excluded these compltely from that logic
+                //TODO make these different animation then the pop animation. i can excluded these compltely from that logic
 
-
-                //ExplodingTiles.Add(explosion);
+                Debug.Log($"Adding tile to list {tileLocation} now it has {ExplodingTiles.Count} tiles to remove");
+                ExplodingTiles.Add(tileLocation);
                 //Debug.Log($"The bomb is at {location}: all the surrounding tiles are {x},{y}");
             }
         }
+        //add the exploding tiles to the list to be removed
+        ExplodingTiles.ForEach(tile => listOfDiceToRemove.Add(tile));
 
         //await the bomb fx
         //return the surrounding bomb tiles
@@ -488,8 +505,10 @@ public class DiceMatch : MonoBehaviour
 
         //score the bomb
         bombEvent?.Invoke(ExplodingTiles.Count);
-        //add the exploding tiles to the list to be removed
-        ExplodingTiles.ForEach(tile => tilesToRemove.Add(tile));
+
+        ////add the exploding tiles to the list to be removed
+        //ExplodingTiles.ForEach(tile => listOfDiceToRemove.Add(tile));
+
 
 
     }
