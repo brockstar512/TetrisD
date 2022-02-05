@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     NumberCounterUpdater numberCounterUpdater;
     NumberCounter numberCounter;
     // Start is called before the first frame update
-    void Awake()
+    public void Init(DiceMatch diceMatch)
     {
         numberCounterUpdater = this.gameObject.transform.GetComponent<NumberCounterUpdater>();
         numberCounter = this.gameObject.transform.GetComponent<NumberCounter>();
@@ -20,16 +20,7 @@ public class ScoreManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    //public void Score(int DiceNumber, bool isSameColor, int chain)
-    //{
-
-    //}
 
     void HardDropBonus(int depth)
     {

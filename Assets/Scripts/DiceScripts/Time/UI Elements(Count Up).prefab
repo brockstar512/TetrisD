@@ -551,6 +551,8 @@ GameObject:
   - component: {fileID: 7908752133860610230}
   - component: {fileID: 7908752133860610231}
   - component: {fileID: 7908752133860610228}
+  - component: {fileID: 1609860190473757045}
+  - component: {fileID: 220254853999340087}
   m_Layer: 0
   m_Name: UI Elements(Count Up)
   m_TagString: Untagged
@@ -601,6 +603,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7908752133860610219}
   m_CullTransparentMesh: 1
+--- !u!114 &1609860190473757045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908752133860610219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5cfc4fba84c42a7b6b9198d4dd1729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceMatch: {fileID: 0}
+  currentScore: 0
+  scoreToAdd: 0
+--- !u!114 &220254853999340087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908752133860610219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1c1ff9ba06148d0a7999d6c722c2f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 7908752134601123941}
+  CountFPS: 30
+  Duration: 1
+  NumberFormat: N0
+  persistantScore: 0
+  valueToAdd: 0
 --- !u!1 &7908752133878933216
 GameObject:
   m_ObjectHideFlags: 0

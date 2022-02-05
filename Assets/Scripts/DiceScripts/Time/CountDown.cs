@@ -20,7 +20,7 @@ public class CountDown : MonoBehaviour, IClock
         "READY",
         ""
     };
-    private void Awake()
+    public void StartGame()
     {
         StartCoroutine(GameCountDown());
         startGameDelegate += StartClock;

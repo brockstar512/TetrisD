@@ -15,7 +15,9 @@ public class DiceMatch : MonoBehaviour
 
     public DiceFXController diceFXController;
     public DiceBoard diceBoard;
-    [SerializeField] Tilemap mainMap;    
+    [SerializeField] Tilemap mainMap;
+
+    //ignore
     [SerializeField] Grid grid;
     List<bool> TaskList = new List<bool>();
 
@@ -41,7 +43,6 @@ public class DiceMatch : MonoBehaviour
         Five = 1,
         Six_Right = 2,
     }
-    bool taskIsRunning = false;
     Dictionary<Vector3Int, DiceImprint> TilePos;
     #endregion 
 
@@ -51,7 +52,6 @@ public class DiceMatch : MonoBehaviour
     private void Awake()
     {
         Initialize();
-        //TaskList.Add(true);
     }
 
     void Update()
@@ -485,7 +485,7 @@ public class DiceMatch : MonoBehaviour
 
                 //TODO make these different animation then the pop animation. i can excluded these compltely from that logic
 
-                Debug.Log($"Adding tile to list {tileLocation} now it has {ExplodingTiles.Count} tiles to remove");
+                //Debug.Log($"Adding tile to list {tileLocation} now it has {ExplodingTiles.Count} tiles to remove");
                 ExplodingTiles.Add(tileLocation);
                 //Debug.Log($"The bomb is at {location}: all the surrounding tiles are {x},{y}");
             }

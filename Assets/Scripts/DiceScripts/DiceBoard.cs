@@ -7,7 +7,7 @@ public class DiceBoard : MonoBehaviour
 {
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
-    [SerializeField] CountDown currentClock;
+    private CountDown currentClock;
 
     public DiceData[] DiceOptions;
     public Vector3Int spawnPosition;
@@ -39,7 +39,7 @@ public class DiceBoard : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Awake()
+    public void Init(IClock currentClock)
     {
         #region Bound Testing
         //i wonder if it wont go all the way because you can divide 9 by 2 that easily when the bounds is divided by 2

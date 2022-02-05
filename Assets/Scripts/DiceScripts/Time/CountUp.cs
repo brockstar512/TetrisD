@@ -20,7 +20,7 @@ public class CountUp : MonoBehaviour, IClock
 
 
 
-    private void Awake()
+    public void StartGame()
     {
         StartCoroutine(GameCountDown());
         startGameDelegate += StartClock;
@@ -41,7 +41,6 @@ public class CountUp : MonoBehaviour, IClock
 
     public IEnumerator GameCountDown()
     {
-        //startTime = Time.time;
         countDownDisplay.text = "";
         countDownDisplay.gameObject.SetActive(true);
         while (countDownTime > 0)
@@ -50,12 +49,12 @@ public class CountUp : MonoBehaviour, IClock
             yield return new WaitForSeconds(1f);
             countDownTime--;
         }
-        startGameDelegate?.Invoke();
-
+        //give the last sign a second
+        countDownDisplay.text = countDownText[countDownTime];
         yield return new WaitForSeconds(1f);
-        //Clock();
-        //start the game
+
         countDownDisplay.gameObject.SetActive(false);
+        startGameDelegate?.Invoke();
     }
     private void StartClock()
     {
