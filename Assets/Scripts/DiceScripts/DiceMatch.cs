@@ -106,9 +106,10 @@ public class DiceMatch : MonoBehaviour
 
     public void Score()
     {
+        //i think the issue is we are scoring before all the dice are placed
         Debug.Log($"Scoring");
         diceBoard.ClearGroupFromBoard();
-        Chain = 0;
+        Chain = 1;
         CheckForMatches();
 
     }
@@ -317,7 +318,7 @@ public class DiceMatch : MonoBehaviour
 
         //get a reference if they are the same color
         bool sameColor = TilePos[position].color == TilePos[checkingPosition].color;
-        Debug.Log($"Are they the same color?  {sameColor} the color are {TilePos[position].color} and {TilePos[checkingPosition].color}");
+        //Debug.Log($"Are they the same color?  {sameColor} the color are {TilePos[position].color} and {TilePos[checkingPosition].color}");
         //figure out if we are going in the x or y
         Vector3Int directionalCheck = position.x == checkingPosition.x ? new Vector3Int(0,-1,0)  : new Vector3Int(-1, 0, 0);
 

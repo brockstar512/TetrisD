@@ -9,6 +9,7 @@ public class DiceGroup : MonoBehaviour
 {
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
+    public DifficultyManager difficultyManager;
 
 
     public DiceDisengage diceDisengage { get; private set; }
@@ -44,7 +45,7 @@ public class DiceGroup : MonoBehaviour
     public bool isHorizontal{ get{return this.cells[0].y == this.cells[1].y; } }
     //{get;private set;}
 
-
+    public int round = 0;
     //TODO
     //-clean check for match
     //-clean state manager
@@ -83,10 +84,10 @@ public class DiceGroup : MonoBehaviour
 
 
 
-    //TODO clean the initialize function up and see if i can do a deep dive into explainning whats going on 
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
+        
         diceDisengage = this.GetComponent<DiceDisengage>();
         diceDisengage.Initialize(diceBoard);
 
@@ -100,8 +101,16 @@ public class DiceGroup : MonoBehaviour
         if (isScoring)
             return;
 
-        this.stepTime = Time.time+ stepDelay;
+        round++;
+        Debug.Log($"Here is the round {round}");
+
+        this.stepDelay = difficultyManager.GetDifficultyStepTime;
+        this.lockDelay = difficultyManager.GetDifficultyLocktime;
+
+        this.stepTime = Time.time + stepDelay;
         this.lockTime = 0f;
+
+
 
 
         //if we have not initialized this array do it now
@@ -376,7 +385,8 @@ public class DiceGroup : MonoBehaviour
                 break;
         }
         await Task.WhenAll(tasks);
-        Lock();
+        Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
+        //Lock();
 
     }
 
@@ -401,7 +411,8 @@ public class DiceGroup : MonoBehaviour
                 return;
 
             }
-                Lock();
+            Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
+            Lock();
         }
     }
 
@@ -410,16 +421,22 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void Lock()
     {
+
+        //locks// should not score until after this
         //if(false)
-        {
-            
+        //{
+            //Debug.Log(this.data.number);
+            //Debug.Log(this.data.color);
+            //Debug.Log(this.cells[0]);
+            //Debug.Log(this.cells[0] + this.position);
+
             DiceImprint staticDice = new DiceImprint(this.data, this.cells[0] + this.position);
             DiceImprint dynamicDice = new DiceImprint(this.dynamicData, this.cells[1] + this.position);
 
             
             diceMatch.SetTileDict(this.cells[0] + this.position, staticDice);
             diceMatch.SetTileDict(this.cells[1] + this.position, dynamicDice);
-        }
+        //}
 
         this.diceBoard.SetOnBoard(this);
         //this.diceBoard.SpawnGroupq();
@@ -477,14 +494,14 @@ public class DiceGroup : MonoBehaviour
     }
 
 
-    public void ClearGroupFromBoard()
-    {
-        isScoring = true;
-        DiceData newGroup = null;
-        DiceData newGroup2 = null;
-        this.Initialize(diceBoard, diceBoard.spawnPosition, newGroup, newGroup2);
+    //public void ClearGroupFromBoard()
+    //{
+    //    isScoring = true;
+    //    DiceData newGroup = null;
+    //    DiceData newGroup2 = null;
+    //    this.Initialize(diceBoard, diceBoard.spawnPosition, newGroup, newGroup2);
 
-    }
+    //}
     //out 
     public void StateManager(ref GameState from, GameState to)
     {

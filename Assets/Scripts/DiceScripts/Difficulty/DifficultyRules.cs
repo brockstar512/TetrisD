@@ -25,22 +25,26 @@ public class DifficultyRules : ScriptableObject
     public Difficulty difficulty;
     public Stage stage;
 
-    [System.Serializable]
-    public class DiceRate
-    {
-        public int chance;
-        public DiceData option;
-    }
 
-    public DiceRate[] diceOptions;
+    public List<DiceData> diceOptions;
     public float lockTime;
     public float stepTime;
     private int scoreLimit;//should this be in charge?
     private int lineLimit;
+    public int limit;
 
-    //public DiceData SupplyDice()
-    //{
-    //    return DiceData;
-    //}
+
+    public void RemoveBombs()
+    {
+        for(int i = 0; i < diceOptions.Count; i++)
+        {
+            if(diceOptions[i].number == DiceNumber.Seven)
+            {
+                diceOptions.RemoveAt(i);
+                i--;
+            }
+
+        }
+    }
 
 }

@@ -32,9 +32,11 @@ public enum DiceColor
 [System.Serializable]
 public class DiceData
 {
+
     public DiceNumber number;
     public DiceColor color;
     public Tile tile;//which dice tile we are using
+    public int chance;
     //public Vector2Int[] cellLocation{get;private set;}//the cell this dice inhbits
     public Vector2Int[] cellLocation = new Vector2Int[1];//the cell this dice inhbits
     //public Vector2Int[,] wallKicks{get;private set;}

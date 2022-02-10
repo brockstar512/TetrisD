@@ -8,6 +8,8 @@ public class DiceBoard : MonoBehaviour
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
     private CountDown currentClock;
+    public DifficultyManager difficultyManager;
+
 
     public DiceData[] DiceOptions;
     public Vector3Int spawnPosition;
@@ -70,15 +72,19 @@ public class DiceBoard : MonoBehaviour
 
     public void SpawnGroup()
     {
+        DiceData newGroup = difficultyManager.DiceFactory();
+        DiceData newGroup2 = difficultyManager.DiceFactory();
         this.activeGroup.isPlaying = true;
         this.activeGroup.isScoring = false;
-        int random = Random.Range(0, this.DiceOptions.Length);
-        DiceData newGroup = this.DiceOptions[random];
-        Debug.Log($"This is the new group {newGroup.color}");
-        int random2 = Random.Range(0, this.DiceOptions.Length);
-        DiceData newGroup2 = this.DiceOptions[random2];
-        Debug.Log($"This is new group number two {newGroup2.color}");
+        //int random = Random.Range(0, this.DiceOptions.Length);
+        //DiceData newGroup = this.DiceOptions[random];
+        //Debug.Log($"This is the new group {newGroup.color}");
+        //int random2 = Random.Range(0, this.DiceOptions.Length);
+        //DiceData newGroup2 = this.DiceOptions[random2];
+        //Debug.Log($"This is new group number two {newGroup2.color}");
 
+
+        Debug.Log($"<color=purple>{newGroup.number} and {newGroup2.number}</color>");
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
@@ -87,6 +93,8 @@ public class DiceBoard : MonoBehaviour
     //this should be in a state manager method
     public void ClearGroupFromBoard()
     {
+        //this function removes the group from the board while its scoreing
+        //Debug.Log($"<color=red> clear group from baord</color>");
         this.activeGroup.isScoring = true;
         DiceData newGroup = null;
         DiceData newGroup2 = null;
@@ -106,12 +114,16 @@ public class DiceBoard : MonoBehaviour
         {
             this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
         }
-        else { Debug.Log("dynamic dice is null"); }
+        else { //Debug.Log("dynamic dice is null");
+             }
         if (diceGroup.data != null)
         {
             this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
         }
-        else { Debug.Log("data dice is null"); }
+        else
+        {
+            //Debug.Log("data dice is null");
+        }
     }
 
     /// <summary>

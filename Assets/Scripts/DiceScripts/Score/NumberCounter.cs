@@ -50,7 +50,7 @@ public class NumberCounter : MonoBehaviour
     {
         WaitForSeconds Wait = new WaitForSeconds(1f / CountFPS);
         int previousValue = _value;
-        Debug.Log(previousValue);
+        //Debug.Log(previousValue);
         int stepAmount;
 
         if (newValue - previousValue < 0)

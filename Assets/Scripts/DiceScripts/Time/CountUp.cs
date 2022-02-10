@@ -52,7 +52,7 @@ public class CountUp : MonoBehaviour, IClock
         //give the last sign a second
         countDownDisplay.text = countDownText[countDownTime];
         yield return new WaitForSeconds(1f);
-
+        
         countDownDisplay.gameObject.SetActive(false);
         startGameDelegate?.Invoke();
     }

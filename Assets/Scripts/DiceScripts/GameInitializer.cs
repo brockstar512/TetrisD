@@ -13,6 +13,8 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] DiceBoard gameBoard;
 
 
+    [SerializeField] DifficultyManager difficultyManager;
+    //this script will have everything from the menu so it should also be the one to tell the difficult
 
 
     [ContextMenu("Start")]
@@ -32,10 +34,10 @@ public class GameInitializer : MonoBehaviour
         gameBoard.Init(clock.GetComponent<IClock>());
 
         clock.GetComponent<IClock>().StartGame();
+
+        difficultyManager.StartGame();
     }
-    //refs of all clocks
-    //pass them the references they dont have nested
-    //start the game coroutine
+
 
 
 }

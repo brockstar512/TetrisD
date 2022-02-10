@@ -41,7 +41,7 @@ public class ScoreManager : MonoBehaviour
         float bonus = isSameColor ? 17.5f : 12.5f;
         int score = Mathf.CeilToInt(DiceNumber * bonus) * Mathf.CeilToInt(WaterFallBonus(chain));
         scoreToAdd += score;
-        Debug.Log($"scoreToAdd:: {scoreToAdd}");
+        //Debug.Log($"scoreToAdd:: {scoreToAdd}");
         //numberCounterUpdater.SetValue(scoreToAdd);
         UpdateScore(scoreToAdd);
 
