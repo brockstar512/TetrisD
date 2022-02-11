@@ -846,7 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyOptions:
-  - {fileID: 11400000, guid: d72f1a2ab394e40e7aee58492518c5fc, type: 2}
+  - {fileID: 11400000, guid: 639b583d190a34fdb925601d7e0c2986, type: 2}
   - {fileID: 11400000, guid: a39cb64833ef3433981f98b426ca8936, type: 2}
   - {fileID: 11400000, guid: 3f8918470b0cd4f28aa7c649787a69cf, type: 2}
   - {fileID: 11400000, guid: a598dff4038c94b2e892c7fb60efbdbd, type: 2}
@@ -1463,6 +1463,7 @@ MonoBehaviour:
   isDisengaging: 0
   isScoring: 0
   isPlaying: 0
+  round: 0
   gameState: 0
 --- !u!114 &1999377124
 MonoBehaviour:

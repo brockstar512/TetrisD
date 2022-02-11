@@ -385,7 +385,7 @@ public class DiceGroup : MonoBehaviour
                 break;
         }
         await Task.WhenAll(tasks);
-        Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
+        //Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
         //Lock();
 
     }
@@ -411,7 +411,7 @@ public class DiceGroup : MonoBehaviour
                 return;
 
             }
-            Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
+            //Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
             Lock();
         }
     }

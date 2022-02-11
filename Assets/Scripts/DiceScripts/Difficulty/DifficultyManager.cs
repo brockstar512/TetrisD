@@ -46,7 +46,7 @@ public class DifficultyManager : MonoBehaviour
 
     //this starts us where we need to be
     //we are going to pass in a packet that gives us if we should use bomba dn what stage and level to start on
-    public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
+    public void StartGame(int level = 0, int stage = 0, bool useBombs = false)
     {
         //we get the level we selected
         this.level = level;
@@ -60,8 +60,8 @@ public class DifficultyManager : MonoBehaviour
     //this removes the bombs and updates the selection of the dice
     void UpdateLevel()
     {
-        currentDifficulty = difficultyOptions[GetDifficultyIndex];
-        if (useBombs)
+        currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex]);
+        if (!useBombs)
         {
             currentDifficulty.RemoveBombs();
         }
@@ -109,7 +109,7 @@ public class DifficultyManager : MonoBehaviour
             }
             break;
         }
-        //Debug.Log($"DICE FACTORY {rolledIndex} and rolled number {numberRoll} which will give you  {currentDifficulty.diceOptions[rolledIndex].number}");
+        Debug.Log($"DICE FACTORY {rolledIndex} and rolled number {numberRoll} which will give you  {currentDifficulty.diceOptions[rolledIndex].number} here is the cound of dice {currentDifficulty.diceOptions.Count - 1}");
         //Debug.Log($"DICE FACTORY {rolledIndex} and the options {currentDifficulty.diceOptions[rolledIndex]}");
 
         return currentDifficulty.diceOptions[rolledIndex];

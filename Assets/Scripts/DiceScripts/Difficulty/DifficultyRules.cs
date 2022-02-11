@@ -33,6 +33,11 @@ public class DifficultyRules : ScriptableObject
     private int lineLimit;
     public int limit;
 
+    //public DifficultyRules Copy(DifficultyRules difficultyRules)
+    //{
+    //    DifficultyRules difficultyRulesCopy = new DifficultyRules();
+    //    return new DifficultyRules();
+    //}
 
     public void RemoveBombs()
     {
