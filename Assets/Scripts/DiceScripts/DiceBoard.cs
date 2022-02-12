@@ -84,7 +84,7 @@ public class DiceBoard : MonoBehaviour
         //Debug.Log($"This is new group number two {newGroup2.color}");
 
 
-        Debug.Log($"<color=purple>{newGroup.number} and {newGroup2.number}</color>");
+        //Debug.Log($"<color=purple>{newGroup.number} and {newGroup2.number}</color>");
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 

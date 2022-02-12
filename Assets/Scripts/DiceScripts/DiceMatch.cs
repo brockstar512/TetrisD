@@ -106,8 +106,7 @@ public class DiceMatch : MonoBehaviour
 
     public void Score()
     {
-        //i think the issue is we are scoring before all the dice are placed
-        Debug.Log($"Scoring");
+        //Debug.Log($"Scoring");
         diceBoard.ClearGroupFromBoard();
         Chain = 1;
         CheckForMatches();
@@ -291,6 +290,7 @@ public class DiceMatch : MonoBehaviour
             tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.pop, pair.Key));
 
         }
+        Debug.Log($"You have removed {tasks.Count}");
         //when all animations are finished
         await Task.WhenAll(tasks);
         //apply the gravity
@@ -362,10 +362,10 @@ public class DiceMatch : MonoBehaviour
             for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
             {
                 Vector3Int position = new Vector3Int(x, y, 0);
- 
                 //we can skip the tiles that are empty
                 if (!mainMap.HasTile(position))//(y doesnt have a tile)
                     continue;
+
 
                 Vector3Int startPos = position;
                 Vector3Int finishPos= new Vector3Int();
@@ -382,14 +382,17 @@ public class DiceMatch : MonoBehaviour
                     Vector3Int newPosition = new Vector3Int(x, falling, 0);
                     finishPos = newPosition;
                 }
-
                 //get final position
                 MovingDiceInRow++;
+                //Debug.Log($"We are increasing moving dice in row {MovingDiceInRow}");
+
                 finishPos = new Vector3Int(finishPos.x, finishPos.y + MovingDiceInRow,0);
+                //Debug.Log($"We are increasing moving dice in row is there a dice? {mainMap.HasTile(finishPos)} at {finishPos}");
 
-                if (mainMap.HasTile(finishPos))
-                    continue;
+                //if (mainMap.HasTile(finishPos))
+                //    continue;
 
+                //Debug.Log($"Checking Dice {TilePos[position].number} at pos:{position} the tile is not empty, we are going to take the tile at {startPos} all the way to {finishPos} how many dice has been removed for this piece? {MovingDiceInRow}");
 
                 //move the dice down until it can't anymore
                 tasks.Add(TravelingDice(currentDice, startPos, finishPos));

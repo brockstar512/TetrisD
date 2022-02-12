@@ -102,7 +102,7 @@ public class DiceGroup : MonoBehaviour
             return;
 
         round++;
-        Debug.Log($"Here is the round {round}");
+        //Debug.Log($"Here is the round {round}");
 
         this.stepDelay = difficultyManager.GetDifficultyStepTime;
         this.lockDelay = difficultyManager.GetDifficultyLocktime;
