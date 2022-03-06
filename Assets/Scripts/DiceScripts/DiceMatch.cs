@@ -290,7 +290,6 @@ public class DiceMatch : MonoBehaviour
             tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.pop, pair.Key));
 
         }
-        Debug.Log($"You have removed {tasks.Count}");
         //when all animations are finished
         await Task.WhenAll(tasks);
         //apply the gravity

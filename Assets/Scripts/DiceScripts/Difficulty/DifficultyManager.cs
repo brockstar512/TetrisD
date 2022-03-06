@@ -5,7 +5,12 @@ using TMPro;
 
 public class DifficultyManager : MonoBehaviour
 {
-    public List<DifficultyRules> difficultyOptions;
+    private List<DifficultyRules> difficultyOptions;
+    public List<DifficultyRules> difficultyOptionsClassic;
+    public List<DifficultyRules> difficultyOptionsConfetti;
+    public List<DifficultyRules> difficultyOptionsFunfetti;
+
+
     public DifficultyRules currentDifficulty;
     [SerializeField] TextMeshProUGUI difficultyNumbers;
     private bool useBombs;
@@ -13,40 +18,16 @@ public class DifficultyManager : MonoBehaviour
     public int level { get; private set; }
     public int stage { get; private set; }
     public int GetDifficultyIndex { get { return (level * 5) + stage; } }
-    public float GetDifficultyStepTime
-    {
-        get
-        {
-            //Debug.Log($"Your step time is: {currentDifficulty.stepTime}");
-            return currentDifficulty.stepTime;
-        }
-    }
-    public float GetDifficultyLocktime
-    {
-        get
-        {
-            //Debug.Log($"Your lock time is: {currentDifficulty.lockTime}");
-            return currentDifficulty.lockTime;
-        }
-    }
-    public int GetCurrentLimit = 100;//todo figure out what the threshold is to level up
-    //public static DifficultyManager Instance { get; private set; }
-    //private static DifficultyManager instance = null;
-    //public static DifficultyManager Instance
-    //{
-    //    get
-    //    {
-    //        if (instance == null)
-    //        {
-    //            instance = new DifficultyManager();
-    //        }
-    //        return instance;
-    //    }
-    //}
+    public float GetDifficultyStepTime{ get { return currentDifficulty.stepTime; } }
+    public float GetDifficultyLocktime{ get { return currentDifficulty.lockTime; } }
+    public int GetCurrentLimitGoal { get { return currentDifficulty.limit; } }
+    public int CurrentLimit{ get; private set; }
+//todo figure out what the threshold is to level up
 
-    //this starts us where we need to be
-    //we are going to pass in a packet that gives us if we should use bomba dn what stage and level to start on
-    public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
+
+//this starts us where we need to be
+//we are going to pass in a packet that gives us if we should use bomba dn what stage and level to start on
+public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
     {
         //we get the level we selected
         this.level = level;
@@ -54,24 +35,31 @@ public class DifficultyManager : MonoBehaviour
         this.stage = stage;
         //we got if we want to inlclude bombs
         this.useBombs = useBombs;
+        //get the correct game mode
+        difficultyOptions = difficultyOptionsClassic;
         UpdateLevel();
     }
 
     //this removes the bombs and updates the selection of the dice
     void UpdateLevel()
     {
+        //gets the current difficulty packet
         currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex]);
-        if (!useBombs)
-        {
-            currentDifficulty.RemoveBombs();
-        }
+        //sets your difficulty so you don't have to play all the way up to where you are to level up
+        CurrentLimit = level == 0 && stage == 0 ? 0 : difficultyOptions[GetDifficultyIndex - 1].limit;
+        ////takes out the bombs
+        //if (!useBombs)
+        //{
+        //    currentDifficulty.RemoveBombs();
+        //}
+        //updates the UI
         UpdateLevelUI(level, stage);
     }
 
     //this checks if we need to update base on
     bool UpdateLevelCheck(int value)
     {
-        if (value < GetCurrentLimit)
+        if (value < GetCurrentLimitGoal)
             return false;
 
         if (level == 2 && stage == 4)
