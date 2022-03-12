@@ -10,22 +10,45 @@ public class ScoreManager : MonoBehaviour
     NumberCounterUpdater numberCounterUpdater;
     NumberCounter numberCounter;
     // Start is called before the first frame update
-    public void Init(DiceMatch diceMatch)
+    public void Init(DiceMatch diceMatch, DiceGroup diceGroup)
     {
         numberCounterUpdater = this.gameObject.transform.GetComponent<NumberCounterUpdater>();
         numberCounter = this.gameObject.transform.GetComponent<NumberCounter>();
 
-        diceMatch.scoreEvent += Bookend;
-        diceMatch.bombEvent += Bomb;
+        diceMatch.ScoreEvent += Bookend;
+        diceMatch.BombEvent += Bomb;
 
+
+        diceGroup.HardDropEvent += HardDropBonus;
     }
 
 
-
-    void HardDropBonus(int depth)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="depth"></param>
+    /// <param name="isDisengaged"></param>
+    void HardDropBonus(int depth, bool isDisengaged)
     {
+        //if (depth < 3)
+        //    return;
+
+        int hardDropBonus = 0;
+        switch (isDisengaged)
+        {
+            case true:
+                hardDropBonus = depth * 2;
+                break;
+            case false:
+                hardDropBonus = depth * 4;
+                break;
+        }
+        //Debug.Log($"<color=red> hard drop bonus {depth} are they disengage {isDisengaged}</color>");
 
         //depth / did break?
+        scoreToAdd += hardDropBonus;
+        UpdateScore(scoreToAdd);
+
     }
 
     public void Bookend(int DiceNumber, bool isSameColor, int chain)//6 * 1.5

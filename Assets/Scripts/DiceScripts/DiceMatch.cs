@@ -8,8 +8,8 @@ using System.Linq;
 
 public class DiceMatch : MonoBehaviour
 {
-    public event Action<int, bool, int> scoreEvent;
-    public event Action<int> bombEvent;
+    public event Action<int, bool, int> ScoreEvent;
+    public event Action<int> BombEvent;
 
 
 
@@ -200,7 +200,7 @@ public class DiceMatch : MonoBehaviour
                      //if there is a horizontal match and they have a dice in between them...
                     if (hasHorizontalMatch && IsConnected(position, horizontalPosCheck, withinHorizontalBounds, BetweenDice))
                     {
-                        scoreEvent?.Invoke((int)TilePos[position].number, hasHorizontalColorMatch, Chain);
+                        ScoreEvent?.Invoke((int)TilePos[position].number, hasHorizontalColorMatch, Chain);
 
                         //figure out if we need to loop through all this again because the board has changed
                         hasMatch = true;
@@ -227,7 +227,7 @@ public class DiceMatch : MonoBehaviour
 
                     if (hasVerticalMatch && IsConnected(position, verticalPosCheck, withinVerticalBounds, BetweenDice))
                     {
-                        scoreEvent?.Invoke((int)TilePos[position].number, hashasVerticalColorMatch, Chain);
+                        ScoreEvent?.Invoke((int)TilePos[position].number, hashasVerticalColorMatch, Chain);
 
                         //figure out if we need to loop through all this again because the board has changed
                         hasMatch = true;
@@ -501,7 +501,7 @@ public class DiceMatch : MonoBehaviour
         await Task.WhenAll(tasks);
 
         //score the bomb
-        bombEvent?.Invoke(ExplodingTiles.Count);
+        BombEvent?.Invoke(ExplodingTiles.Count);
 
         ////add the exploding tiles to the list to be removed
         //ExplodingTiles.ForEach(tile => listOfDiceToRemove.Add(tile));

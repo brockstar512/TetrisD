@@ -12,7 +12,6 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainMenu.DOAnchorPos(Vector2.zero, 0.25f);
         memoryStack.Push(mainMenu);
     }
 

@@ -11,6 +11,7 @@ public class GameInitializer : MonoBehaviour
 
     [SerializeField] DiceMatch diceMatch;
     [SerializeField] DiceBoard gameBoard;
+    [SerializeField] DiceGroup diceGroup;
 
 
     [SerializeField] DifficultyManager difficultyManager;
@@ -30,7 +31,7 @@ public class GameInitializer : MonoBehaviour
                 break;
         }
         
-        clock.GetComponent<ScoreManager>().Init(diceMatch);
+        clock.GetComponent<ScoreManager>().Init(diceMatch, diceGroup);
         gameBoard.Init(clock.GetComponent<IClock>());
 
         clock.GetComponent<IClock>().StartGame();

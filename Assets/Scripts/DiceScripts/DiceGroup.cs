@@ -1,8 +1,10 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
+
 
 
 public class DiceGroup : MonoBehaviour
@@ -19,6 +21,9 @@ public class DiceGroup : MonoBehaviour
     public DiceBoard diceBoard {get;private set;}//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceData data {get;private set;}//the dice that stays still 
     public DiceData dynamicData { get; private set; }//the dice that roates around the other
+
+
+    public event Action<int,bool> HardDropEvent;
 
     /// <summary>
     /// This is tehe position the group is on the board as it falls down the board.
@@ -342,17 +347,25 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void HardDrop()
     {
+        int fallHeight = 0;
         while (Move(Vector2Int.down))
         {
+            fallHeight++;
             continue;
         }
         int? continuingDice;
         if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
         {
+            //Debug.Log($"Hard Drop height {fallHeight} true");
+            HardDropEvent?.Invoke(fallHeight, true);
             //Debug.LogError($"DISENGAGE dice {continuingDice}");
             HandleDisengagement(continuingDice);
             return;
         }
+        //Debug.Log($"Hard Drop height {fallHeight} false");
+        HardDropEvent?.Invoke(fallHeight,false);
+        //bombEvent?.Invoke(ExplodingTiles.Count);
+
         //Debug.Log("FX");
         //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, this.cells[0] + this.position);
         //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight, this.cells[1] + this.position);
