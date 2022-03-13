@@ -13,7 +13,38 @@ MonoBehaviour:
   m_Name: A1-2
   m_EditorClassIdentifier: 
   difficulty: 0
-  stage: 3
-  diceOptions: []
-  lockTime: 0
-  stepTime: 1
+  stage: 1
+  diceOptions:
+  - number: 2
+    color: 0
+    tile: {fileID: 11400000, guid: 710a17f3bc9414ab898c32b3616e3b01, type: 2}
+    chance: 0
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 6
+    color: 2
+    tile: {fileID: 11400000, guid: 5a0f5f62d9f1e4407ac76c90fe9b4886, type: 2}
+    chance: 20
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 3
+    color: 6
+    tile: {fileID: 11400000, guid: de7ca5df6891e41dab277df891c6ac78, type: 2}
+    chance: 40
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 3
+    tile: {fileID: 11400000, guid: 287a9292bd27745b1a74cff8c0742324, type: 2}
+    chance: 60
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 1
+    color: 3
+    tile: {fileID: 11400000, guid: bd3281c7705ac42329a7866a9ab0c3d3, type: 2}
+    chance: 80
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 0.05
+  stepTime: 0.5
+  limit: 10

@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ScoreManager : MonoBehaviour
 {
     public DiceMatch diceMatch;
     public int currentScore = 0;
     public int scoreToAdd = 0;
+    public int diceLinesCleared = 0;
     NumberCounterUpdater numberCounterUpdater;
     NumberCounter numberCounter;
+
+    //public event Action<int> LineCleared;
+    private DifficultyManager difficultyManager;
+
     // Start is called before the first frame update
-    public void Init(DiceMatch diceMatch, DiceGroup diceGroup)
+    public void Init(DiceMatch diceMatch, DiceGroup diceGroup, DifficultyManager difficultyManager)
     {
         numberCounterUpdater = this.gameObject.transform.GetComponent<NumberCounterUpdater>();
         numberCounter = this.gameObject.transform.GetComponent<NumberCounter>();
@@ -20,7 +26,14 @@ public class ScoreManager : MonoBehaviour
 
 
         diceGroup.HardDropEvent += HardDropBonus;
+        this.difficultyManager = difficultyManager;
+
+
+        //LIMIT INCREASE
+        //vaporize group
     }
+
+
 
 
     /// <summary>
@@ -53,6 +66,8 @@ public class ScoreManager : MonoBehaviour
 
     public void Bookend(int DiceNumber, bool isSameColor, int chain)//6 * 1.5
     {
+        diceLinesCleared++;
+        //Debug.Log($"Dice lines cleared {diceLinesCleared}");
         Debug.Log($"<color=yellow>{chain}</color>");
 
         //What about the dice in between? is clearning that amount a bonus enough
@@ -62,6 +77,7 @@ public class ScoreManager : MonoBehaviour
         //Same color lines
         //# * 1.5
         float bonus = isSameColor ? 17.5f : 12.5f;
+        bonus *= 2;
         int score = Mathf.CeilToInt(DiceNumber * bonus) * Mathf.CeilToInt(WaterFallBonus(chain));
         scoreToAdd += score;
         //Debug.Log($"scoreToAdd:: {scoreToAdd}");
@@ -73,16 +89,28 @@ public class ScoreManager : MonoBehaviour
 
     public void Bomb(int DiceNumber)
     {
+        //this should be in the difficulty manager not here
+        diceLinesCleared++;
+       
+        //Debug.Log($"Dice lines cleared {diceLinesCleared}");
+
         //# of dice involved? * .75 (every square involved)//8 * .75 = 6
-        scoreToAdd+= Mathf.CeilToInt(DiceNumber * 7.5f);
+        scoreToAdd += Mathf.CeilToInt(DiceNumber * 7.5f);
         UpdateScore(scoreToAdd);
 
     }
 
     void UpdateScore(int score)
     {
+        //Debug.Log($"Dice lines cleared {diceLinesCleared}");
+        difficultyManager.UpdateLevelCheck(diceLinesCleared);
+        //this needs to update but it also needs to add an update bonus... I think that should be invoked in difficulty manager
+        //bonus is howveer many difficulties youve past since beginning thats your bonus. start at 1 then getting to 10 is more points than going form 5 to 10
+
+        //keep track of limit increase here?
         numberCounter.Value = score;
     }
+
 
     private float WaterFallBonus(int chain)
     {

@@ -31,7 +31,7 @@ public class GameInitializer : MonoBehaviour
                 break;
         }
         
-        clock.GetComponent<ScoreManager>().Init(diceMatch, diceGroup);
+        clock.GetComponent<ScoreManager>().Init(diceMatch, diceGroup, difficultyManager);
         gameBoard.Init(clock.GetComponent<IClock>());
 
         clock.GetComponent<IClock>().StartGame();
