@@ -24,6 +24,7 @@ public class DiceMatch : MonoBehaviour
     #region Grid Data
     private enum YGridCell
     {
+        new_top = 4,
         One_Top =3,
         Two = 2,
         Three = 1,
