@@ -1,11 +1,17 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
+
+
 
 public class DiceGroup : MonoBehaviour
 {
     public DiceMatch diceMatch;
+    public DiceFXController diceFXController;
+    public DifficultyManager difficultyManager;
 
 
     public DiceDisengage diceDisengage { get; private set; }
@@ -15,6 +21,9 @@ public class DiceGroup : MonoBehaviour
     public DiceBoard diceBoard {get;private set;}//anytime the piece moves we need to pass that info to redraw that game piece
     public DiceData data {get;private set;}//the dice that stays still 
     public DiceData dynamicData { get; private set; }//the dice that roates around the other
+
+
+    public event Action<int,bool> HardDropEvent;
 
     /// <summary>
     /// This is tehe position the group is on the board as it falls down the board.
@@ -36,9 +45,12 @@ public class DiceGroup : MonoBehaviour
     private float lockTime;
 
     public bool isDisengaging = false;//is playing or playerHasControll
+    public bool isScoring = false;
+    public bool isPlaying = false;
+    public bool isHorizontal{ get{return this.cells[0].y == this.cells[1].y; } }
     //{get;private set;}
 
-
+    public int round = 0;
     //TODO
     //-clean check for match
     //-clean state manager
@@ -77,10 +89,10 @@ public class DiceGroup : MonoBehaviour
 
 
 
-    //TODO clean the initialize function up and see if i can do a deep dive into explainning whats going on 
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
+        
         diceDisengage = this.GetComponent<DiceDisengage>();
         diceDisengage.Initialize(diceBoard);
 
@@ -91,9 +103,19 @@ public class DiceGroup : MonoBehaviour
         this.data = data;
         this.dynamicData = dynamicData;
 
+        if (isScoring)
+            return;
 
-        this.stepTime = Time.time+ stepDelay;
+        round++;
+        //Debug.Log($"Here is the round {round}");
+
+        this.stepDelay = difficultyManager.GetDifficultyStepTime;
+        this.lockDelay = difficultyManager.GetDifficultyLocktime;
+
+        this.stepTime = Time.time + stepDelay;
         this.lockTime = 0f;
+
+
 
 
         //if we have not initialized this array do it now
@@ -120,8 +142,13 @@ public class DiceGroup : MonoBehaviour
     #region Update
     void Update()
     {
-        
+        if (isScoring)
+            return;
+
         if (isDisengaging)
+            return;
+
+        if (!isPlaying)
             return;
         //MoveController();
         this.diceBoard.Clear(this);
@@ -164,7 +191,7 @@ public class DiceGroup : MonoBehaviour
 
         //the disengage check might get switched after this update function runs but before it ends, so the check in the beginning is not good enough.
         //we also need to check here because this will revert the dice back into the board.
-        if (!isDisengaging)
+        if (!isDisengaging && !isScoring)
         {
             this.diceBoard.SetOnBoard(this);
         }
@@ -320,21 +347,62 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void HardDrop()
     {
+        int fallHeight = 0;
         while (Move(Vector2Int.down))
         {
+            fallHeight++;
             continue;
         }
         int? continuingDice;
         if (this.diceBoard.CanOnePieceContinue(new Vector3Int(cells[0].x, cells[0].y - 1, cells[0].z) + this.position, new Vector3Int(cells[1].x, cells[1].y - 1, cells[1].z) + this.position, out continuingDice))
         {
+            //Debug.Log($"Hard Drop height {fallHeight} true");
+            HardDropEvent?.Invoke(fallHeight, true);
             //Debug.LogError($"DISENGAGE dice {continuingDice}");
             HandleDisengagement(continuingDice);
             return;
         }
+        //Debug.Log($"Hard Drop height {fallHeight} false");
+        HardDropEvent?.Invoke(fallHeight,false);
+        //bombEvent?.Invoke(ExplodingTiles.Count);
 
-        Lock(); 
+        //Debug.Log("FX");
+        //diceFXController.FX(DiceFXController.TileEffect.bigSlamLeft, this.cells[0] + this.position);
+        //diceFXController.FX(DiceFXController.TileEffect.bigSlamRight, this.cells[1] + this.position);
+        //Lock();
+        HardDropFX(this.cells[0] + this.position, this.cells[1] + this.position);
 
     }
+
+    async void HardDropFX(Vector3Int locationLeft, Vector3Int locationRight)
+    {
+        List<Task> tasks = new List<Task>();
+        //this decides which hard drop fx to do
+        switch(isHorizontal)
+        {
+            case true:
+            //Debug.Log($"is it horizontal {isHorizontal}");
+            tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamLeft, locationLeft));
+            tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.bigSlamRight, locationRight));
+                break;
+            case false:
+                switch(this.cells[0].y < this.cells[1].y)
+                {
+                    case true:
+                        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.slam, locationLeft));
+                        break;
+                    case false:
+                        tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.slam, locationRight));
+                        break;
+                }
+                break;
+        }
+        await Task.WhenAll(tasks);
+        //Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
+        //Lock();
+
+    }
+
 
     /// <summary>
     /// resets the step time and forces the tile group to move down
@@ -356,7 +424,8 @@ public class DiceGroup : MonoBehaviour
                 return;
 
             }
-                Lock();
+            //Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
+            Lock();
         }
     }
 
@@ -365,19 +434,24 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void Lock()
     {
+
+        //locks// should not score until after this
         //if(false)
-        {
-            
+        //{
+            //Debug.Log(this.data.number);
+            //Debug.Log(this.data.color);
+            //Debug.Log(this.cells[0]);
+            //Debug.Log(this.cells[0] + this.position);
+
             DiceImprint staticDice = new DiceImprint(this.data, this.cells[0] + this.position);
             DiceImprint dynamicDice = new DiceImprint(this.dynamicData, this.cells[1] + this.position);
 
-
+            
             diceMatch.SetTileDict(this.cells[0] + this.position, staticDice);
             diceMatch.SetTileDict(this.cells[1] + this.position, dynamicDice);
-        }
+        //}
 
         this.diceBoard.SetOnBoard(this);
-        //Debug.Log("SCORE:");
         //this.diceBoard.SpawnGroupq();
         diceMatch.Score();
     }
@@ -415,8 +489,6 @@ public class DiceGroup : MonoBehaviour
     public void HandlePostDisengagement()
     {
         isDisengaging = false;
-        //Debug.Log("SCORE:");
-        //this.diceBoard.SpawnGroup();
         diceMatch.Score();
     }
     #endregion
@@ -435,7 +507,14 @@ public class DiceGroup : MonoBehaviour
     }
 
 
+    //public void ClearGroupFromBoard()
+    //{
+    //    isScoring = true;
+    //    DiceData newGroup = null;
+    //    DiceData newGroup2 = null;
+    //    this.Initialize(diceBoard, diceBoard.spawnPosition, newGroup, newGroup2);
 
+    //}
     //out 
     public void StateManager(ref GameState from, GameState to)
     {

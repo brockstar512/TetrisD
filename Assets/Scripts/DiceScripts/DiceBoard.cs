@@ -6,6 +6,9 @@ using UnityEngine.Tilemaps;
 public class DiceBoard : MonoBehaviour
 {
     public DiceMatch diceMatch;
+    public DiceFXController diceFXController;
+    private CountDown currentClock;
+    public DifficultyManager difficultyManager;
 
 
     public DiceData[] DiceOptions;
@@ -26,9 +29,19 @@ public class DiceBoard : MonoBehaviour
         }
     }
 
+    public CurrentState currentState = CurrentState.Beginning;
+    public enum CurrentState
+    {
+        Beginning,
+        Playing,
+        Disengaging,
+        Scoring,
+        GameOver,
+    }
+    
 
     // Start is called before the first frame update
-    void Awake()
+    public void Init(IClock currentClock)
     {
         #region Bound Testing
         //i wonder if it wont go all the way because you can divide 9 by 2 that easily when the bounds is divided by 2
@@ -51,10 +64,7 @@ public class DiceBoard : MonoBehaviour
             this.DiceOptions[i].Initialize();
         }
 
-    }
-    void Start()
-    {
-        SpawnGroup();
+        currentClock.startGameDelegate += SpawnGroup;
 
     }
 
@@ -62,13 +72,44 @@ public class DiceBoard : MonoBehaviour
 
     public void SpawnGroup()
     {
-        int random = Random.Range(0, this.DiceOptions.Length);
-        DiceData newGroup = this.DiceOptions[random];
-        int random2 = Random.Range(0, this.DiceOptions.Length);
-        DiceData newGroup2 = this.DiceOptions[random2];
+        DiceData newGroup = difficultyManager.DiceFactory();
+        DiceData newGroup2 = difficultyManager.DiceFactory();
+
+        //make sure they are diffrent
+        if (newGroup.number >= DiceNumber.Seven && newGroup2.number >= DiceNumber.Seven)
+        {
+            Debug.Log("Both Dice are bombs");
+            while (newGroup2.number == DiceNumber.Seven)
+            {
+                newGroup2 = difficultyManager.DiceFactory();
+            }
+
+        }
+        this.activeGroup.isPlaying = true;
+        this.activeGroup.isScoring = false;
+        //int random = Random.Range(0, this.DiceOptions.Length);
+        //DiceData newGroup = this.DiceOptions[random];
+        //Debug.Log($"This is the new group {newGroup.color}");
+        //int random2 = Random.Range(0, this.DiceOptions.Length);
+        //DiceData newGroup2 = this.DiceOptions[random2];
+        //Debug.Log($"This is new group number two {newGroup2.color}");
+
+
+        //Debug.Log($"<color=purple>{newGroup.number} and {newGroup2.number}</color>");
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
+    }
+
+    //this should be in a state manager method
+    public void ClearGroupFromBoard()
+    {
+        //this function removes the group from the board while its scoreing
+        //Debug.Log($"<color=red> clear group from baord</color>");
+        this.activeGroup.isScoring = true;
+        DiceData newGroup = null;
+        DiceData newGroup2 = null;
+        this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
     }
 
 
@@ -84,12 +125,16 @@ public class DiceBoard : MonoBehaviour
         {
             this.tilemap.SetTile(diceGroup.cells[1] + diceGroup.position, diceGroup.dynamicData.tile);
         }
-        else { Debug.Log("dynamic dice is null"); }
+        else { //Debug.Log("dynamic dice is null");
+             }
         if (diceGroup.data != null)
         {
             this.tilemap.SetTile(diceGroup.cells[0] + diceGroup.position, diceGroup.data.tile);
         }
-        else { Debug.Log("data dice is null"); }
+        else
+        {
+            //Debug.Log("data dice is null");
+        }
     }
 
     /// <summary>
@@ -151,7 +196,6 @@ public class DiceBoard : MonoBehaviour
 
     }
 
-
     public bool IsValidPositionSingleDice(Vector3Int position)
     {
         //get the bounds
@@ -210,33 +254,51 @@ public class DiceBoard : MonoBehaviour
     }
 
 
-
-    #region Testing Gravity
-    //put random tiles up high
-    [ContextMenu("Test gravity")]
-    void TestGravity()
+    public CurrentState StateManager(CurrentState from, CurrentState to)
     {
-        int random = Random.Range(0, this.DiceOptions.Length);
-        DiceData dice1 = this.DiceOptions[random];
-        DiceData dice2 = this.DiceOptions[random];
-        DiceData dice3 = this.DiceOptions[random];
-        DiceData dice4 = this.DiceOptions[random];
-        DiceData dice5 = this.DiceOptions[random];
-        DiceData dice6 = this.DiceOptions[random];
-
-        Vector3Int position = new Vector3Int(-2, 2, 0);
-        Vector3Int position1 = new Vector3Int(-2, 1, 0);
-        Vector3Int position2 = new Vector3Int(-2, 0, 0);
-        Vector3Int position3 = new Vector3Int(1, 3, 0);
-        Vector3Int position4 = new Vector3Int(-2, -5, 0);
-        Vector3Int position5 = new Vector3Int(1, 0, 0);
-
-        SetSingleDiceOnBoard(position, dice1.tile);
-        SetSingleDiceOnBoard(position1, dice2.tile);
-        SetSingleDiceOnBoard(position2, dice3.tile);
-        SetSingleDiceOnBoard(position3, dice4.tile);
-        SetSingleDiceOnBoard(position4, dice5.tile);
-        SetSingleDiceOnBoard(position5, dice6.tile);
+        switch (to)
+        {
+            case CurrentState.Beginning:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.Disengaging:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.Playing:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.Scoring:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+            case CurrentState.GameOver:
+                switch (from)
+                {
+                    case CurrentState.Disengaging:
+                        break;
+                }
+                this.currentState = to;
+                break;
+        }
+        return to;
     }
-    #endregion
 }

@@ -12,7 +12,8 @@ public enum DiceNumber
     Three,
     Four,
     Five,
-    Six
+    Six,
+    Seven
 
 }
 public enum DiceColor
@@ -31,16 +32,18 @@ public enum DiceColor
 [System.Serializable]
 public class DiceData
 {
+
     public DiceNumber number;
     public DiceColor color;
     public Tile tile;//which dice tile we are using
+    public int chance;
     //public Vector2Int[] cellLocation{get;private set;}//the cell this dice inhbits
     public Vector2Int[] cellLocation = new Vector2Int[1];//the cell this dice inhbits
     //public Vector2Int[,] wallKicks{get;private set;}
     public void Initialize()
     {
         this.cellLocation[0] = new Vector2Int(0,0);//this could just in the fields
-        color = DiceColor.White;
+        //color = DiceColor.White;
     }
 
 }
