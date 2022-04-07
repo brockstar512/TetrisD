@@ -24,16 +24,16 @@ public class DiceMatch : MonoBehaviour
     #region Grid Data
     private enum YGridCell
     {
-        new_top = 4,
-        One_Top =3,
-        Two = 2,
-        Three = 1,
-        Four =0,
-        Five = -1,
-        Six = -2,
-        Seven = -3,
-        Eight = -4,
-        Nine_Bottom = -5,
+        One_Top = 4,
+        Two = 3,
+        Three = 2,
+        Four = 1,
+        Five =0,
+        Six = -1,
+        Seven = -2,
+        Eight = -3,
+        Nine = -4,
+        Ten_Bottom = -5,
     }
     private enum XGridCell
     {
@@ -70,7 +70,7 @@ public class DiceMatch : MonoBehaviour
     {
         TilePos = new Dictionary<Vector3Int, DiceImprint>();
 
-        for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
+        for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
         {
             for (int x = (int)XGridCell.One_Left; x <= (int)XGridCell.Six_Right; x++)
             {
@@ -135,7 +135,7 @@ public class DiceMatch : MonoBehaviour
         Dictionary<Vector3Int, int> MatchedDice = new Dictionary<Vector3Int, int>();
 
 
-        for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
+        for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
         {
 
             for (int x = (int)XGridCell.One_Left; x<= (int)XGridCell.Six_Right; x++)
@@ -359,7 +359,7 @@ public class DiceMatch : MonoBehaviour
         {
             int MovingDiceInRow = -1;
 
-            for (int y = (int)YGridCell.Nine_Bottom; y <= (int)YGridCell.One_Top; y++)
+            for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
             {
                 Vector3Int position = new Vector3Int(x, y, 0);
                 //we can skip the tiles that are empty
@@ -377,7 +377,7 @@ public class DiceMatch : MonoBehaviour
 
                 DiceImprint currentDice = new DiceImprint(TilePos[position], position);
 
-                for (int falling = position.y;(mainMap.HasTile(new Vector3Int(x,falling-1,0)) || (falling >= (int)YGridCell.Nine_Bottom)); falling--)
+                for (int falling = position.y;(mainMap.HasTile(new Vector3Int(x,falling-1,0)) || (falling >= (int)YGridCell.Ten_Bottom)); falling--)
                 {
                     Vector3Int newPosition = new Vector3Int(x, falling, 0);
                     finishPos = newPosition;

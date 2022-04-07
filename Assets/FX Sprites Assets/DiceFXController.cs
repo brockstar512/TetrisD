@@ -107,7 +107,7 @@ public class DiceFXController : MonoBehaviour
     public async Task FXTask(TileEffect effect, Vector3Int location)
     {
         Effect effectConfig = ConfigureTile(effect);
-        await effectConfig.AnimateTask(location, map);
+        await effectConfig.AnimateTask(location, map);//you are awaiting a tak
     }
 
 

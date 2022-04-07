@@ -34,7 +34,8 @@ public class Effect : ScriptableObject
         //isDoneAnimating = true;
         yield return null;
     }
-
+    //to await a task you need to make the function async
+    //to take adantage of Task.methods you need to return a task 
     public async Task AnimateTask(Vector3Int pos, Tilemap map)
     {
         //Debug.Log("Animating Task");
