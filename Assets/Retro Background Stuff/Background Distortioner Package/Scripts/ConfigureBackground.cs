@@ -3,8 +3,10 @@
 /// Creates Textures and sets values utilized by the shader to produce multiple effects.
 public class ConfigureBackground : MonoBehaviour
 {
+    //public bool isAnimated;
+    public Texture2D gibbgab;
+    public Sprite[] sequence;
 
-    
     /// Represents the original Texture to manipulate, assigned in the inspector.
     [Header("Texture and Color Gradient")]
     [Tooltip("Use this to set the texture to manipulate")]
@@ -296,14 +298,16 @@ public class ConfigureBackground : MonoBehaviour
     //Convert the source texture to grayscale and save is as the resultTexture
     private void ConvertToGrayscale()
     {
+        
         for (int x = 0; x < resultTexture.width; x++)
         {
             for (int y = 0; y < resultTexture.height; y++)
             {
                 Color pixel = sourceTexture.GetPixel(x,y);
+                Color old = gibbgab.GetPixel(x, y);
 
                 float l = pixel.r * 0.3f + pixel.g * 0.59f + pixel.b * 0.11f;
-                Color c = new Color(l, l, l, 1);
+                Color c = new Color(old.r, old.g, old.b, 1);
                 resultTexture.SetPixel(x, y, c);
             }
         }
