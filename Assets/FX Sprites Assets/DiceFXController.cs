@@ -17,17 +17,6 @@ public class DiceFXController : MonoBehaviour
     public Effect explosionFX;
 
 
-
-
-    //public AnimatedTile m_Bubble;
-    //public AnimatedTile m_Slam;
-    //public AnimatedTile m_Explosion;
-    //public AnimatedTile m_ExplosionTwo;
-    //public AnimatedTile m_Disengage;
-    //public AnimatedTile m_Pop;
-    //public AnimatedTile m_Touch;
-
-
     public enum TileEffect
     {
         none,
@@ -92,18 +81,6 @@ public class DiceFXController : MonoBehaviour
        
     }
 
-    //public async Task FXTask(TileEffect effect, Vector3Int location)
-    //{
-    //    Effect effectConfig = ConfigureTile(effect);
-    //    StartCoroutine(effectConfig.Animate(location, map));
-    //    //effectConfig.isDoneAnimating
-
-    //    //    Debug.Log($"Clearing:::{location}");
-    //    //    diceBoard.Clear(location);
-    //    //    Effect effectConfig = ConfigureTile(effect);
-    //    //    await effectConfig.AnimateTask(location, map);
-
-    //}
     public async Task FXTask(TileEffect effect, Vector3Int location)
     {
         Effect effectConfig = ConfigureTile(effect);

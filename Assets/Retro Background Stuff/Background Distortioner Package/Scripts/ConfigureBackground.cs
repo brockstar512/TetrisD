@@ -1,14 +1,23 @@
 ﻿using UnityEngine;
+using System.Threading.Tasks;
+
 
 /// Creates Textures and sets values utilized by the shader to produce multiple effects.
 public class ConfigureBackground : MonoBehaviour
 {
-    //public bool isAnimated;
-    public Texture2D gibbgab;
-    public Sprite[] sequence;
+    //adds color
+    public Texture2D GetColorMap { get { return sourceTexture; } }
 
-    /// Represents the original Texture to manipulate, assigned in the inspector.
-    [Header("Texture and Color Gradient")]
+    //animates the sequence
+    public bool isAnimating;
+    public Sprite[] sequence;//sequence from the texture we are putting in frame
+    public float FPS;//frame rate
+    public int currentFrame = 0;//current section of sequence
+
+
+
+/// Represents the original Texture to manipulate, assigned in the inspector.
+[Header("Texture and Color Gradient")]
     [Tooltip("Use this to set the texture to manipulate")]
     public Texture2D sourceTexture;
 
@@ -100,9 +109,9 @@ public class ConfigureBackground : MonoBehaviour
 
 
     //Initiate
-    void Awake()
+    async void Awake()
     {
-
+        
         rend = GetComponent<Renderer>();
 
         CreateImageEffect();
@@ -153,7 +162,12 @@ public class ConfigureBackground : MonoBehaviour
                 print("Blend mode not correct");
                 break;
         }
+        //if (isAnimating)
+        //{
+        //    await AnimateSprite();
+        //}
     }
+
 
     //Calls color map function, calls grayscale convertion function, finds min max values, and finally applies the textures to the shader.
     private void CreateImageEffect()
@@ -185,6 +199,25 @@ public class ConfigureBackground : MonoBehaviour
         rend.material.SetFloat(Min, min);
     }
 
+    public async Task AnimateSprite()
+    {
+        while (isAnimating)
+        {
+
+            await Task.Delay((int)(Mathf.Pow(FPS, -1) * 1000));//how long we show this image
+            currentFrame = currentFrame < sequence.Length - 1 ? currentFrame+=1 : 0;
+            sourceTexture = new Texture2D((int)sequence[currentFrame].rect.width, (int)sequence[currentFrame].rect.height);
+            var pixels = sequence[currentFrame].texture.GetPixels((int)sequence[currentFrame].textureRect.x,
+                                                     (int)sequence[currentFrame].textureRect.y,
+                                                     (int)sequence[currentFrame].textureRect.width,
+                                                     (int)sequence[currentFrame].textureRect.height);
+            sourceTexture.SetPixels(pixels);
+            sourceTexture.Apply();
+            Debug.Log($"Current frame {currentFrame} and the length of the sequrnce {sequence.Length - 1}");
+
+        }
+        
+    }
 
     //Update values if there are changes in the inspector.
     void Update()
@@ -304,7 +337,7 @@ public class ConfigureBackground : MonoBehaviour
             for (int y = 0; y < resultTexture.height; y++)
             {
                 Color pixel = sourceTexture.GetPixel(x,y);
-                Color old = gibbgab.GetPixel(x, y);
+                Color old = GetColorMap.GetPixel(x, y);
 
                 float l = pixel.r * 0.3f + pixel.g * 0.59f + pixel.b * 0.11f;
                 Color c = new Color(old.r, old.g, old.b, 1);
