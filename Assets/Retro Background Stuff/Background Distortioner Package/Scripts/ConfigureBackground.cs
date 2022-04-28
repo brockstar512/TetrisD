@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 public class ConfigureBackground : MonoBehaviour
 {
     //adds color
-    public Texture2D GetColorMap { get { return sourceTexture; } }
+    //public Texture2D GetColorMap { get { return sourceTexture; } }
+    public Texture2D GetColorMap;
+
 
     //animates the sequence
     public bool isAnimating;
