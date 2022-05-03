@@ -314,6 +314,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7413784383113859313, guid: 89bf2d5a9f4e047c381542a2dd5a7df0, type: 3}
+      propertyPath: diceGroup
+      value: 
+      objectReference: {fileID: 1999377123}
+    - target: {fileID: 7413784383113859313, guid: 89bf2d5a9f4e047c381542a2dd5a7df0, type: 3}
       propertyPath: swipeLimit
       value: 75
       objectReference: {fileID: 0}
@@ -1307,6 +1311,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1949862605 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7413784383113859313, guid: 89bf2d5a9f4e047c381542a2dd5a7df0, type: 3}
+  m_PrefabInstance: {fileID: 423168653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64416d477d4d499b8777c6c7e0e9b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1975790803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,6 +1613,7 @@ MonoBehaviour:
   isPlaying: 0
   round: 0
   gameState: 0
+  swipeControls: {fileID: 1949862605}
 --- !u!114 &1999377124
 MonoBehaviour:
   m_ObjectHideFlags: 0

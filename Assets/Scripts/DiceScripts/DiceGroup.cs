@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public class DiceGroup : MonoBehaviour
 {
+    
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
     public DifficultyManager difficultyManager;
@@ -61,8 +62,8 @@ public class DiceGroup : MonoBehaviour
 
     }
     public GameState gameState = GameState.None;
+    public SwipeControls swipeControls;
 
- 
 
 
     #region testing regions
@@ -87,6 +88,8 @@ public class DiceGroup : MonoBehaviour
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
         //swipeControls.HardDropEvent += HardDropBonus;//move()
+        //swipeControls.DirectionEvent += ExternalMoveController;
+        //swipeControls.RotateEvent += ExternalRotateController;
 
 
         diceDisengage = this.GetComponent<DiceDisengage>();
@@ -313,6 +316,47 @@ public class DiceGroup : MonoBehaviour
     #endregion
 
     #region Movement Methods
+
+    public void ExternalMoveController(SwipeControls.DraggedDirection dir)
+    {
+        if (isScoring || isDisengaging || !isPlaying)
+            return;
+        Debug.Log("Move");
+
+        switch(dir)
+        {
+            case SwipeControls.DraggedDirection.Right:
+                Move(Vector2Int.right);
+                break;
+            case SwipeControls.DraggedDirection.Left:
+                Move(Vector2Int.left);
+                break;
+            case SwipeControls.DraggedDirection.Down:
+                HardDrop();
+                break;
+        }
+        
+        
+        
+
+    }
+    public void ExternalRotateController(SwipeControls.RotationDirection dir)
+    {
+        if (isScoring || isDisengaging || !isPlaying)
+            return;
+        Debug.Log("Rotate");
+        switch (dir)
+        {
+            case SwipeControls.RotationDirection.Right:
+                Rotate(DynamicDiceState.Right);
+                break;
+            case SwipeControls.RotationDirection.Left:
+                Rotate(DynamicDiceState.Left);
+                break;
+
+        }
+    }
+
     /// <summary>
     /// Moves tile after checking is valid position which check the bounds of the board, then if that tile has a tile on it
     /// if the tile does not and it is in the bounds then you can move there.... reverts the locktime to 0
@@ -321,9 +365,6 @@ public class DiceGroup : MonoBehaviour
     /// <returns>if the move is valid</returns>
     private bool Move(Vector2Int translation)
     {
-
-        if (isScoring || isDisengaging || !isPlaying)
-            return false;
 
         Vector3Int newPosition = this.position;
         newPosition.x += translation.x;

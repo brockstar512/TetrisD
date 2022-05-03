@@ -145,12 +145,14 @@ public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void MoveDispatch(DraggedDirection move)
     {
         Debug.Log($"MOVE {move}");
-        //HardDropEvent?.Invoke(fallHeight, true);
+
+        //DirectionEvent?.Invoke(move);
     }
     public void MoveDispatch(RotationDirection rotation)
     {
         Debug.Log($"ROTATE {rotation}");
-        //HardDropEvent?.Invoke(fallHeight, true);
+        //RotateEvent?.Invoke(rotation);
+
 
     }
 }
