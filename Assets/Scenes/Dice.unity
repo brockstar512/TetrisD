@@ -313,6 +313,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7413784383113859313, guid: 89bf2d5a9f4e047c381542a2dd5a7df0, type: 3}
+      propertyPath: swipeLimit
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 7413784383113859317, guid: 89bf2d5a9f4e047c381542a2dd5a7df0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -487,7 +491,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 102.95
+  m_fontSize: 115
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -735,7 +739,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 93.3
+  m_fontSize: 115
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1

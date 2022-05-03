@@ -10,11 +10,13 @@ public class ConfigureBackground : MonoBehaviour
     public Texture2D GetColorMap;
 
 
-    //animates the sequence
-    public bool isAnimating;
-    public Sprite[] sequence;//sequence from the texture we are putting in frame
-    public float FPS;//frame rate
-    public int currentFrame = 0;//current section of sequence
+    //Todo this is currently not working. I did not save it when it was working and even when it was the asynchronous function was running even after the game stopped
+    //I also think its being overwritten so i need to add stop it from doing the other logic if i want to frame the correct tecture at the right time.
+    ////animates the sequence
+    //public bool isAnimating;
+    //public Sprite[] sequence;//sequence from the texture we are putting in frame
+    //public float FPS;//frame rate
+    //public int currentFrame = 0;//current section of sequence
 
 
 
@@ -111,7 +113,8 @@ public class ConfigureBackground : MonoBehaviour
 
 
     //Initiate
-    async void Awake()
+    //async if i want to animate the texture
+    void Awake()
     {
         
         rend = GetComponent<Renderer>();
@@ -164,6 +167,8 @@ public class ConfigureBackground : MonoBehaviour
                 print("Blend mode not correct");
                 break;
         }
+
+
         //if (isAnimating)
         //{
         //    await AnimateSprite();
@@ -174,6 +179,7 @@ public class ConfigureBackground : MonoBehaviour
     //Calls color map function, calls grayscale convertion function, finds min max values, and finally applies the textures to the shader.
     private void CreateImageEffect()
     {
+        
         resultTexture = new Texture2D(sourceTexture.width, sourceTexture.height);
         colorMap = new Texture2D(200, 1);
         CreateColorMap();
@@ -201,25 +207,26 @@ public class ConfigureBackground : MonoBehaviour
         rend.material.SetFloat(Min, min);
     }
 
-    public async Task AnimateSprite()
-    {
-        while (isAnimating)
-        {
+    //TODO this doesn't stop running after the scene ends. I need to rework the asynchronous method
+    //public async Task AnimateSprite()
+    //{
+    //    while (isAnimating)
+    //    {
 
-            await Task.Delay((int)(Mathf.Pow(FPS, -1) * 1000));//how long we show this image
-            currentFrame = currentFrame < sequence.Length - 1 ? currentFrame+=1 : 0;
-            sourceTexture = new Texture2D((int)sequence[currentFrame].rect.width, (int)sequence[currentFrame].rect.height);
-            var pixels = sequence[currentFrame].texture.GetPixels((int)sequence[currentFrame].textureRect.x,
-                                                     (int)sequence[currentFrame].textureRect.y,
-                                                     (int)sequence[currentFrame].textureRect.width,
-                                                     (int)sequence[currentFrame].textureRect.height);
-            sourceTexture.SetPixels(pixels);
-            sourceTexture.Apply();
-            Debug.Log($"Current frame {currentFrame} and the length of the sequrnce {sequence.Length - 1}");
+    //        await Task.Delay((int)(Mathf.Pow(FPS, -1) * 1000));//how long we show this image
+    //        currentFrame = currentFrame < sequence.Length - 1 ? currentFrame += 1 : 0;
+    //        sourceTexture = new Texture2D((int)sequence[currentFrame].rect.width, (int)sequence[currentFrame].rect.height);
+    //        var pixels = sequence[currentFrame].texture.GetPixels((int)sequence[currentFrame].textureRect.x,
+    //                                                 (int)sequence[currentFrame].textureRect.y,
+    //                                                 (int)sequence[currentFrame].textureRect.width,
+    //                                                 (int)sequence[currentFrame].textureRect.height);
+    //        sourceTexture.SetPixels(pixels);
+    //        sourceTexture.Apply();
+    //        Debug.Log($"Current frame {currentFrame} and the length of the sequrnce {sequence.Length - 1}");
 
-        }
-        
-    }
+    //    }
+
+    //}
 
     //Update values if there are changes in the inspector.
     void Update()
@@ -338,11 +345,11 @@ public class ConfigureBackground : MonoBehaviour
         {
             for (int y = 0; y < resultTexture.height; y++)
             {
-                Color pixel = sourceTexture.GetPixel(x,y);
-                Color old = GetColorMap.GetPixel(x, y);
+                //Color pixel = sourceTexture.GetPixel(x,y);
+                Color pixelColor = GetColorMap.GetPixel(x, y);
 
-                float l = pixel.r * 0.3f + pixel.g * 0.59f + pixel.b * 0.11f;
-                Color c = new Color(old.r, old.g, old.b, 1);
+                //float l = pixel.r * 0.3f + pixel.g * 0.59f + pixel.b * 0.11f;
+                Color c = new Color(pixelColor.r, pixelColor.g, pixelColor.b, 1);
                 resultTexture.SetPixel(x, y, c);
             }
         }

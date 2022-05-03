@@ -51,13 +51,7 @@ public class DiceGroup : MonoBehaviour
     //{get;private set;}
 
     public int round = 0;
-    //TODO
-    //-clean check for match
-    //-clean state manager
-    //-clean public fields
-    //-chaining
-    //-animation
-    //-visual queues
+
     public enum GameState
     {
         None,
@@ -92,7 +86,9 @@ public class DiceGroup : MonoBehaviour
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
-        
+        //swipeControls.HardDropEvent += HardDropBonus;//move()
+
+
         diceDisengage = this.GetComponent<DiceDisengage>();
         diceDisengage.Initialize(diceBoard);
 
@@ -325,6 +321,10 @@ public class DiceGroup : MonoBehaviour
     /// <returns>if the move is valid</returns>
     private bool Move(Vector2Int translation)
     {
+
+        if (isScoring || isDisengaging || !isPlaying)
+            return false;
+
         Vector3Int newPosition = this.position;
         newPosition.x += translation.x;
         newPosition.y += translation.y;

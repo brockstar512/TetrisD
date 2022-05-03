@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 
 public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -34,6 +35,11 @@ public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     private Vector2 originPoint;
     RotationDirection tapSide;
 
+
+    public event Action<DraggedDirection> DirectionEvent;
+    public event Action<RotationDirection> RotateEvent;
+
+    public DiceGroup diceGroup;
 
     private void Awake()
     {
@@ -139,10 +145,12 @@ public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void MoveDispatch(DraggedDirection move)
     {
         Debug.Log($"MOVE {move}");
+        //HardDropEvent?.Invoke(fallHeight, true);
     }
     public void MoveDispatch(RotationDirection rotation)
     {
         Debug.Log($"ROTATE {rotation}");
+        //HardDropEvent?.Invoke(fallHeight, true);
 
     }
 }
