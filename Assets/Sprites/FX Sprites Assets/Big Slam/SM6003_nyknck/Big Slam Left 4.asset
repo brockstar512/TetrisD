@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Big Slam Left 4
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -7898392904059037869, guid: fed98817a71804430966af8f19cc31b6, type: 3}
+  m_Sprite: {fileID: 2165663147513160842, guid: 07213ceaf872041659ea7d48e443f259, type: 3}
   m_Color: {r: 0.24705882, g: 0.24705882, b: 0.24705882, a: 1}
   m_Transform:
     e00: 1

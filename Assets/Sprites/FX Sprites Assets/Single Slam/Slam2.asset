@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Slam2
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 0369281f5f7b2464e9c87b30b2272c59, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 37ddacefe469b4077b5181f26a38fc7c, type: 3}
   m_Color: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
   m_Transform:
     e00: 1

@@ -15,6 +15,6 @@ MonoBehaviour:
   effect: 5
   FPS: 12
   tiles:
+  - {fileID: 11400000, guid: 2812a7d27bbcf44eca56ba89ee6b40c1, type: 2}
   - {fileID: 11400000, guid: 94840e09882664cd291f7fafb2619d7c, type: 2}
   - {fileID: 11400000, guid: d85e6280abb4c45618c1bdd87a88a735, type: 2}
-  - {fileID: 11400000, guid: 2812a7d27bbcf44eca56ba89ee6b40c1, type: 2}
