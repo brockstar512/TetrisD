@@ -238,6 +238,66 @@ Transform:
   m_Father: {fileID: 1375196349}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &343581930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c6188ef2e24488fa8ee1d0210ce8f2, type: 3}
+  m_Name: A1-1(Clone)
+  m_EditorClassIdentifier: 
+  difficulty: 0
+  stage: 0
+  diceOptions:
+  - number: 1
+    color: 0
+    tile: {fileID: 11400000, guid: 52a91917d82c34470b4e58b30d082652, type: 2}
+    chance: 0
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 0
+    tile: {fileID: 11400000, guid: 710a17f3bc9414ab898c32b3616e3b01, type: 2}
+    chance: 10
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 3
+    color: 0
+    tile: {fileID: 11400000, guid: ab614f5efb879409e8cb0844551925b9, type: 2}
+    chance: 25
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 4
+    color: 0
+    tile: {fileID: 11400000, guid: 5693a0b75c28a4ea69b512e360c04a60, type: 2}
+    chance: 50
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 5
+    color: 0
+    tile: {fileID: 11400000, guid: 70ae23c293e0b4329af74f88ad6aa391, type: 2}
+    chance: 75
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 6
+    color: 0
+    tile: {fileID: 11400000, guid: 98e27f7c73e224e6abbd8e126734968f, type: 2}
+    chance: 80
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 7
+    color: 0
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    chance: 82
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 0.05
+  stepTime: 1
+  limit: 5
 --- !u!1 &418173160
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +456,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: --
+  m_text: 1-1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c1b898a67217b4b718a652393ff6e516, type: 2}
   m_sharedMaterial: {fileID: -4502348454367827551, guid: c1b898a67217b4b718a652393ff6e516, type: 2}
@@ -926,7 +986,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  currentDifficulty: {fileID: 0}
+  currentDifficulty: {fileID: 343581930}
   difficultyNumbers: {fileID: 530711995}
 --- !u!1 &1363189442
 GameObject:
@@ -1751,7 +1811,7 @@ Tilemap:
       e33: 1
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 1, g: 1, b: 1, a: 1}
+    m_Data: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}

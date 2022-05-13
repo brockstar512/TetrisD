@@ -63,6 +63,12 @@ public class DiceGroup : MonoBehaviour
     }
     public GameState gameState = GameState.None;
     public SwipeControls swipeControls;
+    public bool CanMove {
+        get {
+            if (isScoring || isDisengaging)
+                return false;
+            return true;
+        } }
 
 
 
@@ -82,14 +88,17 @@ public class DiceGroup : MonoBehaviour
 
     //const float DisengageDropSpeed = 0.05f;
 
-
+    void Awake()
+    {
+        //swipeControls.DirectionEvent += ExternalMoveController;
+        //swipeControls.RotateEvent += ExternalRotateController;
+    }
 
     ///game board           spawn location      dice data currently active
     public void Initialize(DiceBoard diceBoard, Vector3Int position, DiceData data, DiceData dynamicData)
     {
         //swipeControls.HardDropEvent += HardDropBonus;//move()
-        //swipeControls.DirectionEvent += ExternalMoveController;
-        //swipeControls.RotateEvent += ExternalRotateController;
+
 
 
         diceDisengage = this.GetComponent<DiceDisengage>();
@@ -153,7 +162,44 @@ public class DiceGroup : MonoBehaviour
         this.diceBoard.Clear(this);
 
         this.lockTime += Time.deltaTime;
-        
+
+        if (swipeControls.currentDirection.Count > 0)
+        {
+            switch (swipeControls.currentDirection.Dequeue())
+            {
+                case SwipeControls.DraggedDirection.Right:
+                    Debug.Log("RIGHT");
+                    Move(Vector2Int.right);
+                    break;
+                case SwipeControls.DraggedDirection.Left:
+                    Debug.Log("LEFT");
+                    Move(Vector2Int.left);
+                    break;
+                case SwipeControls.DraggedDirection.Up:
+                    Debug.Log("NOTHING FOR NOW");
+                    break;
+                case SwipeControls.DraggedDirection.Down:
+                    HardDrop();
+                    break;
+
+            }
+        }
+
+        if (swipeControls.currentRotation.Count > 0)
+        {
+            switch (swipeControls.currentRotation.Dequeue())
+            {
+                case SwipeControls.RotationDirection.Right:
+                    Debug.Log("RIGHT");
+                    Rotate(DynamicDiceState.Right);
+                    break;
+                case SwipeControls.RotationDirection.Left:
+                    Debug.Log("LEFT");
+                    Rotate(DynamicDiceState.Left);
+                    break;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Move(Vector2Int.left);
@@ -317,45 +363,7 @@ public class DiceGroup : MonoBehaviour
 
     #region Movement Methods
 
-    public void ExternalMoveController(SwipeControls.DraggedDirection dir)
-    {
-        if (isScoring || isDisengaging || !isPlaying)
-            return;
-        Debug.Log("Move");
 
-        switch(dir)
-        {
-            case SwipeControls.DraggedDirection.Right:
-                Move(Vector2Int.right);
-                break;
-            case SwipeControls.DraggedDirection.Left:
-                Move(Vector2Int.left);
-                break;
-            case SwipeControls.DraggedDirection.Down:
-                HardDrop();
-                break;
-        }
-        
-        
-        
-
-    }
-    public void ExternalRotateController(SwipeControls.RotationDirection dir)
-    {
-        if (isScoring || isDisengaging || !isPlaying)
-            return;
-        Debug.Log("Rotate");
-        switch (dir)
-        {
-            case SwipeControls.RotationDirection.Right:
-                Rotate(DynamicDiceState.Right);
-                break;
-            case SwipeControls.RotationDirection.Left:
-                Rotate(DynamicDiceState.Left);
-                break;
-
-        }
-    }
 
     /// <summary>
     /// Moves tile after checking is valid position which check the bounds of the board, then if that tile has a tile on it
@@ -548,34 +556,7 @@ public class DiceGroup : MonoBehaviour
     }
 
 
-    //public void ClearGroupFromBoard()
-    //{
-    //    isScoring = true;
-    //    DiceData newGroup = null;
-    //    DiceData newGroup2 = null;
-    //    this.Initialize(diceBoard, diceBoard.spawnPosition, newGroup, newGroup2);
 
-    //}
-    //out 
-    public void StateManager(ref GameState from, GameState to)
-    {
-        switch (to)
-        {
-            case GameState.Disengaging:
-                from = to;
-                break;
-            case GameState.Playing:
-                from = to;
-                //this.diceBoard.SpawnGroup();
-                break;
-            case GameState.Scoring:
-                from = to;
-                //check for score
-                break;
-            default:
-                break;
-        }
-    }
 
 }
 

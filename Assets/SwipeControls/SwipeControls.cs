@@ -36,8 +36,12 @@ public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     RotationDirection tapSide;
 
 
-    public event Action<DraggedDirection> DirectionEvent;
-    public event Action<RotationDirection> RotateEvent;
+    //public event Action<DraggedDirection> DirectionEvent;
+    //public event Action<RotationDirection> RotateEvent;
+
+    public Queue<RotationDirection> currentRotation = new Queue<RotationDirection>();
+    public Queue<DraggedDirection> currentDirection = new Queue<DraggedDirection>();
+
 
     public DiceGroup diceGroup;
 
@@ -145,13 +149,24 @@ public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void MoveDispatch(DraggedDirection move)
     {
         Debug.Log($"MOVE {move}");
-
+        if (!diceGroup.CanMove)
+            return;
         //DirectionEvent?.Invoke(move);
+        //only add one hard drop at a time... also keep track of the start
+        if (currentDirection.Contains(DraggedDirection.Down))
+            return;
+
+            currentDirection.Enqueue(move);
     }
     public void MoveDispatch(RotationDirection rotation)
     {
+        if (!diceGroup.CanMove)
+            return;
+        //TODO differentiate hard drop and small drop?
         Debug.Log($"ROTATE {rotation}");
         //RotateEvent?.Invoke(rotation);
+        currentRotation.Enqueue(rotation);
+
 
 
     }

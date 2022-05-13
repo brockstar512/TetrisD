@@ -47,7 +47,7 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
         currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex]);
         //sets your difficulty so you don't have to play all the way up to where you are to level up
         CurrentLimit = level == 0 && stage == 0 ? 0 : difficultyOptions[GetDifficultyIndex - 1].limit;
-        Debug.Log($"CURRENT LIMIT {CurrentLimit} and goal is  {GetCurrentLimitGoal}");
+        //Debug.Log($"CURRENT LIMIT {CurrentLimit} and goal is  {GetCurrentLimitGoal}");
         ////takes out the bombs
         //if (!useBombs)
         //{
@@ -62,7 +62,7 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
     //this checks if we need to update base on
     public bool UpdateLevelCheck(int value)
     {
-        Debug.Log($"Checking update level score {value} and limit {GetCurrentLimitGoal}");
+        //Debug.Log($"Checking update level score {value} and limit {GetCurrentLimitGoal}");
         if (value < GetCurrentLimitGoal)
             return false;
 
