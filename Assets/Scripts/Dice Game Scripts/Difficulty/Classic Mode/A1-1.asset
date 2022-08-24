@@ -17,7 +17,7 @@ MonoBehaviour:
   diceOptions:
   - number: 1
     color: 0
-    tile: {fileID: 11400000, guid: 52a91917d82c34470b4e58b30d082652, type: 2}
+    tile: {fileID: 11400000, guid: c6a720c7e08ae444e808b6b9a06b74d0, type: 2}
     chance: 0
     cellLocation:
     - {x: 0, y: 0}

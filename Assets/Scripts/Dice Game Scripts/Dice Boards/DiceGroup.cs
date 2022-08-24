@@ -53,15 +53,7 @@ public class DiceGroup : MonoBehaviour
 
     public int round = 0;
 
-    public enum GameState
-    {
-        None,
-        Disengaging,
-        Scoring,
-        Playing,
 
-    }
-    public GameState gameState = GameState.None;
     public SwipeControls swipeControls;
     public bool CanMove {
         get {
@@ -69,8 +61,6 @@ public class DiceGroup : MonoBehaviour
                 return false;
             return true;
         } }
-
-
 
     #region testing regions
 
