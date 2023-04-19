@@ -878,55 +878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5206b69d6ab404dac9733540d6eb9bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyOptionsClassic:
+  difficultyOptionsDefault:
   - {fileID: 11400000, guid: d72f1a2ab394e40e7aee58492518c5fc, type: 2}
-  - {fileID: 11400000, guid: a39cb64833ef3433981f98b426ca8936, type: 2}
-  - {fileID: 11400000, guid: 3f8918470b0cd4f28aa7c649787a69cf, type: 2}
-  - {fileID: 11400000, guid: a598dff4038c94b2e892c7fb60efbdbd, type: 2}
-  - {fileID: 11400000, guid: 736950465e3884ecba52968cebc61950, type: 2}
-  - {fileID: 11400000, guid: be3bb9bdb27e54bf687ee4703960249d, type: 2}
-  - {fileID: 11400000, guid: 838b6caee53774befad87b44de050d82, type: 2}
-  - {fileID: 11400000, guid: 73c5948080d7e472bbd6b9c43e231f18, type: 2}
-  - {fileID: 11400000, guid: 4b5b8030cebb541118e37f0f8ea9981d, type: 2}
-  - {fileID: 11400000, guid: 451fe4a7ea2ee4562a743161c5d65077, type: 2}
-  - {fileID: 11400000, guid: f2fa00170aad5487a8b9e3f0410420de, type: 2}
-  - {fileID: 11400000, guid: 4543dea33625c4c15a25671443f57d8a, type: 2}
-  - {fileID: 11400000, guid: 03629cf55a68e4d019b9c87821e6af61, type: 2}
-  - {fileID: 11400000, guid: 22e8998caa2bf4337adcd319e47b5e43, type: 2}
-  - {fileID: 11400000, guid: f9dfb146f896047e49c3c757702e5e71, type: 2}
-  difficultyOptionsConfetti:
-  - {fileID: 11400000, guid: 747e751bcfebc42dc8dcb5ad0901bce8, type: 2}
-  - {fileID: 11400000, guid: 6fa9e2a7ebb1c4217955fa51529197bd, type: 2}
-  - {fileID: 11400000, guid: b5bceebe76d084e06abd12cb587d8840, type: 2}
-  - {fileID: 11400000, guid: e153aee00e19c48b5b92210767572c4f, type: 2}
-  - {fileID: 11400000, guid: 9cc3e4bb63a144ab99029a1227edb17b, type: 2}
-  - {fileID: 11400000, guid: 29736f776a39647d08d327f6797c10c2, type: 2}
-  - {fileID: 11400000, guid: 748384783e520499195600fadcbe5a7b, type: 2}
-  - {fileID: 11400000, guid: 0616c9963c58045eea47ba36ceda56f3, type: 2}
-  - {fileID: 11400000, guid: 3b02a7d8d2c3a47168ec767129f906b8, type: 2}
-  - {fileID: 11400000, guid: 441c3a011090149b3ab2530151fe2b63, type: 2}
-  - {fileID: 11400000, guid: 3554120099fe64217b18d6ea996eca2b, type: 2}
-  - {fileID: 11400000, guid: fd23677b4b3214814ba23ffc4036a017, type: 2}
-  - {fileID: 11400000, guid: 10821bcd2e5354aeaac920ee43d49a6a, type: 2}
-  - {fileID: 11400000, guid: d7bb44636e4b24599974b86d8a1caac6, type: 2}
-  - {fileID: 11400000, guid: ce80257a0fb44493c97d71e066ad81f6, type: 2}
-  difficultyOptionsFunfetti:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentDifficulty: {fileID: 11400000, guid: eafe066b490c04904a6c985ed0a0453c, type: 2}
+  currentDifficulty: {fileID: 0}
   difficultyNumbers: {fileID: 530711995}
 --- !u!1 &1363189442
 GameObject:
@@ -1570,7 +1524,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.13999999, y: 0.13999999, z: 0}
   m_MaxChunkCount: 16
