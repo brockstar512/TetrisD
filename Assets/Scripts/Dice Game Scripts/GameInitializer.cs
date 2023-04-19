@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
-    [SerializeField ]GameObject countDownPrefab;
-    [SerializeField] GameObject countUpPrefab;
+
+    [SerializeField] GameObject clockGameObject;
     public bool isCountUp;
     private GameObject clock;
 
@@ -21,13 +21,21 @@ public class GameInitializer : MonoBehaviour
     [ContextMenu("Start")]
     public void StartGame()
     {
+        CountDown countDown = clockGameObject?.GetComponent<CountDown>();
+        CountUp countUp = clockGameObject?.GetComponent<CountUp>();
+
+
         switch (isCountUp)
         {
             case true:
-                clock = Instantiate(countUpPrefab);
+                clock = clockGameObject;
+                countDown.enabled = false;
+                countUp.enabled = true;
                 break;
             case false:
-                clock = Instantiate(countDownPrefab);
+                clock = clockGameObject;
+                countDown.enabled = true;
+                countUp.enabled = false;
                 break;
         }
         
