@@ -85,8 +85,10 @@ public class DiceBoard : MonoBehaviour
             }
 
         }
+        Debug.Log("Spawning Group");
         this.activeGroup.isPlaying = true;
         this.activeGroup.isScoring = false;
+        
         //int random = Random.Range(0, this.DiceOptions.Length);
         //DiceData newGroup = this.DiceOptions[random];
         //Debug.Log($"This is the new group {newGroup.color}");
@@ -98,6 +100,12 @@ public class DiceBoard : MonoBehaviour
         Debug.Log($"<color=purple>{newGroup.number} and {newGroup2.number}</color>");
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
+
+        if (activeGroup.isHardDropping)
+        {
+            StopCoroutine(activeGroup.DelayHardDrop());
+            StartCoroutine(activeGroup.DelayHardDrop());
+        }
 
     }
 
@@ -120,6 +128,7 @@ public class DiceBoard : MonoBehaviour
     /// <param name="diceGroup"></param>
     public void SetOnBoard(DiceGroup diceGroup)
     {
+       
         //Debug.LogWarning("SET ON BOARD");
         if (diceGroup.dynamicData != null)
         {
@@ -254,51 +263,5 @@ public class DiceBoard : MonoBehaviour
     }
 
 
-    public CurrentState StateManager(CurrentState from, CurrentState to)
-    {
-        switch (to)
-        {
-            case CurrentState.Beginning:
-                switch (from)
-                {
-                    case CurrentState.Disengaging:
-                        break;
-                }
-                this.currentState = to;
-                break;
-            case CurrentState.Disengaging:
-                switch (from)
-                {
-                    case CurrentState.Disengaging:
-                        break;
-                }
-                this.currentState = to;
-                break;
-            case CurrentState.Playing:
-                switch (from)
-                {
-                    case CurrentState.Disengaging:
-                        break;
-                }
-                this.currentState = to;
-                break;
-            case CurrentState.Scoring:
-                switch (from)
-                {
-                    case CurrentState.Disengaging:
-                        break;
-                }
-                this.currentState = to;
-                break;
-            case CurrentState.GameOver:
-                switch (from)
-                {
-                    case CurrentState.Disengaging:
-                        break;
-                }
-                this.currentState = to;
-                break;
-        }
-        return to;
-    }
+    
 }

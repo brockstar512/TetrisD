@@ -45,6 +45,7 @@ public class DiceGroup : MonoBehaviour
     private float stepTime;
     private float lockTime;
 
+    public bool isHardDropping = false;
     public bool isDisengaging = false;//is playing or playerHasControll
     public bool isScoring = false;
     public bool isPlaying = false;
@@ -148,6 +149,7 @@ public class DiceGroup : MonoBehaviour
 
         if (!isPlaying)
             return;
+
         //MoveController();
         this.diceBoard.Clear(this);
 
@@ -386,6 +388,10 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void HardDrop()
     {
+        if (isHardDropping)
+            return;
+
+        isHardDropping = true;
         int fallHeight = 0;
         while (Move(Vector2Int.down))
         {
@@ -439,7 +445,6 @@ public class DiceGroup : MonoBehaviour
         await Task.WhenAll(tasks);
         //Debug.Log($"<color=red>Lock is called in hard drop fx for round {round}</color>");
         //Lock();
-
     }
 
 
@@ -546,7 +551,11 @@ public class DiceGroup : MonoBehaviour
     }
 
 
-
+    public IEnumerator DelayHardDrop()
+    {
+        yield return new WaitForSeconds(.25f);
+        isHardDropping = false;
+    }
 
 }
 
