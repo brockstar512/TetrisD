@@ -6,9 +6,11 @@ using TMPro;
 public class DifficultyManager : MonoBehaviour
 {
     private List<DifficultyRules> difficultyOptions;
-    public List<DifficultyRules> difficultyOptionsClassic;
-    public List<DifficultyRules> difficultyOptionsConfetti;
-    public List<DifficultyRules> difficultyOptionsFunfetti;
+    public List<DifficultyRules> difficultyOptionsDefault;
+
+    //public List<DifficultyRules> difficultyOptionsClassic;
+    //public List<DifficultyRules> difficultyOptionsConfetti;
+    //public List<DifficultyRules> difficultyOptionsFunfetti;
 
 
     public DifficultyRules currentDifficulty;
@@ -36,13 +38,14 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
         //we got if we want to inlclude bombs
         this.useBombs = useBombs;
         //get the correct game mode
-        difficultyOptions = difficultyOptionsClassic;
+        difficultyOptions = difficultyOptionsDefault;
         UpdateLevel();
     }
 
     //this removes the bombs and updates the selection of the dice
     void UpdateLevel()
     {
+        Debug.Log($"Here is diffuculty index {GetDifficultyIndex}");
         //gets the current difficulty packet
         currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex]);
         //sets your difficulty so you don't have to play all the way up to where you are to level up

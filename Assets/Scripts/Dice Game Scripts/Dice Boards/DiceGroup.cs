@@ -133,7 +133,7 @@ public class DiceGroup : MonoBehaviour
         //To the right -> 
         this.cells[1] = new Vector3Int( data.cellLocation[0].x + 1, data.cellLocation[0].y , 0); //this is dynamic dice position//TODO This is very imortant
 
-
+        Debug.Log($"Here is one position  {data.number} and {data.tile}");
 
     }
 
