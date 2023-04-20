@@ -1384,7 +1384,7 @@ GameObject:
   - component: {fileID: 740047293}
   - component: {fileID: 740047292}
   m_Layer: 5
-  m_Name: Difficulty Numbers
+  m_Name: Lines Numbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
   m_sharedMaterial: {fileID: 6833471927047663234, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
@@ -2441,6 +2441,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d72f1a2ab394e40e7aee58492518c5fc, type: 2}
   currentDifficulty: {fileID: 0}
   difficultyNumbers: {fileID: 530711995}
+  linesClear: {fileID: 740047293}
 --- !u!1 &1266985583
 GameObject:
   m_ObjectHideFlags: 0

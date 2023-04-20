@@ -15,6 +15,8 @@ public class DifficultyManager : MonoBehaviour
 
     public DifficultyRules currentDifficulty;
     [SerializeField] TextMeshProUGUI difficultyNumbers;
+    [SerializeField] TextMeshProUGUI linesClear;
+
     private bool useBombs;
 
     public int level { get; private set; }
@@ -60,6 +62,8 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
     //this checks if we need to update base on
     public bool UpdateLevelCheck(int value)
     {
+        linesClear.text = value.ToString();
+
         if (value < GetCurrentLimitGoal)
             return false;
 

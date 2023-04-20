@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public DiceMatch diceMatch;
@@ -11,7 +11,6 @@ public class ScoreManager : MonoBehaviour
     public int diceLinesCleared = 0;
     NumberCounterUpdater numberCounterUpdater;
     NumberCounter numberCounter;
-
     //public event Action<int> LineCleared;
     private DifficultyManager difficultyManager;
 
@@ -90,7 +89,7 @@ public class ScoreManager : MonoBehaviour
     public void Bomb(int DiceNumber)
     {
         //this should be in the difficulty manager not here
-        diceLinesCleared++;
+        diceLinesCleared++;//should lines effect
        
         //Debug.Log($"Dice lines cleared {diceLinesCleared}");
 
