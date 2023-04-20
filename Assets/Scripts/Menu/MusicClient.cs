@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MusicClient : MonoBehaviour
 {
-    [SerializeField] AudioClip _song;
-    
+    public SoundManager.TrackList track;
+
     public void Play()
     {
-        SoundManager.Instance.PlaySong(_song, true);
+        SoundManager.Instance.PlaySong(track);
     }
 
 

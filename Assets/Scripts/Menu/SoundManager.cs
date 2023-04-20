@@ -5,7 +5,14 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    [SerializeField] AudioSource _musicSource, _effectsSource;
+    [SerializeField] AudioSource _effectsSource;
+    public List<AudioSource> MusicPlayers;
+    public enum TrackList
+    {
+        Menu,
+        Game,
+        Multiplayer
+    }
 
     private void Awake()
     {
@@ -28,10 +35,19 @@ public class SoundManager : MonoBehaviour
         _effectsSource.PlayOneShot(clip);
     }
 
-    public void PlaySong(AudioClip clip, bool isLooping)
+    public void PlaySong(TrackList track)
     {
-        _musicSource.loop = isLooping;
-        _musicSource.PlayOneShot(clip);
+        StopMusic();
+        MusicPlayers[(int)track].Play();
+
+    }
+
+    public void StopMusic()
+    {
+        for (int i = 0; i < MusicPlayers.Count; i++)
+        {
+            MusicPlayers[i].Stop();
+        }
     }
 
     public void ChangeMatserVolume(float value)

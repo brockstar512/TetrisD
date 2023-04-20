@@ -8,7 +8,7 @@ public class NumberCounter : MonoBehaviour
     public TextMeshProUGUI Text;
     public int CountFPS = 30;
     public float Duration = 1f;
-    public string NumberFormat = "N0";
+    public string NumberFormat = "N0";//"N0"; //byteValue.ToString("D8")"D6"
     private int _value;
     public int persistantScore = 0;
     public int valueToAdd = 0;
