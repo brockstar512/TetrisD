@@ -119,10 +119,10 @@ public class SwipeControls : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         if (Time.time - tapTime < tapTimeLimit)
         {
 
-            RectTransform rectTransform = GetComponent<RectTransform>(); ;
-            Debug.Log($"rect {rectTransform.rect.width}");
-            width = rectTransform.rect.width;
-            height = rectTransform.rect.height;
+            //RectTransform rectTransform = GetComponent<RectTransform>(); ;
+            //Debug.Log($"rect {rectTransform.rect.width}");
+            //width = rectTransform.rect.width;
+            //height = rectTransform.rect.height;
             Debug.Log($"Here is the event {eventData.position.x} and here is the half waypoint  {(width / 2)} and here is the width {width}");
 
 

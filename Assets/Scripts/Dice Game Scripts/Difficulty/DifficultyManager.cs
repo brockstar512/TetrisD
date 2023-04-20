@@ -20,7 +20,6 @@ public class DifficultyManager : MonoBehaviour
     public float GetDifficultyLocktime{ get { return currentDifficulty.lockTime; } }
     public int GetCurrentLimitGoal { get { return currentDifficulty.limit; } }
     public int CurrentLimit{ get; private set; }
-//todo figure out what the threshold is to level up
 
 
 //this starts us where we need to be

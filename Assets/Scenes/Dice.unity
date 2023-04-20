@@ -234,7 +234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ff02db5bd2d4f369216b9ea902fdeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicSource: {fileID: 1839610037}
   _effectsSource: {fileID: 364112927}
   MusicPlayers:
   - {fileID: 1839610037}
@@ -336,7 +335,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 000000
+  m_text: --
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
   m_sharedMaterial: {fileID: 6833471927047663234, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
@@ -573,7 +572,7 @@ RectTransform:
   m_AnchorMin: {x: 0.033305578, y: 0.9223822}
   m_AnchorMax: {x: 0.23265995, y: 0.9836207}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.000015258789, y: 0.000030517578}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &306204922
 MonoBehaviour:
@@ -597,7 +596,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -960,7 +959,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: --
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
   m_sharedMaterial: {fileID: 6833471927047663234, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
@@ -1456,7 +1455,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: --
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
   m_sharedMaterial: {fileID: 6833471927047663234, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
@@ -2313,7 +2312,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1036704026
 GameObject:
@@ -3092,7 +3091,7 @@ Transform:
   - {fileID: 870368693}
   - {fileID: 7413784382997928568}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1596204725
 GameObject:
