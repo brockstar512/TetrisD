@@ -78,14 +78,13 @@ public class DiceBoard : MonoBehaviour
         //make sure they are diffrent
         if (newGroup.number >= DiceNumber.Seven && newGroup2.number >= DiceNumber.Seven)
         {
-            Debug.Log("Both Dice are bombs");
+            
             while (newGroup2.number == DiceNumber.Seven)
             {
                 newGroup2 = difficultyManager.DiceFactory();
             }
 
         }
-        Debug.Log("Spawning Group");
         this.activeGroup.isPlaying = true;
         this.activeGroup.isScoring = false;
         

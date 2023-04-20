@@ -547,6 +547,7 @@ GameObject:
   - component: {fileID: 306204923}
   - component: {fileID: 306204922}
   - component: {fileID: 306204925}
+  - component: {fileID: 306204926}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -673,6 +674,19 @@ MonoBehaviour:
   _no: {fileID: 953514887}
   cg: {fileID: 237029440}
   canvas: {fileID: 1332881682}
+--- !u!114 &306204926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306204920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6084d22cc21e4394ad33f1ca5481965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSound: {fileID: 8300000, guid: 79d77fae75f0a453c9a326dd0dc7841b, type: 3}
 --- !u!1 &364112926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,7 +1995,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 146.71118, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899467042
@@ -2139,6 +2153,7 @@ GameObject:
   - component: {fileID: 953514889}
   - component: {fileID: 953514888}
   - component: {fileID: 953514887}
+  - component: {fileID: 953514890}
   m_Layer: 5
   m_Name: No Button
   m_TagString: Untagged
@@ -2248,6 +2263,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953514885}
   m_CullTransparentMesh: 1
+--- !u!114 &953514890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953514885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6084d22cc21e4394ad33f1ca5481965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSound: {fileID: 8300000, guid: 79d77fae75f0a453c9a326dd0dc7841b, type: 3}
 --- !u!1 &984879879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2620,7 +2648,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 933.5559, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266985585
@@ -3495,7 +3523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 540.13354, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663878346
@@ -3919,6 +3947,7 @@ GameObject:
   - component: {fileID: 1863084706}
   - component: {fileID: 1863084705}
   - component: {fileID: 1863084704}
+  - component: {fileID: 1863084707}
   m_Layer: 5
   m_Name: Yes Button
   m_TagString: Untagged
@@ -4028,6 +4057,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863084702}
   m_CullTransparentMesh: 1
+--- !u!114 &1863084707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863084702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6084d22cc21e4394ad33f1ca5481965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSound: {fileID: 8300000, guid: 79d77fae75f0a453c9a326dd0dc7841b, type: 3}
 --- !u!1 &1975790803
 GameObject:
   m_ObjectHideFlags: 0
@@ -4511,6 +4553,7 @@ MonoBehaviour:
   diceFXController: {fileID: 1903845430354739680}
   difficultyManager: {fileID: 1209862593}
   diceGhost: {fileID: 1363189445}
+  hardDropStartSound: {fileID: 8300000, guid: 535931a0e52f74da79164bcd780c60e6, type: 3}
   stepDelay: 1
   lockDelay: 0.5
   isHardDropping: 0
@@ -5135,6 +5178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee151fc8a946447585b4c73643f6dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prepareSound: {fileID: 8300000, guid: 935d0c59f6a464f04b02f00ccc09c537, type: 3}
+  startSound: {fileID: 8300000, guid: e091eed5894c54394a9efe5267f56cb2, type: 3}
   musicClient: {fileID: 8262675116702832416}
   timerText: {fileID: 8262675117451444689}
   countDownDisplay: {fileID: 8262675117345682491}
@@ -5202,6 +5247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cede772e7c54c4190cfd668b5436c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prepareSound: {fileID: 8300000, guid: 935d0c59f6a464f04b02f00ccc09c537, type: 3}
+  startSound: {fileID: 8300000, guid: e091eed5894c54394a9efe5267f56cb2, type: 3}
   musicClient: {fileID: 8262675116702832416}
   timerText: {fileID: 8262675117451444689}
   countDownDisplay: {fileID: 8262675117345682491}

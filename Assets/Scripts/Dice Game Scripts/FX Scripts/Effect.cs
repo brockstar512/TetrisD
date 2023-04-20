@@ -16,13 +16,14 @@ public class Effect : ScriptableObject
     //public float framesPerSecond;
     public Tile[] tiles;
     //public bool isDoneAnimating = false;
+    [SerializeField] AudioClip sound;
 
 
 
     //not every pixel effect needs to be waited on which is why some are tasks and others are just corouines
     public IEnumerator Animate(Vector3Int pos, Tilemap map)
     {
-
+        SoundManager.Instance.PlaySound(sound);
         //isDoneAnimating = false;
         //Tilemap map = map;
         for (int i = 0; i < tiles.Length; i++)
@@ -39,6 +40,7 @@ public class Effect : ScriptableObject
     public async Task AnimateTask(Vector3Int pos, Tilemap map)
     {
         //Debug.Log("Animating Task");
+        SoundManager.Instance.PlaySound(sound);
 
         for (int i = 0; i < tiles.Length; i++)
         {

@@ -20,4 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56a956374e3814551badb569f1f14c9d, type: 2}
   - {fileID: 11400000, guid: 7d3579ed63aa24753a91dc8b3ba567db, type: 2}
   - {fileID: 11400000, guid: 2b034e2ef511d486888a29f327a8f0d7, type: 2}
-  isDoneAnimating: 0
+  sound: {fileID: 8300000, guid: 7d8fda0c6ba1e4d07a70197a9674db41, type: 3}

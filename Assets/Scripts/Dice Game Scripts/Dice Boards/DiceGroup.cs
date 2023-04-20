@@ -1,9 +1,8 @@
-using System.Collections;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
+using UnityEngine;
 
 
 
@@ -23,6 +22,7 @@ public class DiceGroup : MonoBehaviour
     public DiceData data {get;private set;}//the dice that stays still 
     public DiceData dynamicData { get; private set; }//the dice that roates around the other
 
+    [SerializeField] AudioClip hardDropStartSound;
 
     public event Action<int,bool> HardDropEvent;
 
@@ -392,6 +392,7 @@ public class DiceGroup : MonoBehaviour
             return;
 
         isHardDropping = true;
+        SoundManager.Instance.PlaySound(hardDropStartSound);
         int fallHeight = 0;
         while (Move(Vector2Int.down))
         {

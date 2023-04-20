@@ -5,6 +5,8 @@ using TMPro;
 
 public class CountUp : MonoBehaviour, IClock
 {
+    [SerializeField] AudioClip prepareSound;
+    [SerializeField] AudioClip startSound;
     [SerializeField] MusicClient musicClient;
     [SerializeField] TextMeshProUGUI timerText;
     public TextMeshProUGUI countDownDisplay;
@@ -48,13 +50,15 @@ public class CountUp : MonoBehaviour, IClock
         {
             countDownDisplay.text = countDownText[countDownTime];
             yield return new WaitForSeconds(1f);
+            SoundManager.Instance.PlaySound(prepareSound);
             countDownTime--;
         }
         //give the last sign a second
         countDownDisplay.text = countDownText[countDownTime];
         yield return new WaitForSeconds(1f);
+        SoundManager.Instance.PlaySound(startSound);
 
-        
+
         countDownDisplay.gameObject.SetActive(false);
         startGameDelegate?.Invoke();
         musicClient.Play();

@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e7be903b967f648ff95644c4f6c5e5f3, type: 2}
   - {fileID: 11400000, guid: 728001c29f8ca4bea849d19649efe95d, type: 2}
   - {fileID: 11400000, guid: d8b458812e4a44d52b79f7a70c3888aa, type: 2}
+  sound: {fileID: 8300000, guid: 539696569db714a989aad78c5d719c09, type: 3}
