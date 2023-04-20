@@ -7,13 +7,7 @@ public class DifficultyManager : MonoBehaviour
 {
     private List<DifficultyRules> difficultyOptions;
     public List<DifficultyRules> difficultyOptionsDefault;
-
-    //public List<DifficultyRules> difficultyOptionsClassic;
-    //public List<DifficultyRules> difficultyOptionsConfetti;
-    //public List<DifficultyRules> difficultyOptionsFunfetti;
-
-
-    public DifficultyRules currentDifficulty;
+    DifficultyRules currentDifficulty;
     [SerializeField] TextMeshProUGUI difficultyNumbers;
     [SerializeField] TextMeshProUGUI linesClear;
 
@@ -54,7 +48,10 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
         CurrentLimit = level == 0 && stage == 0 ? 0 : difficultyOptions[GetDifficultyIndex - 1].limit;
 
         //updates the UI
-        UpdateLevelUI(level, stage);
+        if ((int)currentDifficulty.level < 10)
+        {
+            UpdateLevelUI(((int)currentDifficulty.level).ToString());
+        }
     }
 
  
@@ -106,9 +103,9 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
         return currentDifficulty.diceOptions[rolledIndex];
     }
 
-    void UpdateLevelUI(int level = 0, int stage = 0)
+    void UpdateLevelUI(string level)
     {
-        difficultyNumbers.text = $"{level + 1}-{stage + 1}";
+        difficultyNumbers.text = $"{level}";
     }
 
 

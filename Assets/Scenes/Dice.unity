@@ -826,7 +826,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 907483270}
-  m_Father: {fileID: 1209862592}
+  m_Father: {fileID: 1501496303}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1808,7 +1808,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1501496303}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899467040
 GameObject:
@@ -2403,7 +2403,7 @@ GameObject:
   - component: {fileID: 1209862592}
   - component: {fileID: 1209862593}
   m_Layer: 0
-  m_Name: Difficulty Controller and UI Elements
+  m_Name: Difficulty Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2420,10 +2420,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 418173161}
   - {fileID: 8262675116702832387}
   m_Father: {fileID: 1501496303}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1209862593
 MonoBehaviour:
@@ -2449,7 +2448,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 268b5af604499491a94f55531b705f3c, type: 2}
   - {fileID: 11400000, guid: 86530edb9cd66497e8f8da4aec3cc7ed, type: 2}
   - {fileID: 11400000, guid: b1f858a69e64e4171933323833227f25, type: 2}
-  currentDifficulty: {fileID: 0}
   difficultyNumbers: {fileID: 530711995}
   linesClear: {fileID: 740047293}
 --- !u!1 &1266985583
@@ -2828,6 +2826,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 418173161}
   - {fileID: 1209862592}
   - {fileID: 1831943333}
   - {fileID: 870368693}
@@ -3470,7 +3469,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1501496303}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1839610036
 GameObject:
@@ -4712,7 +4711,7 @@ RectTransform:
   m_Children:
   - {fileID: 7413784382694531140}
   m_Father: {fileID: 1501496303}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4955,7 +4954,7 @@ RectTransform:
   m_Children:
   - {fileID: 8262675116331943095}
   m_Father: {fileID: 1209862592}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

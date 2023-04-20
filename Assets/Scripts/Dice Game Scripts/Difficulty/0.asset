@@ -16,24 +16,28 @@ MonoBehaviour:
   diceOptions:
   - number: 2
     color: 2
-    tile: {fileID: 0}
+    tile: {fileID: 11400000, guid: 0db6ef7719e504112aa1b145a6af1972, type: 2}
     chance: 0
-    cellLocation: []
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 4
     color: 6
-    tile: {fileID: 0}
-    chance: 0
-    cellLocation: []
+    tile: {fileID: 11400000, guid: ce71f7f41044a40038868c1b8ecc216e, type: 2}
+    chance: 25
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 6
     color: 3
-    tile: {fileID: 0}
-    chance: 0
-    cellLocation: []
+    tile: {fileID: 11400000, guid: e79904fee91cd48bfa01f813b16783c0, type: 2}
+    chance: 50
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 7
     color: 7
-    tile: {fileID: 0}
-    chance: 0
-    cellLocation: []
-  lockTime: 0
-  stepTime: 0
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    chance: 75
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 2
+  stepTime: 2
   limit: 10
