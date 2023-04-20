@@ -50,8 +50,20 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void ChangeMatserVolume(float value)
+
+    public void HandleSFXVolume(bool isMute)
     {
-        AudioListener.volume = value;
+        float volumeLevel = isMute ? 0 : .75f;
+        _effectsSource.volume = volumeLevel;
+    }
+
+    public void HandleMusicVolume(bool isMute)
+    {
+        float volumeLevel = isMute ? 0 : .75f;
+
+        for (int i = 0; i < MusicPlayers.Count; i++)
+        {
+            MusicPlayers[i].volume = volumeLevel;
+        }
     }
 }

@@ -27,15 +27,13 @@ public class SoundControl : MonoBehaviour
     {
         isMuteMusic = !isMuteMusic;
         musicIcon.image.sprite = isMuteMusic ? soundOff : soundOn;
-        float volumeLevel = isMuteMusic ? 0 : .75f;
-        SoundManager.Instance.ChangeMatserVolume(volumeLevel);
+        SoundManager.Instance.HandleMusicVolume(isMuteMusic);
     }
     void ChangeVolumeFX()
     {
         isMuteFX = !isMuteFX;
         soundIcon.image.sprite = isMuteFX ? soundOff : soundOn;
-        float volumeLevel = isMuteFX ? 0 : .75f;
-        SoundManager.Instance.ChangeMatserVolume(volumeLevel);
+        SoundManager.Instance.HandleMusicVolume(isMuteFX);
         SoundManager.Instance.PlaySound(_soundSample);
     }
 

@@ -57,6 +57,7 @@ public class NavigationManager : MonoBehaviour
 
     void OpenPage(CanvasGroup screen)
     {
+        screen.gameObject.transform.localScale = new Vector3(1,1,1);
         screen.gameObject.SetActive(true);
         currentPage.DOFade(0, .1f).OnComplete(() =>
         {
@@ -64,6 +65,8 @@ public class NavigationManager : MonoBehaviour
             {
                 stack.Push(currentPage);
                 currentPage.gameObject.SetActive(false);
+                screen.gameObject.transform.localScale = new Vector3(0, 0, 0);
+
                 currentPage = screen;
             });
         });
