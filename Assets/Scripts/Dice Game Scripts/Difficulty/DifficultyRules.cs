@@ -7,25 +7,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Difficulty", menuName = "ScriptableObjects/DifficultyPacket", order = 2)]
 public class DifficultyRules : ScriptableObject
 {
-    public enum Difficulty
+
+    public enum Level
     {
-        Easy = 0,
-        Medium,
-        Hard
-    };
-    public enum Stage
-    {
-        One = 0,
+        Zero = 0,
+        One,
         Two,
         Three,
         Four,
         Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        
     };
-    //public DiceData[] DiceOptions;
-    public Difficulty difficulty;
-    public Stage stage;
-
-
+    public Level level;
     public List<DiceData> diceOptions;
     public float lockTime;
     public float stepTime;
@@ -33,11 +31,7 @@ public class DifficultyRules : ScriptableObject
     private int lineLimit;
     public int limit;
 
-    //public DifficultyRules Copy(DifficultyRules difficultyRules)
-    //{
-    //    DifficultyRules difficultyRulesCopy = new DifficultyRules();
-    //    return new DifficultyRules();
-    //}
+
 
     public void RemoveBombs()
     {

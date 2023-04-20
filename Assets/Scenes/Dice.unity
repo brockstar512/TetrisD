@@ -2438,7 +2438,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyOptionsDefault:
-  - {fileID: 11400000, guid: d72f1a2ab394e40e7aee58492518c5fc, type: 2}
+  - {fileID: 11400000, guid: f7dccc2dd6ad4444d827d50cbbfe712f, type: 2}
+  - {fileID: 11400000, guid: 3812eec4b9ccf44508ea2924781188b3, type: 2}
+  - {fileID: 11400000, guid: c277159b1774f471d93b897d4ee61b5d, type: 2}
+  - {fileID: 11400000, guid: 7dcf4877cb3284b2abf3b5f0b7bf9845, type: 2}
+  - {fileID: 11400000, guid: 327d59a3b4d2f4dc4bf215d85b2098e9, type: 2}
+  - {fileID: 11400000, guid: 37c32635864b342ed97bf4bd1af3948d, type: 2}
+  - {fileID: 11400000, guid: facf689ef752a4e38a378c363e710031, type: 2}
+  - {fileID: 11400000, guid: 802f593c79ed14be59c230a9a31ada61, type: 2}
+  - {fileID: 11400000, guid: 268b5af604499491a94f55531b705f3c, type: 2}
+  - {fileID: 11400000, guid: 86530edb9cd66497e8f8da4aec3cc7ed, type: 2}
+  - {fileID: 11400000, guid: b1f858a69e64e4171933323833227f25, type: 2}
   currentDifficulty: {fileID: 0}
   difficultyNumbers: {fileID: 530711995}
   linesClear: {fileID: 740047293}
