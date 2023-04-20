@@ -5,6 +5,7 @@ using TMPro;
 
 public class CountDown : MonoBehaviour, IClock
 {
+    [SerializeField] MusicClient musicClient;
     [SerializeField] TextMeshProUGUI timerText;
     public TextMeshProUGUI countDownDisplay;
     private int countDownTime = 2;
@@ -57,7 +58,7 @@ public class CountDown : MonoBehaviour, IClock
         
         countDownDisplay.gameObject.SetActive(false);
         startGameDelegate?.Invoke();
-
+        musicClient.Play();
     }
 
     private void StartClock()

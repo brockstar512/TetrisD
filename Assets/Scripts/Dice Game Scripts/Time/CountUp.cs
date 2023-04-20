@@ -5,6 +5,7 @@ using TMPro;
 
 public class CountUp : MonoBehaviour, IClock
 {
+    [SerializeField] MusicClient musicClient;
     [SerializeField] TextMeshProUGUI timerText;
     public TextMeshProUGUI countDownDisplay;
     private int countDownTime = 2;
@@ -52,9 +53,11 @@ public class CountUp : MonoBehaviour, IClock
         //give the last sign a second
         countDownDisplay.text = countDownText[countDownTime];
         yield return new WaitForSeconds(1f);
+
         
         countDownDisplay.gameObject.SetActive(false);
         startGameDelegate?.Invoke();
+        musicClient.Play();
     }
     private void StartClock()
     {

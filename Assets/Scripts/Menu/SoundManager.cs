@@ -28,6 +28,12 @@ public class SoundManager : MonoBehaviour
         _effectsSource.PlayOneShot(clip);
     }
 
+    public void PlaySong(AudioClip clip, bool isLooping)
+    {
+        _musicSource.loop = isLooping;
+        _musicSource.PlayOneShot(clip);
+    }
+
     public void ChangeMatserVolume(float value)
     {
         AudioListener.volume = value;

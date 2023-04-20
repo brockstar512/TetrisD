@@ -8,13 +8,14 @@ public class MenuManager : MonoBehaviour
 {
     public RectTransform mainMenu, multiplayerMenu, quickPlayMenu, storyModeMenu;
     public Stack<RectTransform> memoryStack = new Stack<RectTransform>();
-
+    [SerializeField] MusicClient musicClient;
     // Start is called before the first frame update
     void Start()
     {
         memoryStack.Push(mainMenu);
+        musicClient.Play();
     }
-
+  
     public void GoTo(RectTransform newPage)
     {
 
