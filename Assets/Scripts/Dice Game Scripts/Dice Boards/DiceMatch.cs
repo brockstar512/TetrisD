@@ -287,10 +287,12 @@ public class DiceMatch : MonoBehaviour
 
             //reset position to 0
             TilePos[pair.Key] = new DiceImprint(pair.Key);
-
             tasks.Add(diceFXController.FXTask(DiceFXController.TileEffect.pop, pair.Key));
 
         }
+        //one shot sound?
+        //if too many sounds at once causes problems just do one sound here
+
         //when all animations are finished
         await Task.WhenAll(tasks);
         //apply the gravity

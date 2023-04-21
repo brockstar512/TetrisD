@@ -32,7 +32,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
+        //if(_effectsSource.)
         _effectsSource.PlayOneShot(clip);
+        Debug.Log("Is playing :::  "+_effectsSource.clip);
     }
 
     public void PlaySong(TrackList track)

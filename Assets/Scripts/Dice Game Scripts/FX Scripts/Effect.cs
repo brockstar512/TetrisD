@@ -40,7 +40,10 @@ public class Effect : ScriptableObject
     public async Task AnimateTask(Vector3Int pos, Tilemap map)
     {
         //Debug.Log("Animating Task");
-        SoundManager.Instance.PlaySound(sound);
+        //if (sound != null)
+        //{
+            SoundManager.Instance.PlaySound(sound);
+        //}
 
         for (int i = 0; i < tiles.Length; i++)
         {

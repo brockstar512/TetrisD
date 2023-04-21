@@ -10,41 +10,35 @@ public class DifficultyManager : MonoBehaviour
     DifficultyRules currentDifficulty;
     [SerializeField] TextMeshProUGUI difficultyNumbers;
     [SerializeField] TextMeshProUGUI linesClear;
-
-    private bool useBombs;
-
-    public int level { get; private set; }
-    public int stage { get; private set; }
-    public int GetDifficultyIndex { get { return (level * 5) + stage; } }
+    [SerializeField] AudioClip levelUpSoundFX;
+ 
+    //if null return 0
+    public int GetDifficultyIndex { get { return (int)currentDifficulty.level; } }
     public float GetDifficultyStepTime{ get { return currentDifficulty.stepTime; } }
     public float GetDifficultyLocktime{ get { return currentDifficulty.lockTime; } }
     public int GetCurrentLimitGoal { get { return currentDifficulty.limit; } }
-    public int CurrentLimit{ get; private set; }
+    public int CurrentLimit { get; private set; }
 
 
-//this starts us where we need to be
-//we are going to pass in a packet that gives us if we should use bomba dn what stage and level to start on
-public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
+    //this starts us where we need to be
+    //we are going to pass in a packet that gives us if we should use bomba dn what stage and level to start on
+    public void StartGame(int level = 0)
     {
-        //we get the level we selected
-        this.level = level;
-        //we get  the stage we selected
-        this.stage = stage;
-        //we got if we want to inlclude bombs
-        this.useBombs = useBombs;
+
         //get the correct game mode
         difficultyOptions = difficultyOptionsDefault;
+
         UpdateLevel();
     }
 
     //this removes the bombs and updates the selection of the dice
-    void UpdateLevel()
+    void UpdateLevel(int increase = 0)
     {
-        Debug.Log($"Here is diffuculty index {GetDifficultyIndex}");
+        
         //gets the current difficulty packet
-        currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex]);
+        currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex + increase]);
         //sets your difficulty so you don't have to play all the way up to where you are to level up
-        CurrentLimit = level == 0 && stage == 0 ? 0 : difficultyOptions[GetDifficultyIndex - 1].limit;
+        CurrentLimit =  difficultyOptions[GetDifficultyIndex].limit;
 
         //updates the UI
         if ((int)currentDifficulty.level < 10)
@@ -62,20 +56,8 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
 
         if (value < GetCurrentLimitGoal)
             return false;
-
-        if (level == 2 && stage == 4)
-            return false;
-        switch (stage)
-        {
-            case 4:
-                stage = 0;
-                level++;
-                break;
-            default:
-                stage++;
-                break;
-        }
-        UpdateLevel();
+        SoundManager.Instance.PlaySound(levelUpSoundFX);
+        UpdateLevel(1);
         return true;
         
     }
@@ -85,13 +67,13 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
     {
         int numberRoll = Random.Range(1, 100);
         int rolledIndex = -1;
-        //Debug.Log($"rolled number {numberRoll}");
+        Debug.Log($"rolled number {numberRoll}");
 
         for (int i = 0; i < currentDifficulty.diceOptions.Count - 1;i++)
         {
             if(currentDifficulty.diceOptions[i].chance <= numberRoll)
             {
-                //Debug.Log($"DICE FACTORY chance {currentDifficulty.diceOptions[i].chance}");
+                Debug.Log($"DICE FACTORY chance {currentDifficulty.diceOptions[i].chance}");
 
                 rolledIndex = i;
                 continue;
@@ -106,10 +88,5 @@ public void StartGame(int level = 0, int stage = 0, bool useBombs = true)
     {
         difficultyNumbers.text = $"{level}";
     }
-
-
-
-
-
 
 }
