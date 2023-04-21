@@ -13,7 +13,7 @@ public class DifficultyManager : MonoBehaviour
     [SerializeField] AudioClip levelUpSoundFX;
  
     //if null return 0
-    public int GetDifficultyIndex { get { return (int)currentDifficulty.level; } }
+    public int GetDifficultyIndex { get { return currentDifficulty != null ? (int)currentDifficulty.level : 0; } }
     public float GetDifficultyStepTime{ get { return currentDifficulty.stepTime; } }
     public float GetDifficultyLocktime{ get { return currentDifficulty.lockTime; } }
     public int GetCurrentLimitGoal { get { return currentDifficulty.limit; } }
