@@ -19,6 +19,7 @@ public class ButtonPressed : MonoBehaviour
     }
     private void OnDestroy()
     {
+        button = this.GetComponent<Button>();
         button.onClick.RemoveAllListeners();
     }
 

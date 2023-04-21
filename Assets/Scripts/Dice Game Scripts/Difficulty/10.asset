@@ -13,7 +13,85 @@ MonoBehaviour:
   m_Name: 10
   m_EditorClassIdentifier: 
   level: 10
-  diceOptions: []
-  lockTime: 0
-  stepTime: 0
+  diceOptions:
+  - number: 3
+    color: 3
+    tile: {fileID: 11400000, guid: 0378f795d33ac41cea2b1c2083d0f535, type: 2}
+    chance: 0
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 5
+    tile: {fileID: 11400000, guid: 04d9d59aa1d584b4bb703cfd13256ddb, type: 2}
+    chance: 8
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 4
+    color: 6
+    tile: {fileID: 11400000, guid: ce71f7f41044a40038868c1b8ecc216e, type: 2}
+    chance: 16
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 6
+    color: 0
+    tile: {fileID: 11400000, guid: 70150a093fb574f20be6112bad52c92d, type: 2}
+    chance: 30
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 7
+    color: 7
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    chance: 40
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 5
+    color: 4
+    tile: {fileID: 11400000, guid: 7886c3fb0a5404854a45761a940f1c32, type: 2}
+    chance: 50
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 5
+    color: 5
+    tile: {fileID: 11400000, guid: dc38ef2f6482f413ead090a173a182ee, type: 2}
+    chance: 60
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 3
+    color: 2
+    tile: {fileID: 11400000, guid: 27e7ad987384048418bde3ea520ae537, type: 2}
+    chance: 68
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 4
+    color: 4
+    tile: {fileID: 11400000, guid: ce1556574c65641848419fe28f0e3beb, type: 2}
+    chance: 72
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 6
+    color: 1
+    tile: {fileID: 11400000, guid: cf55532ec13f044d3b693caebdef5519, type: 2}
+    chance: 80
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 0
+    color: 7
+    tile: {fileID: 11400000, guid: 689ba65a14dac462d8eac8be06bc28eb, type: 2}
+    chance: 90
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 6
+    color: 3
+    tile: {fileID: 11400000, guid: e79904fee91cd48bfa01f813b16783c0, type: 2}
+    chance: 90
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 3
+    tile: {fileID: 11400000, guid: 52a4d349fba4f4c3a923d3e66f606807, type: 2}
+    chance: 95
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 0.15
+  stepTime: 0.2
   limit: 100

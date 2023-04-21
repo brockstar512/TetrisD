@@ -13,7 +13,37 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: 
   level: 3
-  diceOptions: []
-  lockTime: 0
-  stepTime: 0
+  diceOptions:
+  - number: 3
+    color: 3
+    tile: {fileID: 11400000, guid: 0378f795d33ac41cea2b1c2083d0f535, type: 2}
+    chance: 1
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 4
+    tile: {fileID: 11400000, guid: 869221275e7cb4c2cae0aead21bc1232, type: 2}
+    chance: 25
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 4
+    color: 6
+    tile: {fileID: 11400000, guid: ce71f7f41044a40038868c1b8ecc216e, type: 2}
+    chance: 50
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 5
+    color: 0
+    tile: {fileID: 11400000, guid: 2f5e64e4c70bd4cfc9bcb6307ac732ed, type: 2}
+    chance: 65
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 0
+    color: 7
+    tile: {fileID: 11400000, guid: 689ba65a14dac462d8eac8be06bc28eb, type: 2}
+    chance: 85
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 0.4
+  stepTime: 0.75
   limit: 40

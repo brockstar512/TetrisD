@@ -22,13 +22,13 @@ public class DifficultyManager : MonoBehaviour
 
     //this starts us where we need to be
     //we are going to pass in a packet that gives us if we should use bomba dn what stage and level to start on
-    public void StartGame(int level = 0)
+    public void StartGame(int level =0)
     {
 
         //get the correct game mode
         difficultyOptions = difficultyOptionsDefault;
 
-        UpdateLevel();
+        UpdateLevel(level);
     }
 
     //this removes the bombs and updates the selection of the dice

@@ -13,7 +13,61 @@ MonoBehaviour:
   m_Name: 8
   m_EditorClassIdentifier: 
   level: 8
-  diceOptions: []
-  lockTime: 0
-  stepTime: 0
+  diceOptions:
+  - number: 3
+    color: 5
+    tile: {fileID: 11400000, guid: 7458dae01637c485e8c5fd80f4fbf98d, type: 2}
+    chance: 0
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 2
+    tile: {fileID: 11400000, guid: 0db6ef7719e504112aa1b145a6af1972, type: 2}
+    chance: 12
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 4
+    color: 6
+    tile: {fileID: 11400000, guid: ce71f7f41044a40038868c1b8ecc216e, type: 2}
+    chance: 24
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 6
+    color: 5
+    tile: {fileID: 11400000, guid: 7fc8c9bfe8f9b4cf7bc124dda8464215, type: 2}
+    chance: 35
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 7
+    color: 7
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    chance: 45
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 1
+    color: 0
+    tile: {fileID: 11400000, guid: c6a720c7e08ae444e808b6b9a06b74d0, type: 2}
+    chance: 65
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 5
+    color: 4
+    tile: {fileID: 11400000, guid: 7886c3fb0a5404854a45761a940f1c32, type: 2}
+    chance: 75
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 5
+    color: 1
+    tile: {fileID: 11400000, guid: 4e5d421f1d6b143c381b07827047defe, type: 2}
+    chance: 85
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 3
+    color: 2
+    tile: {fileID: 11400000, guid: 27e7ad987384048418bde3ea520ae537, type: 2}
+    chance: 90
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 0.15
+  stepTime: 0.3
   limit: 90
