@@ -69,7 +69,7 @@ public class DifficultyManager : MonoBehaviour
         int rolledIndex = -1;
         Debug.Log($"rolled number {numberRoll}");
 
-        for (int i = 0; i < currentDifficulty.diceOptions.Count - 1;i++)
+        for (int i = 0; i <= currentDifficulty.diceOptions.Count - 1;i++)
         {
             if(currentDifficulty.diceOptions[i].chance <= numberRoll)
             {

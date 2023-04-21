@@ -29,17 +29,33 @@ public class DiceBoard : MonoBehaviour
         }
     }
 
-    public CurrentState currentState = CurrentState.Beginning;
-    public enum CurrentState
-    {
-        Beginning,
-        Playing,
-        Disengaging,
-        Scoring,
-        GameOver,
-    }
-    
+    [Header("GameOver Items")]
+    public Tile gameOverTile;
+    public AudioClip gameOverSound;
+    public Transform gameOverText;
 
+    private enum YGridCell
+    {
+        One_Top = 4,
+        Two = 3,
+        Three = 2,
+        Four = 1,
+        Five = 0,
+        Six = -1,
+        Seven = -2,
+        Eight = -3,
+        Nine = -4,
+        Ten_Bottom = -5,
+    }
+    private enum XGridCell
+    {
+        One_Left = -3,
+        Two = -2,
+        Three = -1,
+        Four = 0,
+        Five = 1,
+        Six_Right = 2,
+    }
     // Start is called before the first frame update
     public void Init(IClock currentClock)
     {
@@ -98,6 +114,13 @@ public class DiceBoard : MonoBehaviour
 
         Debug.Log($"<color=purple>{newGroup.number} and {newGroup2.number}</color>");
         this.activeGroup.Initialize(this, spawnPosition, newGroup, newGroup2);
+
+        if (!IsValidPosition(activeGroup, spawnPosition))
+        {
+            GameOver();
+            return;
+        }
+
         SetOnBoard(this.activeGroup);//pass the dice group collection to be placed on the board
 
         if (activeGroup.isHardDropping)
@@ -261,6 +284,19 @@ public class DiceBoard : MonoBehaviour
 
     }
 
+    public void GameOver()
+    {
+        activeGroup.isPlaying = false;
+        ClearGroupFromBoard();
+        SoundManager.Instance.PlaySound(gameOverSound);
+        for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
+        {
+            for (int x = (int)XGridCell.One_Left; x <= (int)XGridCell.Six_Right; x++)
+            {
+                this.tilemap.SetTile(new Vector3Int(x, y, 0), gameOverTile);
+            }
+        }
+        gameOverText.gameObject.SetActive(true);
+    }
 
-    
 }
