@@ -33,7 +33,7 @@ public class SoundControl : MonoBehaviour
     {
         isMuteFX = !isMuteFX;
         soundIcon.image.sprite = isMuteFX ? soundOff : soundOn;
-        SoundManager.Instance.HandleMusicVolume(isMuteFX);
+        SoundManager.Instance.HandleSFXVolume(isMuteFX);
         SoundManager.Instance.PlaySound(_soundSample);
     }
 

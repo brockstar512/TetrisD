@@ -58,13 +58,13 @@ public class NavigationManager : MonoBehaviour
     {
         screen.gameObject.transform.localScale = new Vector3(1,1,1);
         screen.gameObject.SetActive(true);
-        currentPage.DOFade(0, .1f).OnComplete(() =>
+        currentPage.DOFade(0, .15f).OnComplete(() =>
         {
-            screen.DOFade(1, .2f).OnComplete(() =>
+            screen.DOFade(1, .15f).OnComplete(() =>
             {
                 stack.Push(currentPage);
                 currentPage.gameObject.SetActive(false);
-                screen.gameObject.transform.localScale = new Vector3(0, 0, 0);
+                currentPage.gameObject.transform.localScale = new Vector3(0, 0, 0);
 
                 currentPage = screen;
             });
@@ -77,9 +77,9 @@ public class NavigationManager : MonoBehaviour
         newScreen.gameObject.SetActive(true);
 
         //do I need to change the alpha at all?
-        previousScreen.DOFade(0, .1f).OnComplete(() =>
+        previousScreen.DOFade(0, .15f).OnComplete(() =>
         {
-            newScreen.DOFade(1, .2f).OnComplete(() =>
+            newScreen.DOFade(1, .15f).OnComplete(() =>
             {
                 stack.Push(previousScreen);
                 previousScreen.gameObject.SetActive(false);
@@ -93,9 +93,11 @@ public class NavigationManager : MonoBehaviour
     {
         CanvasGroup previousPage = this.stack.Pop();
         previousPage.gameObject.SetActive(true);
-        currentPage.DOFade(0, .1f).OnComplete(() => {
-            previousPage.DOFade(1, .2f).OnComplete(() =>
+        previousPage.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        currentPage.DOFade(0, .15f).OnComplete(() => {
+            previousPage.DOFade(1, .15f).OnComplete(() =>
             {
+                currentPage.gameObject.transform.localScale = new Vector3(0, 0, 0);
                 currentPage.gameObject.SetActive(false);
                 currentPage = previousPage;
             });
