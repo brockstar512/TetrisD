@@ -2348,7 +2348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &436497646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2408,7 +2408,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &436497649
 RectTransform:
@@ -7446,6 +7446,7 @@ GameObject:
   - component: {fileID: 1743584368}
   - component: {fileID: 1743584367}
   - component: {fileID: 1743584366}
+  - component: {fileID: 1743584369}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -7625,6 +7626,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743584364}
   m_CullTransparentMesh: 1
+--- !u!114 &1743584369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743584364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd998f83f3e14108a25c7f63fc39e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 1
 --- !u!1 &1753042669
 GameObject:
   m_ObjectHideFlags: 0
@@ -9836,7 +9850,9 @@ MonoBehaviour:
   Play: {fileID: 1743584366}
   description: {fileID: 1771290336}
   highScore: {fileID: 2074071613}
-  gameTypeToggle: {fileID: 1850652524}
+  marathonToggle: {fileID: 2137082071}
+  timeToggle: {fileID: 1246768359}
+  lineToggle: {fileID: 1594695093}
 --- !u!1 &2137082069
 GameObject:
   m_ObjectHideFlags: 0

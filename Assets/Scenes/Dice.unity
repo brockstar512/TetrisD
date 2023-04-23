@@ -9719,6 +9719,7 @@ GameObject:
   - component: {fileID: 1863084705}
   - component: {fileID: 1863084704}
   - component: {fileID: 1863084707}
+  - component: {fileID: 1863084708}
   m_Layer: 5
   m_Name: Yes Button
   m_TagString: Untagged
@@ -9841,6 +9842,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: 79d77fae75f0a453c9a326dd0dc7841b, type: 3}
+--- !u!114 &1863084708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863084702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd998f83f3e14108a25c7f63fc39e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 0
 --- !u!1 &1975790803
 GameObject:
   m_ObjectHideFlags: 0

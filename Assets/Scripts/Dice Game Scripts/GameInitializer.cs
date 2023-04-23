@@ -17,10 +17,20 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] DifficultyManager difficultyManager;
     //this script will have everything from the menu so it should also be the one to tell the difficult
 
+    private void Awake()
+    {
+        LoadingManager.Instance.OnNewScene += StartGame;
 
+    }
+    private void OnDestroy()
+    {
+        LoadingManager.Instance.OnNewScene -= StartGame;
+
+    }
     [ContextMenu("Start")]
     public void StartGame()
     {
+        Debug.Log($"We are playing difficulty {GameSetUp.difficulty} with game mode for {GameSetUp.gameType}");
         CountDown countDown = clockGameObject?.GetComponent<CountDown>();
         CountUp countUp = clockGameObject?.GetComponent<CountUp>();
 

@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using DG.Tweening;
-
-
+using System;
 
 public class LoadingManager : MonoBehaviour
 {
@@ -15,12 +14,14 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] private GameObject _loaderCanvas;
     [SerializeField] private Image _progressBar;
     float _target;
-
+    Scenes currentScene;
     public Ease exitEase;
     public Ease enterEase;
     public bool showBar;
 
+    public event Action OnNewScene;
 
+    //public static 
     //loading screen enter animation and exit
     //enforce a one second delay
     //fade in  and fade out
@@ -38,20 +39,21 @@ public class LoadingManager : MonoBehaviour
         }
     }
 
-    public async void LoadScene(string sceneName)
+    public async void LoadScene(Scenes sceneName)
     {
         if (!showBar)
             _progressBar.gameObject.SetActive(false);
-
         await Enter();
 
         _target = 0;
         _progressBar.fillAmount = 0;
 
-        var scene = SceneManager.LoadSceneAsync(sceneName);
+        var scene = SceneManager.LoadSceneAsync(sceneName.ToString());
         scene.allowSceneActivation = false;
 
         _loaderCanvas.SetActive(true);
+        currentScene = sceneName;
+        SoundManager.Instance.StopMusic();
 
         do
         {
@@ -66,7 +68,7 @@ public class LoadingManager : MonoBehaviour
         //make fill either a slider or completely fill the image
         //start task of exit.
         await Exit();
-        _loaderCanvas.SetActive(false);
+        //_loaderCanvas.SetActive(false);
     }
     private void Update()
     {
@@ -87,7 +89,8 @@ public class LoadingManager : MonoBehaviour
     async Task Exit()
     {
         _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1920), 1f).SetEase(exitEase);
-        await Task.Delay(1000); ;
+        await Task.Delay(1000);
+        OnNewScene?.Invoke();
 
     }
 
