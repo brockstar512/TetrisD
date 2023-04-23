@@ -28,7 +28,9 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(this);
 
         }
-
+    }
+    private void Start()
+    {
         Init();
     }
 

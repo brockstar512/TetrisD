@@ -24,9 +24,62 @@ public class GameSetUp : MonoBehaviour
     [SerializeField] Button Play;
     [SerializeField] TextMeshProUGUI description;
     [SerializeField] TextMeshProUGUI highScore;
-    [SerializeField] ToggleGroup gameTypeToggle;
+    [SerializeField] Toggle marathonToggle;
+    [SerializeField] Toggle timeToggle;
+    [SerializeField] Toggle lineToggle;
+
+
+    private void Awake()
+    {
+        slider.onValueChanged.AddListener((val) => difficulty = (int)val);
+        Play.onClick.AddListener(OnPlay);
+
+        marathonToggle.onValueChanged.AddListener(delegate { HandleToggle(marathonToggle); });
+        timeToggle.onValueChanged.AddListener(delegate { HandleToggle(timeToggle); });
+        lineToggle.onValueChanged.AddListener(delegate { HandleToggle(lineToggle); });
 
 
 
+    }
+
+    void HandleToggle(Toggle toggle)
+    {
+        if (!toggle.isOn)
+            return;
+        int index = toggle.gameObject.transform.GetSiblingIndex();
+        description.text = gameDescriptions[index];
+
+        switch (index)
+        {
+            case 0:
+                gameType = GameType.Marathon;
+                highScore.text = DataStore.Instance.playerData.marathonHighscore.ToString();
+                break;
+            case 1:
+                gameType = GameType.TimeAttack;
+                highScore.text = DataStore.Instance.playerData.timeAttackHighscore.ToString();
+                break;
+            case 2:
+                gameType = GameType.LineBreaker;
+                highScore.text = DataStore.Instance.playerData.lineBreakerHighscore.ToString();
+                break;
+        }
+
+    }
+    private void OnPlay()
+    {
+        Debug.Log($"The game mode is {gameType}");
+        Debug.Log($"The difficulty is {difficulty}");
+
+    }
+
+    private void OnDestroy()
+    {
+        slider.onValueChanged.RemoveAllListeners();
+        Play.onClick.RemoveAllListeners();
+        marathonToggle.onValueChanged.RemoveAllListeners();
+        timeToggle.onValueChanged.RemoveAllListeners();
+        lineToggle.onValueChanged.RemoveAllListeners();
+    }
 
 }
