@@ -5,6 +5,7 @@ using System;
 using TMPro;
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] GameRules gameRules;
     public DiceMatch diceMatch;
     public int currentScore = 0;
     public int scoreToAdd = 0;
@@ -27,9 +28,6 @@ public class ScoreManager : MonoBehaviour
         diceGroup.HardDropEvent += HardDropBonus;
         this.difficultyManager = difficultyManager;
     }
-
-
-
 
     /// <summary>
     /// 
@@ -97,6 +95,10 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateScore(int score)
     {
+        if(GameSetUp.gameType == GameSetUp.GameType.LineBreaker)
+        {
+            gameRules.LineBreaker(diceLinesCleared);
+        }
         //Debug.Log($"Dice lines cleared {diceLinesCleared}");
         difficultyManager.UpdateLevelCheck(diceLinesCleared);
         //this needs to update but it also needs to add an update bonus... I think that should be invoked in difficulty manager
@@ -104,6 +106,7 @@ public class ScoreManager : MonoBehaviour
 
         //keep track of limit increase here?
         numberCounter.Value = score;
+        currentScore = numberCounter.Value;
     }
 
 

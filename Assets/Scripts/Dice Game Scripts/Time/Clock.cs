@@ -10,6 +10,7 @@ public class Clock : MonoBehaviour, IClock
     [SerializeField] AudioClip startSound;
     [SerializeField] MusicClient musicClient;
     [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] GameRules gameRules;
     public TextMeshProUGUI countDownDisplay;
     private int countDownTime = 2;
     public bool isCounting;
@@ -83,7 +84,6 @@ public class Clock : MonoBehaviour, IClock
 
     public string ClockCounter()
     {
-        Debug.Log("We are doing clock stuff");
         if (GameSetUp.gameType != GameSetUp.GameType.TimeAttack)
         {
             float t = Time.time - startTime;
@@ -102,9 +102,18 @@ public class Clock : MonoBehaviour, IClock
             string minutes = ((int)t / 60).ToString();
             float sec = Mathf.Floor(t % 60);
             string seconds = sec < 10 ? "0" + sec.ToString("f0") : sec.ToString("f0");
+            if(startTime <= 0)
+            {
+                gameRules.TimeAttack();
+                timerText.text = "0:00";
+            }
             return minutes + ":" + seconds;
         }
 
     }
 
 }
+
+//time attack... when it is 0 game over
+//marathon... nothing speaical
+//line breaker... score manager diceLinesCleared and deduct the time

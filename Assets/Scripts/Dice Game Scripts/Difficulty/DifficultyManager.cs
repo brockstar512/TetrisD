@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using static DifficultyRules;
 
 public class DifficultyManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class DifficultyManager : MonoBehaviour
     public float GetDifficultyStepTime{ get { return currentDifficulty.stepTime; } }
     public float GetDifficultyLocktime{ get { return currentDifficulty.lockTime; } }
     public int GetCurrentLimitGoal { get { return currentDifficulty.limit; } }
-    public int CurrentLimit { get; private set; }
+    public int PastLimit { get; private set; }
 
 
     //this starts us where we need to be
@@ -27,7 +28,8 @@ public class DifficultyManager : MonoBehaviour
 
         //get the correct game mode
         difficultyOptions = difficultyOptionsDefault;
-
+        //sets your difficulty so you don't have to play all the way up to where you are to level up
+        PastLimit = GetDifficultyIndex == 0 ? 0 : difficultyOptions[GetDifficultyIndex].limit - 1;
         UpdateLevel(level);
     }
 
@@ -37,13 +39,15 @@ public class DifficultyManager : MonoBehaviour
         
         //gets the current difficulty packet
         currentDifficulty = Instantiate(difficultyOptions[GetDifficultyIndex + increase]);
-        //sets your difficulty so you don't have to play all the way up to where you are to level up
-        CurrentLimit =  difficultyOptions[GetDifficultyIndex].limit;
+
 
         //updates the UI
         if ((int)currentDifficulty.level < 10)
         {
             UpdateLevelUI(((int)currentDifficulty.level).ToString());
+        }
+        else{
+            UpdateLevelUI(10.ToString());
         }
     }
 
@@ -54,7 +58,14 @@ public class DifficultyManager : MonoBehaviour
     {
         linesClear.text = value.ToString();
 
-        if (value < GetCurrentLimitGoal)
+        //we are going to limit leveling up to just marathon
+        if (GameSetUp.gameType != GameSetUp.GameType.Marathon)
+        {
+            return false;
+        }
+
+
+        if (value + PastLimit < GetCurrentLimitGoal)
             return false;
         SoundManager.Instance.PlaySound(levelUpSoundFX);
         UpdateLevel(1);

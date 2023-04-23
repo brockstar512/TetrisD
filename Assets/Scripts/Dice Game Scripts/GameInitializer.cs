@@ -32,8 +32,6 @@ public class GameInitializer : MonoBehaviour
         clockGameObject.GetComponent<ScoreManager>().Init(diceMatch, diceGroup, difficultyManager);
         gameBoard.Init(clockGameObject.GetComponent<IClock>());
         clockGameObject.GetComponent<IClock>().StartGame();
-        
-
         difficultyManager.StartGame(GameSetUp.difficulty);
     }
 

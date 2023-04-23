@@ -21,10 +21,6 @@ public class LoadingManager : MonoBehaviour
 
     public event Action OnNewScene;
 
-    //public static 
-    //loading screen enter animation and exit
-    //enforce a one second delay
-    //fade in  and fade out
 
     private void Awake()
     {

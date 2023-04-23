@@ -41,7 +41,7 @@ MonoBehaviour:
   - number: 7
     color: 7
     tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
-    chance: 40
+    chance: 47
     cellLocation:
     - {x: 0, y: 0}
   - number: 5
@@ -77,7 +77,7 @@ MonoBehaviour:
   - number: 0
     color: 7
     tile: {fileID: 11400000, guid: 689ba65a14dac462d8eac8be06bc28eb, type: 2}
-    chance: 90
+    chance: 85
     cellLocation:
     - {x: 0, y: 0}
   - number: 6

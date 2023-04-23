@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,6 @@ public class DiceBoard : MonoBehaviour
 {
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
-    private CountDown currentClock;
     public DifficultyManager difficultyManager;
 
 
@@ -33,6 +33,7 @@ public class DiceBoard : MonoBehaviour
     public Tile gameOverTile;
     public AudioClip gameOverSound;
     public Transform gameOverText;
+    public GameRules gameRules;
 
     private enum YGridCell
     {
@@ -117,6 +118,11 @@ public class DiceBoard : MonoBehaviour
 
         if (!IsValidPosition(activeGroup, spawnPosition))
         {
+            if(GameSetUp.gameType == GameSetUp.GameType.Marathon)
+            {
+                gameRules.Marathon();
+            }
+            SoundManager.Instance.PlaySound(gameOverSound);
             GameOver();
             return;
         }
@@ -190,10 +196,6 @@ public class DiceBoard : MonoBehaviour
         {
             Vector3Int tilePosition = group.cells[i] + group.position;
             this.tilemap.SetTile(tilePosition, null);
-
-
-     
-
         }
 
     }
@@ -283,12 +285,12 @@ public class DiceBoard : MonoBehaviour
         this.tilemap.SetTile(diceGroup.cells[diceToSet] + diceGroup.position, tileToSet);
 
     }
-
+    //this should subscribe to something
     public void GameOver()
     {
+        
         activeGroup.isPlaying = false;
         ClearGroupFromBoard();
-        SoundManager.Instance.PlaySound(gameOverSound);
         for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
         {
             for (int x = (int)XGridCell.One_Left; x <= (int)XGridCell.Six_Right; x++)
