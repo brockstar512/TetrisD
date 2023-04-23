@@ -28,13 +28,21 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(this);
 
         }
+
+        Init();
+    }
+
+    private void Init()
+    {
+        HandleSFXVolume(DataStore.Instance.playerData.isFXMuted);
+        Debug.Log("Is our musicinitially muted? " + DataStore.Instance.playerData.isMusicMuted);
+        HandleMusicVolume(DataStore.Instance.playerData.isMusicMuted);
     }
 
     public void PlaySound(AudioClip clip)
     {
         //if(_effectsSource.)
         _effectsSource.PlayOneShot(clip);
-        Debug.Log("Is playing :::  "+_effectsSource.clip);
     }
 
     public void PlaySong(TrackList track)
@@ -57,6 +65,8 @@ public class SoundManager : MonoBehaviour
     {
         float volumeLevel = isMute ? 0 : .75f;
         _effectsSource.volume = volumeLevel;
+        DataStore.Instance.playerData.UpdateFX(isMute);
+
     }
 
     public void HandleMusicVolume(bool isMute)
@@ -67,5 +77,6 @@ public class SoundManager : MonoBehaviour
         {
             MusicPlayers[i].volume = volumeLevel;
         }
+        DataStore.Instance.playerData.UpdateMusic(isMute);
     }
 }
