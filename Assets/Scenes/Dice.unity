@@ -10979,26 +10979,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &8262675116702832384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8262675116702832414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee151fc8a946447585b4c73643f6dd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prepareSound: {fileID: 8300000, guid: 935d0c59f6a464f04b02f00ccc09c537, type: 3}
-  startSound: {fileID: 8300000, guid: e091eed5894c54394a9efe5267f56cb2, type: 3}
-  musicClient: {fileID: 8262675116702832416}
-  timerText: {fileID: 8262675117451444689}
-  countDownDisplay: {fileID: 8262675117345682491}
-  isCounting: 0
-  min: 5
-  sec: 30
 --- !u!222 &8262675116702832385
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11036,8 +11016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8262675116702832387}
   - component: {fileID: 8262675116702832385}
-  - component: {fileID: 8262675116702832415}
-  - component: {fileID: 8262675116702832384}
+  - component: {fileID: 8262675116702832417}
   - component: {fileID: 2656990171680756806}
   - component: {fileID: 6698956209789223608}
   - component: {fileID: 8262675116702832416}
@@ -11048,24 +11027,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8262675116702832415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8262675116702832414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80cede772e7c54c4190cfd668b5436c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prepareSound: {fileID: 8300000, guid: 935d0c59f6a464f04b02f00ccc09c537, type: 3}
-  startSound: {fileID: 8300000, guid: e091eed5894c54394a9efe5267f56cb2, type: 3}
-  musicClient: {fileID: 8262675116702832416}
-  timerText: {fileID: 8262675117451444689}
-  countDownDisplay: {fileID: 8262675117345682491}
-  isCounting: 0
 --- !u!114 &8262675116702832416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11079,6 +11040,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   track: 1
+--- !u!114 &8262675116702832417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262675116702832414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e77b95776274ac8924e44da2c3b8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prepareSound: {fileID: 8300000, guid: 935d0c59f6a464f04b02f00ccc09c537, type: 3}
+  startSound: {fileID: 8300000, guid: e091eed5894c54394a9efe5267f56cb2, type: 3}
+  musicClient: {fileID: 8262675116702832416}
+  timerText: {fileID: 8262675117451444689}
+  countDownDisplay: {fileID: 8262675117345682491}
+  isCounting: 0
 --- !u!224 &8262675116836114860
 RectTransform:
   m_ObjectHideFlags: 0

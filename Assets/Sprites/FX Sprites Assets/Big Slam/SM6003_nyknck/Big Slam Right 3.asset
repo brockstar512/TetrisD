@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Big Slam Right 3
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 8600200461520284493, guid: 6c9cb31f5812c4217b8096eb86e29a87, type: 3}
-  m_Color: {r: 0.24705882, g: 0.24705882, b: 0.24705882, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

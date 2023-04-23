@@ -26,10 +26,6 @@ public class ScoreManager : MonoBehaviour
 
         diceGroup.HardDropEvent += HardDropBonus;
         this.difficultyManager = difficultyManager;
-
-
-        //LIMIT INCREASE
-        //vaporize group
     }
 
 
@@ -89,7 +85,7 @@ public class ScoreManager : MonoBehaviour
     public void Bomb(int DiceNumber)
     {
         //this should be in the difficulty manager not here
-        diceLinesCleared++;//should lines effect
+        //diceLinesCleared++;//should lines effect
        
         //Debug.Log($"Dice lines cleared {diceLinesCleared}");
 
@@ -140,6 +136,8 @@ public class ScoreManager : MonoBehaviour
 
         return multiplier;
     }
+
+
 }
 /*
  * 

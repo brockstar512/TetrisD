@@ -38,7 +38,7 @@ public class CountUp : MonoBehaviour, IClock
    {
 
         if (isCounting)
-            timerText.text = Clock();
+            timerText.text = ClockCounter();
    }
 
 
@@ -70,7 +70,7 @@ public class CountUp : MonoBehaviour, IClock
         countDownDisplay.text = countDownText[countDownTime];
     }
 
-    public string Clock()
+    public string ClockCounter()
     {
         float t = Time.time - startTime;
         string minutes = ((int)t / 60).ToString();

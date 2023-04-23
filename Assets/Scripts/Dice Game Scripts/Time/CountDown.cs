@@ -25,12 +25,13 @@ public class CountDown : MonoBehaviour, IClock
     };
     public void StartGame()
     {
-        StartCoroutine(GameCountDown());
+        Debug.Log("START GAME ON COUNTDOWN");
         startGameDelegate += StartClock;
 
+        StartCoroutine(GameCountDown());
 
         startTime = (min * 60) + sec;
-        timerText.text = Clock();
+        timerText.text = ClockCounter();
 
     }
     private void OnDisable()
@@ -41,11 +42,13 @@ public class CountDown : MonoBehaviour, IClock
     void Update()
     {
         if (isCounting)
-            timerText.text = Clock();
+            timerText.text = ClockCounter();
     }
 
     public IEnumerator GameCountDown()
     {
+        Debug.Log("Game count down   1");
+
         countDownDisplay.text = "";
         countDownDisplay.gameObject.SetActive(true);
         while (countDownTime > 0)
@@ -61,17 +64,20 @@ public class CountDown : MonoBehaviour, IClock
         yield return new WaitForSeconds(1f);
         SoundManager.Instance.PlaySound(startSound);
         countDownDisplay.gameObject.SetActive(false);
+        Debug.Log("Game count down   2");
+
         startGameDelegate?.Invoke();
         musicClient.Play();
     }
 
     private void StartClock()
     {
+        Debug.Log("Start game clock");
         //startTime = (min * 60) + sec;
         isCounting = true;
 
     }
-    public string Clock()
+    public string ClockCounter()
     {
         if (isCounting)
         {
