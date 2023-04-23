@@ -54,7 +54,7 @@ public class GameInitializer : MonoBehaviour
 
         clock.GetComponent<IClock>().StartGame();
 
-        difficultyManager.StartGame();
+        difficultyManager.StartGame(GameSetUp.difficulty);
     }
 
 

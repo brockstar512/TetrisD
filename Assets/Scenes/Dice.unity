@@ -6598,6 +6598,7 @@ GameObject:
   - component: {fileID: 799757035}
   - component: {fileID: 799757038}
   - component: {fileID: 799757037}
+  - component: {fileID: 799757039}
   m_Layer: 5
   m_Name: No
   m_TagString: Untagged
@@ -6778,6 +6779,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &799757039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799757033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd998f83f3e14108a25c7f63fc39e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 0
 --- !u!1 &811960130
 GameObject:
   m_ObjectHideFlags: 0
@@ -8671,6 +8685,7 @@ GameObject:
   - component: {fileID: 1574268918}
   - component: {fileID: 1574268921}
   - component: {fileID: 1574268920}
+  - component: {fileID: 1574268922}
   m_Layer: 5
   m_Name: Yes
   m_TagString: Untagged
@@ -8851,6 +8866,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1574268922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574268916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd998f83f3e14108a25c7f63fc39e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 1
 --- !u!1 &1596204725
 GameObject:
   m_ObjectHideFlags: 0
