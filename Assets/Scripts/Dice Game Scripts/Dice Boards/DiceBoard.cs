@@ -34,6 +34,7 @@ public class DiceBoard : MonoBehaviour
     public AudioClip gameOverSound;
     public Transform gameOverText;
     public GameRules gameRules;
+    internal bool isOver;
 
     private enum YGridCell
     {
@@ -89,6 +90,9 @@ public class DiceBoard : MonoBehaviour
 
     public void SpawnGroup()
     {
+        if (isOver)
+            return;
+
         if (GameSetUp.gameType == GameSetUp.GameType.LineBreaker)
         {
             gameRules.LineBreaker();
@@ -293,6 +297,7 @@ public class DiceBoard : MonoBehaviour
     //this should subscribe to something
     public void GameOver()
     {
+        isOver = true;
         activeGroup.isPlaying = false;
         ClearGroupFromBoard();
         for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)

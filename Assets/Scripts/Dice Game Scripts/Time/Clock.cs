@@ -16,7 +16,7 @@ public class Clock : MonoBehaviour, IClock
     public bool isCounting;
     private float startTime;
     const int _min = 1;
-    const int _sec = 30;
+    const int _sec = 0;
     string[] countDownText =
     {
         "START",
@@ -40,7 +40,11 @@ public class Clock : MonoBehaviour, IClock
     {
 
         if (isCounting)
-            timerText.text = ClockCounter();
+        {
+            string val = ClockCounter();
+            string valueText = val == "0:0-1" ? "0:00" : val;
+            timerText.text = valueText;
+        }
     }
 
     private void OnDisable()
@@ -94,14 +98,21 @@ public class Clock : MonoBehaviour, IClock
         }
         else
         {
+            Debug.Log((Mathf.Floor(startTime % 60) > 0));
+            Debug.Log((((int)startTime / 60) > 0));
+            //Debug.Log($"One value {(int)startTime / 60} and {((int)startTime / 60)}");
+            //Debug.Log($"Checking  {isCounting} and {(Mathf.Floor(startTime % 60) > 0)} and {(((int)startTime / 60) > 0)}");
+            //bool isZero = ((Mathf.Floor(startTime % 60) > 0) && (((int)startTime / 60) > 0));
             if (isCounting)
             {
                 startTime -= Time.deltaTime;
             }
+
             float t = startTime;
             string minutes = ((int)t / 60).ToString();
             float sec = Mathf.Floor(t % 60);
             string seconds = sec < 10 ? "0" + sec.ToString("f0") : sec.ToString("f0");
+
             if(startTime <= 0)
             {
                 gameRules.TimeAttack();

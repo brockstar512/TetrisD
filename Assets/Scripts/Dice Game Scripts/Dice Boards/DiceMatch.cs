@@ -97,6 +97,8 @@ public class DiceMatch : MonoBehaviour
 
     public void Score()
     {
+        if (diceBoard.isOver)
+            return;
         //Debug.Log($"Scoring");
         diceBoard.ClearGroupFromBoard();
         Chain = 1;
@@ -417,29 +419,6 @@ public class DiceMatch : MonoBehaviour
         this.diceBoard.SetSingleDiceOnBoard(finish, die.tile);
 
         TilePos[finish] = new DiceImprint(die, finish);
-    }
-
-    [ContextMenu("TestExplode")]
-    void TestExplode()
-    {
-        Debug.Log("Testing explose");
-        Vector3Int first = new Vector3Int(3,3,0);
-        Vector3Int second = new Vector3Int(-3,-3,0);
-        Vector3Int third = new Vector3Int(3, -3, 0);
-        Vector3Int fourth = new Vector3Int(-3, 3, 0);
-        Vector3Int five = new Vector3Int(-3, -5, 0);
-
-
-        //ExplodeFX(first);
-        //ExplodeFX(second);
-        //ExplodeFX(third);
-        //ExplodeFX(five);
-        //first a then b then c... etc
-        //1a//1b
-        //2a//2b
-        //3a//3b
-
-
     }
 
     public async Task ExplodeFX(Vector3Int location, List<Vector3Int> listOfDiceToRemove)
