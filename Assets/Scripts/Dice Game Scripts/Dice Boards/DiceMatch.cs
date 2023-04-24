@@ -144,8 +144,9 @@ public class DiceMatch : MonoBehaviour
                     continue;
 
                 //Do they have a pair in bounds
-                bool withinHorizontalBounds = (position.x + (int)TilePos[position].number) <= 2 ? true : false;
-                bool withinVerticalBounds = (position.y + (int)TilePos[position].number) <= 3 ? true : false;
+                bool withinHorizontalBounds = (position.x + (int)TilePos[position].number + 1) <= 2 ? true : false;
+                bool withinVerticalBounds = (position.y + (int)TilePos[position].number + 1) <= 3 ? true : false;
+
 
                 //get the number of the current position
                 DiceNumber number = TilePos[position].number;
@@ -165,7 +166,6 @@ public class DiceMatch : MonoBehaviour
                 ////if its a bomb
                 if (number == DiceNumber.Seven)
                 {
-                    //todo the only bug now is that the disentigration doesnt happen after but before the explosion
                     hasMatch = true;
                     await ExplodeFX(position, BetweenDice);
                     foreach (Vector3Int item in BetweenDice)
@@ -177,9 +177,8 @@ public class DiceMatch : MonoBehaviour
                 //if it is within our bounds
                 if (withinHorizontalBounds)
                 {
-
                     //get the dice x number away
-                    Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number, position.y, 0);
+                    Vector3Int horizontalPosCheck = new Vector3Int(position.x + (int)number + 1, position.y, 0);
 
                     //if the numbers are the same?
                     bool hasHorizontalMatch = TilePos[position].number == TilePos[horizontalPosCheck].number;
@@ -211,7 +210,8 @@ public class DiceMatch : MonoBehaviour
                 }
                 //we do the same with the vertial bounds as we did with the horizontal.
                 if (withinVerticalBounds) {
-                    Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number, 0);
+                    //Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number, 0);
+                    Vector3Int verticalPosCheck = new Vector3Int(position.x, position.y + (int)number + 1, 0);
 
                     bool hasVerticalMatch = TilePos[position].number == TilePos[verticalPosCheck].number;
                     bool hashasVerticalColorMatch = TilePos[position].color == TilePos[verticalPosCheck].color;
