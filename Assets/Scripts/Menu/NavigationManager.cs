@@ -56,52 +56,32 @@ public class NavigationManager : MonoBehaviour
 
     void OpenPage(CanvasGroup screen)
     {
-        screen.gameObject.transform.localScale = new Vector3(1,1,1);
+  
+        stack.Push(currentPage);
+        currentPage.gameObject.SetActive(false);
+        currentPage.gameObject.transform.localScale = new Vector3(0, 0, 0);
+        currentPage.alpha = 0;
+        screen.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        screen.alpha = 1;
         screen.gameObject.SetActive(true);
-        currentPage.DOFade(0, .15f).OnComplete(() =>
-        {
-            screen.DOFade(1, .15f).OnComplete(() =>
-            {
-                stack.Push(currentPage);
-                currentPage.gameObject.SetActive(false);
-                currentPage.gameObject.transform.localScale = new Vector3(0, 0, 0);
+        currentPage = screen;
 
-                currentPage = screen;
-            });
-        });
     }
 
-    public void CachePage(CanvasGroup previousScreen, CanvasGroup newScreen)
-    {
-        //stack.Push(previousScreen);
-        newScreen.gameObject.SetActive(true);
 
-        //do I need to change the alpha at all?
-        previousScreen.DOFade(0, .15f).OnComplete(() =>
-        {
-            newScreen.DOFade(1, .15f).OnComplete(() =>
-            {
-                stack.Push(previousScreen);
-                previousScreen.gameObject.SetActive(false);
-                currentPage = newScreen;
-            });
-        });
-    }
 
 
     public void Back()
     {
+        currentPage.gameObject.transform.localScale = new Vector3(0, 0, 0);
+        currentPage.gameObject.SetActive(false);
+        currentPage.alpha = 0;
         CanvasGroup previousPage = this.stack.Pop();
         previousPage.gameObject.SetActive(true);
         previousPage.gameObject.transform.localScale = new Vector3(1, 1, 1);
-        currentPage.DOFade(0, .15f).OnComplete(() => {
-            previousPage.DOFade(1, .15f).OnComplete(() =>
-            {
-                currentPage.gameObject.transform.localScale = new Vector3(0, 0, 0);
-                currentPage.gameObject.SetActive(false);
-                currentPage = previousPage;
-            });
-        });
+        previousPage.alpha = 1;
+        currentPage = previousPage;
+
     }
 
 }
