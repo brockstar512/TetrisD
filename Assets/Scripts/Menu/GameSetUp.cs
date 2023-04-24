@@ -39,7 +39,7 @@ public class GameSetUp : MonoBehaviour
         lineToggle.onValueChanged.AddListener(delegate { HandleToggle(lineToggle); });
 
 
-
+        HandleToggle(marathonToggle);
     }
 
     void HandleToggle(Toggle toggle)

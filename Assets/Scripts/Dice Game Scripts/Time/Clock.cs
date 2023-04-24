@@ -105,15 +105,16 @@ public class Clock : MonoBehaviour, IClock
             if(startTime <= 0)
             {
                 gameRules.TimeAttack();
-                timerText.text = "0:00";
+
             }
             return minutes + ":" + seconds;
         }
 
     }
 
+    public void ResetClock()
+    {
+        timerText.text = "0:00";
+    }
 }
 
-//time attack... when it is 0 game over
-//marathon... nothing speaical
-//line breaker... score manager diceLinesCleared and deduct the time

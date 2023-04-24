@@ -15,19 +15,20 @@ public class GameRules : MonoBehaviour
     [SerializeField] TextMeshProUGUI highScoreValue;
     const int linebreakerLimit = 10;
     //for score
-    public void LineBreaker(int currentValue)
+    public void LineBreaker()
     {
-        if (currentValue < linebreakerLimit)
+        if (scoreManager.diceLinesCleared < linebreakerLimit)
             return;
         EndGame();
         diceBoard.GameOver();
     }
 
-    //for clock
+    
     public void TimeAttack()
     {
         diceBoard.GameOver();
         EndGame();
+        clock.ResetClock();
     }
 
     public void Marathon()
@@ -38,7 +39,6 @@ public class GameRules : MonoBehaviour
     private void EndGame()
     {
         clock.isCounting = false;
-
         gameOverScorePanel.SetActive(true);
 
         int scoreTarget = GetHighscore();

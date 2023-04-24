@@ -89,6 +89,11 @@ public class DiceBoard : MonoBehaviour
 
     public void SpawnGroup()
     {
+        if (GameSetUp.gameType == GameSetUp.GameType.LineBreaker)
+        {
+            gameRules.LineBreaker();
+        }
+
         DiceData newGroup = difficultyManager.DiceFactory();
         DiceData newGroup2 = difficultyManager.DiceFactory();
 
@@ -288,7 +293,6 @@ public class DiceBoard : MonoBehaviour
     //this should subscribe to something
     public void GameOver()
     {
-        
         activeGroup.isPlaying = false;
         ClearGroupFromBoard();
         for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
@@ -299,6 +303,7 @@ public class DiceBoard : MonoBehaviour
             }
         }
         gameOverText.gameObject.SetActive(true);
+
     }
 
 }

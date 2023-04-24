@@ -11339,7 +11339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5cfc4fba84c42a7b6b9198d4dd1729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameRules: {fileID: 0}
+  gameRules: {fileID: 1519272075}
   diceMatch: {fileID: 0}
   currentScore: 0
   scoreToAdd: 0

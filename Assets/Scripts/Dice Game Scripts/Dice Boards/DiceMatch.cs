@@ -55,16 +55,6 @@ public class DiceMatch : MonoBehaviour
         Initialize();
     }
 
-    void Update()
-    {
-
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            //MouseTileReader();
-        }
-
-    }
 
     void Initialize()
     {
