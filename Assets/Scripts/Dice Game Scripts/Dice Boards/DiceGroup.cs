@@ -141,6 +141,8 @@ public class DiceGroup : MonoBehaviour
     #region Update
     void Update()
     {
+        Debug.Log(dynamicDiceState);
+
         if (isScoring)
             return;
 
@@ -247,6 +249,8 @@ public class DiceGroup : MonoBehaviour
     /// <param name="intendedDirection"></param>
     void Rotate(DynamicDiceState intendedDirection)
     {
+        //Rotate(DynamicDiceState.Right);
+
         switch (intendedDirection)
         {
             case DynamicDiceState.Right:
@@ -479,16 +483,16 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     void Lock()
     {
-
+        dynamicDiceState = DynamicDiceState.Right;
         //locks// should not score until after this
         //if(false)
         //{
-            //Debug.Log(this.data.number);
-            //Debug.Log(this.data.color);
-            //Debug.Log(this.cells[0]);
-            //Debug.Log(this.cells[0] + this.position);
+        //Debug.Log(this.data.number);
+        //Debug.Log(this.data.color);
+        //Debug.Log(this.cells[0]);
+        //Debug.Log(this.cells[0] + this.position);
 
-            DiceImprint staticDice = new DiceImprint(this.data, this.cells[0] + this.position);
+        DiceImprint staticDice = new DiceImprint(this.data, this.cells[0] + this.position);
             DiceImprint dynamicDice = new DiceImprint(this.dynamicData, this.cells[1] + this.position);
 
             
@@ -533,6 +537,7 @@ public class DiceGroup : MonoBehaviour
     /// </summary>
     public void HandlePostDisengagement()
     {
+        dynamicDiceState = DynamicDiceState.Right;
         isDisengaging = false;
         diceMatch.Score();
     }

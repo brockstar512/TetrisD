@@ -515,6 +515,26 @@ public class DiceMatch : MonoBehaviour
         TilePos[position] = new DiceImprint(position);
         //ApplyGravity();
     }
+
+    public bool HasTile(Vector3Int tilePosition)
+    {
+        if (TilePos[tilePosition].tile != null)
+            return true;
+
+        return false;
+    }
+    public bool InBounds(Vector3Int tilePosition)
+    {
+        if(tilePosition.x < (int)XGridCell.One_Left || tilePosition.x > (int)XGridCell.Six_Right)
+        {
+            return false;
+        }
+        if (tilePosition.y > (int)YGridCell.One_Top || tilePosition.y < (int)YGridCell.Ten_Bottom)
+        {
+            return false;
+        }
+        return true;
+    }
     #endregion
 
 }

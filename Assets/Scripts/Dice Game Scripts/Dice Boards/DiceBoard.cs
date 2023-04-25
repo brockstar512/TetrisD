@@ -218,20 +218,19 @@ public class DiceBoard : MonoBehaviour
         for (int i = 0; i < group.cells.Length; i++)
         {
             Vector3Int tilePosition = group.cells[i] + position;
-            //Debug.Log("Here is the tile position "+ (Vector2Int)tilePosition);
-            // An out of bounds tile is invalid
-            if (!bounds.Contains((Vector2Int)tilePosition))
+  
+            if (!diceMatch.InBounds(tilePosition))
             {
-                //Debug.LogError("bounds does not contain that position");
+                Debug.Log("NOT IN BOUNDS");
                 return false;
             }
 
             // A tile already occupies the position, thus invalid
-            if (this.tilemap.HasTile(tilePosition))
+            if (diceMatch.HasTile(tilePosition))
             {
-                //Debug.LogError("tile map has that tile");
                 return false;
             }
+     
         }
 
         return true;
