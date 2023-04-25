@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/MainMenu.unity
+- path: Assets/Feel/FeelDemos/Toaster/FeelToaster.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

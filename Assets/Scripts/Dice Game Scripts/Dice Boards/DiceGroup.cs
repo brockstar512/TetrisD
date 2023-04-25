@@ -8,7 +8,9 @@ using UnityEngine;
 
 public class DiceGroup : MonoBehaviour
 {
-    
+    [SerializeField] AudioClip moveSound;
+    [SerializeField] AudioClip rotateSound;
+
     public DiceMatch diceMatch;
     public DiceFXController diceFXController;
     public DifficultyManager difficultyManager;
@@ -141,7 +143,7 @@ public class DiceGroup : MonoBehaviour
     #region Update
     void Update()
     {
-        Debug.Log(dynamicDiceState);
+       
 
         if (isScoring)
             return;
@@ -163,11 +165,17 @@ public class DiceGroup : MonoBehaviour
             {
                 case SwipeControls.DraggedDirection.Right:
                     Debug.Log("RIGHT");
-                    Move(Vector2Int.right);
+                    if (Move(Vector2Int.right))
+                    {
+                        SoundManager.Instance.PlaySound(moveSound);
+                    }
                     break;
                 case SwipeControls.DraggedDirection.Left:
                     Debug.Log("LEFT");
-                    Move(Vector2Int.left);
+                    if (Move(Vector2Int.left))
+                    {
+                        SoundManager.Instance.PlaySound(moveSound);
+                    }
                     break;
                 case SwipeControls.DraggedDirection.Up:
                     Debug.Log("NOTHING FOR NOW");
@@ -197,10 +205,12 @@ public class DiceGroup : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Move(Vector2Int.left);
+            SoundManager.Instance.PlaySound(moveSound);
         }
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
             Move(Vector2Int.right);
+            SoundManager.Instance.PlaySound(moveSound);
         }
         if(Input.GetKeyDown(KeyCode.DownArrow)){
             Move(Vector2Int.down);
@@ -250,7 +260,7 @@ public class DiceGroup : MonoBehaviour
     void Rotate(DynamicDiceState intendedDirection)
     {
         //Rotate(DynamicDiceState.Right);
-
+        SoundManager.Instance.PlaySound(rotateSound);
         switch (intendedDirection)
         {
             case DynamicDiceState.Right:
