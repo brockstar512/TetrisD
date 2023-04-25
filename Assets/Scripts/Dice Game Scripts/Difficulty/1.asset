@@ -53,7 +53,7 @@ MonoBehaviour:
   - number: 3
     color: 6
     tile: {fileID: 11400000, guid: 39b35664fef7f41cda370f1a7c6f83e6, type: 2}
-    chance: 95
+    chance: 94
     cellLocation:
     - {x: 0, y: 0}
   lockTime: 0.5

@@ -50,10 +50,16 @@ MonoBehaviour:
     chance: 75
     cellLocation:
     - {x: 0, y: 0}
+  - number: 1
+    color: 5
+    tile: {fileID: 11400000, guid: e1724a4796d3f4981beef6b68fe060d4, type: 2}
+    chance: 88
+    cellLocation:
+    - {x: 0, y: 0}
   - number: 7
     color: 7
     tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
-    chance: 85
+    chance: 96
     cellLocation:
     - {x: 0, y: 0}
   lockTime: 0.3

@@ -13,6 +13,7 @@ public class LoadingManager : MonoBehaviour
 
     [SerializeField] private GameObject _loaderCanvas;
     [SerializeField] private Image _progressBar;
+    [SerializeField] private RectTransform _targetRect;
     float _target;
     Scenes currentScene;
     public Ease exitEase;
@@ -20,7 +21,7 @@ public class LoadingManager : MonoBehaviour
     public bool showBar;
 
     public event Action OnNewScene;
-
+    private float height;
 
     private void Awake()
     {
@@ -33,6 +34,10 @@ public class LoadingManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Debug.Log(_targetRect.rect.height);
+        height = this.GetComponent<RectTransform>().rect.height;
+        _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, height), 0);
     }
 
     public async void LoadScene(Scenes sceneName)
@@ -77,14 +82,14 @@ public class LoadingManager : MonoBehaviour
     async Task Enter()
     {
         _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 1.5f).SetEase(enterEase);
-        await Task.Delay(1000);
+        await Task.Delay(1500);
 
     }
 
     [ContextMenu("Exit")]
     async Task Exit()
     {
-        _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1920), 1f).SetEase(exitEase);
+        _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, height), 1f).SetEase(exitEase);
         await Task.Delay(1000);
         OnNewScene?.Invoke();
 
