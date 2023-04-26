@@ -34,7 +34,8 @@ public class DiceBoard : MonoBehaviour
     public AudioClip gameOverSound;
     public Transform gameOverText;
     public GameRules gameRules;
-    internal bool isOver;
+    public bool isOver;
+    public Tilemap gameOverTilemap;
 
     private enum YGridCell
     {
@@ -221,7 +222,6 @@ public class DiceBoard : MonoBehaviour
   
             if (!diceMatch.InBounds(tilePosition))
             {
-                Debug.Log("NOT IN BOUNDS");
                 return false;
             }
 
@@ -298,12 +298,12 @@ public class DiceBoard : MonoBehaviour
     {
         isOver = true;
         activeGroup.isPlaying = false;
-        ClearGroupFromBoard();
+        //ClearGroupFromBoard();//some residual pieces. just overlaying new tile map
         for (int y = (int)YGridCell.Ten_Bottom; y <= (int)YGridCell.One_Top; y++)
         {
             for (int x = (int)XGridCell.One_Left; x <= (int)XGridCell.Six_Right; x++)
             {
-                this.tilemap.SetTile(new Vector3Int(x, y, 0), gameOverTile);
+                this.gameOverTilemap.SetTile(new Vector3Int(x, y, 0), gameOverTile);
             }
         }
         gameOverText.gameObject.SetActive(true);

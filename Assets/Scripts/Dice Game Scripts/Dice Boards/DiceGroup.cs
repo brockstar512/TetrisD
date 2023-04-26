@@ -154,6 +154,9 @@ public class DiceGroup : MonoBehaviour
         if (!isPlaying)
             return;
 
+        if (diceBoard.isOver)
+            return;
+
         //MoveController();
         this.diceBoard.Clear(this);
 
@@ -305,8 +308,8 @@ public class DiceGroup : MonoBehaviour
         
         if (this.diceBoard.IsValidPosition(this, this.position + RotationDict[intendedDirection]))
             ApplyRotation(intendedDirection);
-        else
-            ReverseRotationAndSwap(intendedDirection);
+        //else
+            //ReverseRotationAndSwap(intendedDirection);//this was causing issues with going out of bounds or swapping pieces... if i wanto include maybe if it is in bound but tile is not at roatation then apply reverse
     }
 
     /// <summary>

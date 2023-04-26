@@ -44,6 +44,12 @@ MonoBehaviour:
     chance: 85
     cellLocation:
     - {x: 0, y: 0}
+  - number: 7
+    color: 7
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    chance: 95
+    cellLocation:
+    - {x: 0, y: 0}
   lockTime: 0.4
   stepTime: 0.75
   limit: 40
