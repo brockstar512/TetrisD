@@ -206,10 +206,12 @@ public class DiceGroup : MonoBehaviour
         {
             Move(Vector2Int.left);
             SoundManager.Instance.PlaySound(moveSound);
+            CameraShake.Instance.ShakeCamera(1f,.1f);
         }
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
             Move(Vector2Int.right);
+            CameraShake.Instance.ShakeCamera(1f, .1f);
             SoundManager.Instance.PlaySound(moveSound);
         }
         if(Input.GetKeyDown(KeyCode.DownArrow)){
@@ -424,6 +426,8 @@ public class DiceGroup : MonoBehaviour
         }
         //Debug.Log($"Hard Drop height {fallHeight} false");
         HardDropEvent?.Invoke(fallHeight,false);
+        CameraShake.Instance.ShakeCamera(fallHeight, .1f);
+
         //bombEvent?.Invoke(ExplodingTiles.Count);
 
         //Debug.Log("FX");
