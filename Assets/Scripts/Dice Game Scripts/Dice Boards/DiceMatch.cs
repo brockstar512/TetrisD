@@ -474,7 +474,7 @@ public class DiceMatch : MonoBehaviour
 
         //score the bomb
         BombEvent?.Invoke(ExplodingTiles.Count);
-        CameraShake.Instance.ShakeCamera(3f, .25f);
+        CameraShake.Instance.ShakeCamera(3f, .1f);
 
         ////add the exploding tiles to the list to be removed
         //ExplodingTiles.ForEach(tile => listOfDiceToRemove.Add(tile));
