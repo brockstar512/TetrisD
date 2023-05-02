@@ -305,11 +305,19 @@ public class DiceGroup : MonoBehaviour
                 }
                 break;
         }
-        
+        //var (isInBounds, spotIsAvailable)
+        //var (isInBounds, spotIsAvailable) = this.diceBoard.IsValidRotation(this, this.position + RotationDict[intendedDirection]);
         if (this.diceBoard.IsValidPosition(this, this.position + RotationDict[intendedDirection]))
             ApplyRotation(intendedDirection);
+        else
+            ReverseRotationAndSwap(intendedDirection);
+        //else if (isInBounds && !spotIsAvailable)
+        //    SwapTilesInGroup();
+
+        //ReverseRotationAndSwap(intendedDirection);
+
         //else
-            //ReverseRotationAndSwap(intendedDirection);//this was causing issues with going out of bounds or swapping pieces... if i wanto include maybe if it is in bound but tile is not at roatation then apply reverse
+        //ReverseRotationAndSwap(intendedDirection);//this was causing issues with going out of bounds or swapping pieces... if i wanto include maybe if it is in bound but tile is not at roatation then apply reverse
     }
 
     /// <summary>
@@ -353,19 +361,34 @@ public class DiceGroup : MonoBehaviour
     /// <param name="rotation"></param>
     void ReverseRotationAndSwap(DynamicDiceState rotation)
     {
+        //this still does not work perfectly... when there is a dice below one and not the other. when it tries to go down it dissapears
+
+        //need to check rotated position has position avaiable
         switch(rotation)
         {
             case DynamicDiceState.Up:
-                ApplyRotation(DynamicDiceState.Down);
+                if (this.diceBoard.IsValidPosition(this, this.position + RotationDict[DynamicDiceState.Down]))
+                {
+                    ApplyRotation(DynamicDiceState.Down);
+                }
                 break;
             case DynamicDiceState.Down:
-                ApplyRotation(DynamicDiceState.Up);
+                if (this.diceBoard.IsValidPosition(this, this.position + RotationDict[DynamicDiceState.Up]))
+                {
+                    ApplyRotation(DynamicDiceState.Up);
+                }
                 break;
             case DynamicDiceState.Right:
-                ApplyRotation(DynamicDiceState.Left);
+                if (this.diceBoard.IsValidPosition(this, this.position + RotationDict[DynamicDiceState.Left]))
+                {
+                    ApplyRotation(DynamicDiceState.Left);
+                }
                 break;
             case DynamicDiceState.Left:
-                ApplyRotation(DynamicDiceState.Right);
+                if (this.diceBoard.IsValidPosition(this, this.position + RotationDict[DynamicDiceState.Right]))
+                {
+                    ApplyRotation(DynamicDiceState.Right);
+                }
                 break;
 
         }

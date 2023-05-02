@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0c6188ef2e24488fa8ee1d0210ce8f2, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
-  level: 3
+  level: 6
   diceOptions:
   - number: 3
     color: 3

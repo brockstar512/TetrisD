@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c6188ef2e24488fa8ee1d0210ce8f2, type: 3}
+  m_Name: Tutorial1
+  m_EditorClassIdentifier: 
+  level: 1
+  diceOptions:
+  - number: 1
+    color: 3
+    tile: {fileID: 11400000, guid: 4f09f0f9c5d47442c9f385d7674063a6, type: 2}
+    chance: 0
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 2
+    color: 2
+    tile: {fileID: 11400000, guid: 0db6ef7719e504112aa1b145a6af1972, type: 2}
+    chance: 20
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 3
+    color: 4
+    tile: {fileID: 11400000, guid: 0bbc1b1cd8e654cdfae9846aafd8cdc2, type: 2}
+    chance: 40
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 4
+    color: 1
+    tile: {fileID: 11400000, guid: 2164f13a41583431c9f8ffc07277f4a2, type: 2}
+    chance: 60
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 0
+    color: 7
+    tile: {fileID: 11400000, guid: 689ba65a14dac462d8eac8be06bc28eb, type: 2}
+    chance: 80
+    cellLocation:
+    - {x: 0, y: 0}
+  - number: 7
+    color: 7
+    tile: {fileID: 11400000, guid: 1486637705bf74c93b93e0a2c4e89f00, type: 2}
+    chance: 90
+    cellLocation:
+    - {x: 0, y: 0}
+  lockTime: 0.5
+  stepTime: 1.25
+  limit: 5

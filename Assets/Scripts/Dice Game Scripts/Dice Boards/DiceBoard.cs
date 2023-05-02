@@ -210,6 +210,44 @@ public class DiceBoard : MonoBehaviour
 
     }
 
+    public (bool isInBounds, bool spotIsAvailable) IsValidRotation(DiceGroup group, Vector3Int position)
+    {
+        bool isInBounds = false;
+        bool spotIsAvailable = false;
+
+        //Debug.Log($"Is valid?"); 
+        RectInt bounds = this.Bounds;
+        //Debug.Log("Here are the bounds " + bounds);
+        // The position is only valid if every cell is valid
+        for (int i = 0; i < group.cells.Length; i++)
+        {
+            Vector3Int tilePosition = group.cells[i] + position;
+
+            if (!diceMatch.InBounds(tilePosition))
+            {
+                isInBounds = false;
+            }
+            else
+            {
+                isInBounds = true;
+            }
+
+            // A tile already occupies the position, thus invalid
+            if (diceMatch.HasTile(tilePosition))
+            {
+                spotIsAvailable = false;
+            }
+            else
+            {
+                spotIsAvailable = true;
+            }
+
+        }
+
+        return (isInBounds, spotIsAvailable);
+
+    }
+
     public bool IsValidPosition(DiceGroup group, Vector3Int position)
     {
         //Debug.Log($"Is valid?"); 

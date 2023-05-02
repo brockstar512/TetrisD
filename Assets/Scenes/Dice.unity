@@ -7317,7 +7317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 129.80551, y: 0}
+  m_AnchoredPosition: {x: 146.66664, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899467042
@@ -8305,6 +8305,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyOptionsDefault:
+  - {fileID: 11400000, guid: 7a2257b7bb8bb4e9aacaa7c1984959ec, type: 2}
+  - {fileID: 11400000, guid: fbf83c881ed4d43b19b5217466bbf893, type: 2}
+  - {fileID: 11400000, guid: 250d3575261cf4835864fc9387743363, type: 2}
+  - {fileID: 11400000, guid: 118d01c8be94e4d238f44344d55a91be, type: 2}
   - {fileID: 11400000, guid: f7dccc2dd6ad4444d827d50cbbfe712f, type: 2}
   - {fileID: 11400000, guid: 3812eec4b9ccf44508ea2924781188b3, type: 2}
   - {fileID: 11400000, guid: c277159b1774f471d93b897d4ee61b5d, type: 2}
@@ -8312,13 +8316,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 327d59a3b4d2f4dc4bf215d85b2098e9, type: 2}
   - {fileID: 11400000, guid: 37c32635864b342ed97bf4bd1af3948d, type: 2}
   - {fileID: 11400000, guid: facf689ef752a4e38a378c363e710031, type: 2}
-  - {fileID: 11400000, guid: 802f593c79ed14be59c230a9a31ada61, type: 2}
-  - {fileID: 11400000, guid: 268b5af604499491a94f55531b705f3c, type: 2}
-  - {fileID: 11400000, guid: 86530edb9cd66497e8f8da4aec3cc7ed, type: 2}
-  - {fileID: 11400000, guid: b1f858a69e64e4171933323833227f25, type: 2}
   difficultyNumbers: {fileID: 530711995}
   linesClear: {fileID: 740047293}
-  levelUpSoundFX: {fileID: 8300000, guid: 3211fe51a5ed4489c84fcf45b9fe7766, type: 3}
+  levelUpSoundFX: {fileID: 8300000, guid: 3dadabb89371f409dacfcf6ad77a390a, type: 3}
 --- !u!1 &1266985583
 GameObject:
   m_ObjectHideFlags: 0
@@ -8357,7 +8357,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 849.0276, y: 0}
+  m_AnchoredPosition: {x: 933.3332, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266985585
@@ -9523,7 +9523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 489.41653, y: 0}
+  m_AnchoredPosition: {x: 539.99994, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663878346
@@ -9798,7 +9798,7 @@ MonoBehaviour:
   spawnPosition: {x: -1, y: 4, z: 0}
   boardSize: {x: 6, y: 10}
   gameOverTile: {fileID: 11400000, guid: 689ba65a14dac462d8eac8be06bc28eb, type: 2}
-  gameOverSound: {fileID: 8300000, guid: 345260dc9709f4b3f8c3fa91aa717c59, type: 3}
+  gameOverSound: {fileID: 8300000, guid: 9f9778e1348a84bb8b1d5c442412b0b8, type: 3}
   gameOverText: {fileID: 1060194335}
   gameRules: {fileID: 1519272075}
   isOver: 0

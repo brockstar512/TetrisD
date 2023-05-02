@@ -519,6 +519,11 @@ public class DiceMatch : MonoBehaviour
 
     public bool HasTile(Vector3Int tilePosition)
     {
+        if (!TilePos.ContainsKey(tilePosition))
+        {
+            //if that is out of bounds return true so it wont move there
+            return true;
+        }
         if (TilePos[tilePosition].tile != null)
             return true;
 
