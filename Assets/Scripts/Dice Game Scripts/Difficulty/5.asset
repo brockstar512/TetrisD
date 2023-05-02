@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0c6188ef2e24488fa8ee1d0210ce8f2, type: 3}
   m_Name: 5
   m_EditorClassIdentifier: 
-  level: 8
+  level: 9
   diceOptions:
   - number: 2
     color: 5
@@ -58,4 +58,4 @@ MonoBehaviour:
     - {x: 0, y: 0}
   lockTime: 0.2
   stepTime: 0.75
-  limit: 60
+  limit: 90

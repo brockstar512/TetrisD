@@ -4592,7 +4592,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 52.79602, y: -0.49998474}
+  m_AnchoredPosition: {x: 52.79602, y: -0.49996948}
   m_SizeDelta: {x: -115.5919, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &819872318
@@ -5722,7 +5722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 52.79602, y: -0.49998474}
+  m_AnchoredPosition: {x: 52.79602, y: -0.49996948}
   m_SizeDelta: {x: -115.5919, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &980373335
@@ -5859,7 +5859,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 47.83, y: 0}
+  m_AnchoredPosition: {x: 47.829956, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1011659686
@@ -6473,10 +6473,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'A pair of dice falls together. Once one of them cannot fall anymore the
-    player loses control of the dice. If a dice has another dice that is the same
-    number with the same number of dice between them, they are cleared. If the two
-    dice that are the same number are also the same color, the dice between them
-    are cleared. Otherwise, only the two dice are cleared. '
+    player loses control of the dice. If a dice an identical dice that is the same
+    number of dice between them, they are cleared. If the two dice that are the same
+    number are also the same color, the dice between them are cleared. Otherwise,
+    only the two dice are cleared. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
   m_sharedMaterial: {fileID: 6833471927047663234, guid: d40a0fb49f0094ec880038c26d79dd90, type: 2}
@@ -6588,7 +6588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 47.83, y: 0}
+  m_AnchoredPosition: {x: 47.829956, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1179158865
@@ -7613,7 +7613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 47.83, y: 0}
+  m_AnchoredPosition: {x: 47.829956, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437838817
@@ -12002,7 +12002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.23547363, y: 0.086380005}
+  m_AnchoredPosition: {x: -0.23547363, y: 0.08639526}
   m_SizeDelta: {x: -0.47094727, y: -0.17276001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2053363865
@@ -12307,7 +12307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.56479836, y: 0}
   m_AnchorMax: {x: 1, y: 0.7640366}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2074071613
