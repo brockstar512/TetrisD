@@ -41,6 +41,10 @@ public class GameSetUp : MonoBehaviour
 
         HandleToggle(marathonToggle);
     }
+    private void OnEnable()
+    {
+        slider.value = difficulty;
+    }
 
     void HandleToggle(Toggle toggle)
     {

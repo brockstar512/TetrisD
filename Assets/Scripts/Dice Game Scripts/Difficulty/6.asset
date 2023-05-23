@@ -58,4 +58,4 @@ MonoBehaviour:
     - {x: 0, y: 0}
   lockTime: 0.2
   stepTime: 0.5
-  limit: 100
+  limit: 80
